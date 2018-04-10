@@ -13,14 +13,14 @@
 @interface CPBaseModel : NSObject
 
 @property (nonatomic, copy) NSString *msg;
-@property (nonatomic, copy) NSArray *data;
-@property (nonatomic, assign) NSInteger code;
-
-@property (nonatomic, assign) NSInteger currentpage;
-
-@property (nonatomic, assign) NSInteger pagesize;
-
-@property (nonatomic, assign) NSInteger total;
+////@property (nonatomic, copy) NSArray *data;
+//@property (nonatomic, assign) NSInteger code;
+//
+//@property (nonatomic, assign) NSInteger currentpage;
+//
+//@property (nonatomic, assign) NSInteger pagesize;
+//
+//@property (nonatomic, assign) NSInteger total;
 
 + (instancetype)shareInstance;
 

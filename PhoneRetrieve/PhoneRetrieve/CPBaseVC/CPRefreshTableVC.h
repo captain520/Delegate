@@ -16,6 +16,8 @@
 
 @property (nonatomic, assign) NSInteger currentPageIndex;
 
+@property (nonatomic, strong) NSMutableArray *models;
+
 - (void)loadData;
 
 @end

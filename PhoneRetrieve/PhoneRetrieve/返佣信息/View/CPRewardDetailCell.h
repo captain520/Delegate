@@ -7,7 +7,10 @@
 //
 
 #import "CPBaseCell.h"
+#import "CPRewardModel.h"
 
 @interface CPRewardDetailCell : CPBaseCell
+
+@property (nonatomic, strong) CPRewardInfoModel *model;
 
 @end

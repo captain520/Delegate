@@ -7,7 +7,13 @@
 //
 
 #import "CPHeaderFooter.h"
+#import "CPRewardModel.h"
+#import "CPRetireveOrderModel.h"
 
 @interface CPRewardHeader : CPHeaderFooter
+
+@property (nonatomic, strong) CPRewardDataModel *model;
+
+@property (nonatomic, strong) CPRetrieveOrderDataModel *dataModel;
 
 @end

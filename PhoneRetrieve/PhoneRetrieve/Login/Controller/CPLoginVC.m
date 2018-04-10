@@ -59,7 +59,9 @@ typedef NS_ENUM(NSInteger, CPLoginType){
         self.accountTF = [UITextField new];
         self.accountTF.placeholder = @"请输入您的手机号码/会员编号";
 //        self.accountTF.text = @"15814099327";
-        self.accountTF.text = @"18033446838";
+//        self.accountTF.text = @"18033446838";
+        self.accountTF.text = @"15814099328";
+//        self.accountTF.text = @"15814099329";
         self.accountTF.borderStyle = UITextBorderStyleRoundedRect;
 //        self.accountTF.keyboardType = UIKeyboardTypeNumberPad;
         self.accountTF.font = [UIFont systemFontOfSize:15.0f];
@@ -170,6 +172,24 @@ typedef NS_ENUM(NSInteger, CPLoginType){
             return @(/*CheckPhone(self.accountTF.text) && */self.passwdTF.text.length > 0);
         }];
     }
+    
+//#if DEBUG
+    UISegmentedControl *segmentControl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(100, 100, 100, CELL_HEIGHT_F)];
+    [segmentControl insertSegmentWithTitle:@"代理" atIndex:0 animated:YES];
+    [segmentControl insertSegmentWithTitle:@"商家" atIndex:1 animated:YES];
+    [segmentControl addTarget:self action:@selector(segmentAction:) forControlEvents:UIControlEventValueChanged];
+    
+    [self.view addSubview:segmentControl];
+    
+    [segmentControl mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(cellSpaceOffset);
+        make.width.mas_equalTo(200);
+        make.height.mas_equalTo(CELL_HEIGHT_F);
+        make.bottom.mas_equalTo(-100);
+    }];
+    
+    [segmentControl setSelectedSegmentIndex:0];
+//#endif
 
 }
 
@@ -321,7 +341,7 @@ typedef NS_ENUM(NSInteger, CPLoginType){
         result.linkname = @"匿名用户";
     }
     [CPUserInfoModel shareInstance].isLogined = YES;
-    [CPUserInfoModel shareInstance].isShop = result.Typeid == 3;;
+    [CPUserInfoModel shareInstance].isShop = result.Typeid == 2;;
     [CPUserInfoModel shareInstance].loginModel = result;
     
     [[CPProgress Instance] showSuccess:self.view
@@ -336,6 +356,14 @@ typedef NS_ENUM(NSInteger, CPLoginType){
 //                                    }
                                     [self.navigationController popViewControllerAnimated:NO];
                                 }];
+}
+
+- (void)segmentAction:(UISegmentedControl *)sc {
+    if (sc.selectedSegmentIndex == 0) {
+        self.accountTF.text = @"15814099328";
+    } else if (sc.selectedSegmentIndex == 1) {
+        self.accountTF.text = @"15814099329";
+    }
 }
 
 @end

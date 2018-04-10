@@ -24,6 +24,7 @@
 
 @property (nonatomic, strong) NSArray  *proviceArray, *cityArray, *areaArray;
 @property (nonatomic, strong) CPProviceCityAreaModel *cityModel, *proviceModel, *areaModel;
+@property (nonatomic, strong) CPProviceCityAreaModel *delegate_cityModel, *delegate_proviceModel, *delegate_areaModel;
 
 @end
 
@@ -517,18 +518,58 @@
                                                                   self.shopPhoneTF.rac_textSignal,
                                                                   self.shopEmailT.rac_textSignal
                                                                   ] reduce:^id{
-                                                                      return @(self.shopCodeTF.text.length > 0 &&
-                                                                      self.shopNameTF.text.length > 0 &&
-                                                                      self.proviceTF.text.length > 0 &&
-                                                                      self.cityTF.text.length > 0 &&
-                                                                      self.cityTF.text.length > 0 &&
-                                                                      self.areaTF.text.length > 0 &&
-                                                                      self.shopAddressTF.text.length > 0 &&
-                                                                      self.shopOwnerTF.text.length > 0 &&
-                                                                      self.shopPhoneTF.text.length > 0 &&
-                                                                      self.shopEmailT.text.length > 0 &&
-                                                                      self.businessLicenseBT.currentImage &&
-                                                                      self.IDFrontBT.currentImage && self.IDBackBT.currentImage);
+                                                                      
+                                                                      if (self.registType == CPRegistTypeShop) {
+                                                                          return @(
+                                                                          self.shopCodeTF.text.length > 0 &&
+                                                                          self.shopNameTF.text.length > 0 &&
+                                                                          self.proviceTF.text.length > 0 &&
+                                                                          self.cityTF.text.length > 0 &&
+                                                                          self.cityTF.text.length > 0 &&
+                                                                          self.areaTF.text.length > 0 &&
+                                                                          self.shopAddressTF.text.length > 0 &&
+                                                                          self.shopOwnerTF.text.length > 0 &&
+                                                                          self.shopPhoneTF.text.length > 0 &&
+                                                                          self.shopEmailT.text.length > 0 &&
+                                                                          self.creditCodeTF.text.length > 0 &&
+                                                                          self.businessLicenseBT.imageUrl &&
+                                                                          self.IDFrontBT.imageUrl && self.IDBackBT.imageUrl);
+                                                                      } else if (self.registType == CPRegistTypeCompanyDelegate) {
+                                                                          return @(
+                                                                          self.shopNameTF.text.length > 0 &&
+                                                                          self.proviceTF.text.length > 0 &&
+                                                                          self.cityTF.text.length > 0 &&
+                                                                          self.cityTF.text.length > 0 &&
+                                                                          self.areaTF.text.length > 0 &&
+                                                                          self.shopAddressTF.text.length > 0 &&
+                                                                          self.shopOwnerTF.text.length > 0 &&
+                                                                          self.shopPhoneTF.text.length > 0 &&
+                                                                          self.shopEmailT.text.length > 0 &&
+                                                                          self.delegateProviceTF.text.length > 0 &&
+                                                                          self.delegateCityTF.text.length > 0 &&
+                                                                          self.delegateAreaTF.text.length > 0 &&
+                                                                          self.creditCodeTF.text.length > 0 &&
+                                                                          self.businessLicenseBT.imageUrl &&
+                                                                          self.IDFrontBT.imageUrl && self.IDBackBT.imageUrl );
+                                                                          
+                                                                      } else if (self.registType == CPRegistTypePersonalDelegate) {
+                                                                          return @(
+                                                                          self.shopNameTF.text.length > 0 &&
+                                                                          self.proviceTF.text.length > 0 &&
+                                                                          self.cityTF.text.length > 0 &&
+                                                                          self.cityTF.text.length > 0 &&
+                                                                          self.areaTF.text.length > 0 &&
+                                                                          self.shopAddressTF.text.length > 0 &&
+                                                                          self.shopPhoneTF.text.length > 0 &&
+                                                                          self.shopEmailT.text.length > 0 &&
+                                                                          self.delegateProviceTF.text.length > 0 &&
+                                                                          self.delegateCityTF.text.length > 0 &&
+                                                                          self.delegateAreaTF.text.length > 0 &&
+                                                                          self.IDFrontBT.imageUrl && self.IDBackBT.imageUrl );
+                                                                      } else {
+                                                                          return @(NO);
+                                                                      }
+
                                                                   }];
         
     }
@@ -565,6 +606,12 @@
         self.cityModel = model;
     } else if (textField == self.areaTF) {
         self.areaModel = model;
+    } else if (textField == self.delegateProviceTF) {
+        self.delegate_proviceModel = model;
+    } else if (textField == self.delegateCityTF) {
+        self.delegate_cityModel = model;
+    } else if (textField == self.delegateAreaTF) {
+        self.delegate_areaModel = model;
     }
     
 }
@@ -588,9 +635,10 @@
                 DDLogError(@">>>>>>>>>>>>>>>>>>>>%@",filePath);
                 sender.imageUrl = filePath;
                 [[CPProgress Instance] hidden];
+                
+                [weakSelf handleImagePickImageBlock];
             }];
 
-            [weakSelf handleImagePickImageBlock];
         });
     }];
     
@@ -601,37 +649,79 @@
 
 - (void)handleImagePickImageBlock {
     
-    self.nextAction.enabled = (self.shopCodeTF.text.length > 0
-                               && self.shopNameTF.text.length > 0
-                               && self.proviceTF.text.length > 0
-                               && self.cityTF.text.length > 0
-                               && self.cityTF.text.length > 0
-                               && self.areaTF.text.length > 0
-                               && self.shopAddressTF.text.length > 0
-                               && self.shopOwnerTF.text.length > 0
-                               && self.shopEmailT.text.length > 0
-                               && self.shopPhoneTF.text.length > 0
-                               && self.businessLicenseBT.currentImage
-                               && self.IDFrontBT.currentImage
-                               && self.IDBackBT.currentImage);
+    if (self.registType == CPRegistTypeShop) {
+        self.nextAction.enabled =
+        self.shopCodeTF.text.length > 0 &&
+        self.shopNameTF.text.length > 0 &&
+        self.proviceTF.text.length > 0 &&
+        self.cityTF.text.length > 0 &&
+        self.cityTF.text.length > 0 &&
+        self.areaTF.text.length > 0 &&
+        self.shopAddressTF.text.length > 0 &&
+        self.shopOwnerTF.text.length > 0 &&
+        self.shopPhoneTF.text.length > 0 &&
+        self.shopEmailT.text.length > 0 &&
+        self.creditCodeTF.text.length > 0 &&
+        self.businessLicenseBT.imageUrl &&
+        self.IDFrontBT.imageUrl && self.IDBackBT.imageUrl;
+    } else if (self.registType == CPRegistTypeCompanyDelegate) {
+        self.nextAction.enabled =
+        self.shopNameTF.text.length > 0 &&
+        self.proviceTF.text.length > 0 &&
+        self.cityTF.text.length > 0 &&
+        self.cityTF.text.length > 0 &&
+        self.areaTF.text.length > 0 &&
+        self.shopAddressTF.text.length > 0 &&
+        self.shopOwnerTF.text.length > 0 &&
+        self.shopPhoneTF.text.length > 0 &&
+        self.shopEmailT.text.length > 0 &&
+        self.delegateProviceTF.text.length > 0 &&
+        self.delegateCityTF.text.length > 0 &&
+        self.delegateAreaTF.text.length > 0 &&
+        self.creditCodeTF.text.length > 0 &&
+        self.businessLicenseBT.imageUrl &&
+        self.IDFrontBT.imageUrl && self.IDBackBT.imageUrl;
+        
+    } else if (self.registType == CPRegistTypePersonalDelegate) {
+        self.nextAction.enabled =
+        self.shopNameTF.text.length > 0 &&
+        self.proviceTF.text.length > 0 &&
+        self.cityTF.text.length > 0 &&
+        self.cityTF.text.length > 0 &&
+        self.areaTF.text.length > 0 &&
+        self.shopAddressTF.text.length > 0 &&
+        self.shopPhoneTF.text.length > 0 &&
+        self.shopEmailT.text.length > 0 &&
+        self.delegateProviceTF.text.length > 0 &&
+        self.delegateCityTF.text.length > 0 &&
+        self.delegateAreaTF.text.length > 0 &&
+        self.IDFrontBT.imageUrl && self.IDBackBT.imageUrl;
+    } else {
+        self.nextAction.enabled = NO;
+    }
 }
 
 - (void)nextAction:(UIButton *)sender {
     
-    [CPRegistParam shareInstance].code        = self.shopCodeTF.text;
-    [CPRegistParam shareInstance].companyname = self.shopNameTF.text;
-    [CPRegistParam shareInstance].provinceid  = self.proviceModel.Code;
-    [CPRegistParam shareInstance].cityid      = self.cityModel.Code;
-    [CPRegistParam shareInstance].districtid  = self.areaModel.Code;
-    [CPRegistParam shareInstance].address     = self.shopAddressTF.text;
-    [CPRegistParam shareInstance].linkname    = self.shopOwnerTF.text;
-//    [CPRegistParam shareInstance].phone       = self.shopPhoneTF.text;
-    [CPRegistParam shareInstance].email       = self.shopEmailT.text;
-    [CPRegistParam shareInstance].licenseurl  = self.businessLicenseBT.imageUrl;
-    [CPRegistParam shareInstance].idcard1url  = self.IDFrontBT.imageUrl;
-    [CPRegistParam shareInstance].idcard2url  = self.IDBackBT.imageUrl;
-    [CPRegistParam shareInstance].licensecode = self.creditCodeTF.text;
+    //  商家注册
+    [CPRegistParam shareInstance].code            = self.shopCodeTF.text ? self.shopCodeTF.text : @"";
+    [CPRegistParam shareInstance].companyname     = self.shopNameTF.text ? self.shopNameTF.text : @"";
+    [CPRegistParam shareInstance].provinceid      = cp_noEmptyString(self.proviceModel.Code);
+    [CPRegistParam shareInstance].cityid          = cp_noEmptyString(self.cityModel.Code);
+    [CPRegistParam shareInstance].districtid      = cp_noEmptyString(self.areaModel.Code);
+    [CPRegistParam shareInstance].address         = cp_noEmptyString(self.shopAddressTF.text);
+    [CPRegistParam shareInstance].linkname        = cp_noEmptyString(self.shopOwnerTF.text);
+    [CPRegistParam shareInstance].email           = cp_noEmptyString(self.shopEmailT.text);
+    [CPRegistParam shareInstance].licenseurl      = cp_noEmptyString(self.businessLicenseBT.imageUrl);
+    [CPRegistParam shareInstance].idcard1url      = cp_noEmptyString(self.IDFrontBT.imageUrl);
+    [CPRegistParam shareInstance].idcard2url      = cp_noEmptyString(self.IDBackBT.imageUrl);
+    [CPRegistParam shareInstance].licensecode     = cp_noEmptyString(self.creditCodeTF.text);
 
+
+    //  公司代理
+    [CPRegistParam shareInstance].agentprovinceid = cp_noEmptyString(self.delegate_proviceModel.Code);
+    [CPRegistParam shareInstance].agentcityid     = cp_noEmptyString(self.delegate_cityModel.Code);
+    [CPRegistParam shareInstance].agentdistrictid = cp_noEmptyString(self.delegate_areaModel.Code);
     
     CPRemittanceInfoTBVC *vc = [[CPRemittanceInfoTBVC alloc] init];
     vc.registType = self.registType;
@@ -660,8 +750,9 @@
     }
     
     self.proviceArray = result;
-    
+
     self.proviceTF.dataArray = self.proviceArray;
+    self.delegateProviceTF.dataArray = self.proviceArray;
 }
 
 - (void)loadCity:(NSString *)paramCode {
@@ -685,6 +776,7 @@
     self.cityArray = result;
     
     self.cityTF.dataArray = self.cityArray;
+    self.delegateCityTF.dataArray = self.cityArray;
 }
 
 - (void)loadArea:(NSString *)paramCode {
@@ -708,6 +800,7 @@
     self.areaArray = result;
     
     self.areaTF.dataArray = self.areaArray;
+    self.delegateAreaTF.dataArray = self.areaArray;
 }
 
 

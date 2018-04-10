@@ -6,7 +6,7 @@
 //  Copyright © 2018年 Captain. All rights reserved.
 //
 
-#import "CPBaseTableVC.h"
+#import "CPRefreshTableVC.h"
 
 typedef NS_ENUM(NSUInteger, CPTabBarType) {
     CPTabBarTypeShippingState,
@@ -16,7 +16,7 @@ typedef NS_ENUM(NSUInteger, CPTabBarType) {
     CPTabBarTypePayOther,
 };
 
-@interface CPShippingInformationListVC : CPBaseTableVC
+@interface CPShippingInformationListVC : CPRefreshTableVC
 
 @property (nonatomic, assign) CPTabBarType tabbarType;
 

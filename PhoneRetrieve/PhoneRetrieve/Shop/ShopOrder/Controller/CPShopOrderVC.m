@@ -107,9 +107,6 @@
     vc.hidesBottomBarWhenPushed = YES;
     
     [self.navigationController pushViewController:vc animated:YES];
-    
-    
-    //    [self push2VCWith:@"CPShippingInformationListVC" title:@"订单"];
 }
 
 - (void)push2OrderListVC:(CPGoodOrderListType)type {
@@ -117,8 +114,10 @@
     CPRetrieveOrderListVC *vc = [[CPRetrieveOrderListVC alloc] init];
     if (type == CPGoodOrderListTypeCartOverDueOrder) {
         vc.title = @"回收订单";
+        vc.type = CPRetrieveOrderListTypeSuccess;
     } else if (type == CPGoodOrderListTypeShopRetrieveOrder) {
         vc.title = @"失效订单";
+        vc.type = CPRetrieveOrderListTypeFail;
     }
     
     [self.navigationController pushViewController:vc animated:YES];

@@ -65,5 +65,9 @@
 
 @property (nonatomic, copy) NSString *doorname;
 
+@property (nonatomic, assign) CGFloat lossprice;
+
+@property (nonatomic, copy) NSString *Description;
+
 @end
 

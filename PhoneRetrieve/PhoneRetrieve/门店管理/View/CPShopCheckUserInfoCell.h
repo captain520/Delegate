@@ -7,7 +7,10 @@
 //
 
 #import "CPBaseCell.h"
+#import "CPUserDetailInfoModel.h"
 
 @interface CPShopCheckUserInfoCell : CPBaseCell
+
+@property (nonatomic, strong) CPUserDetailInfoModel *model;
 
 @end

@@ -10,6 +10,7 @@
 #import "CPRewardHeader.h"
 #import "CPLeftRightCell.h"
 #import "CPDeductDetailCell.h"
+#import "CPDeductDetailModel.h"
 
 @interface CPDeductDetailVC ()
 
@@ -29,11 +30,12 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return self.models.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    CPDeductDetailDataModel *deductDetailModel = self.models[section];
+    return deductDetailModel.info.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -53,8 +55,9 @@
         //        cell.contentView.backgroundColor = tableView.backgroundColor;
     }
     
-    //    cell.model = self.models[indexPath.section];
-    
+    CPDeductDetailDataModel *dataModel = self.models[indexPath.section];
+    cell.model = dataModel.info[indexPath.row];
+
     return cell;
 }
 
@@ -81,8 +84,10 @@
         [header.contentView addSubview:cell];
     }
     
-    cell.title = @"2018-03-14";
-    NSString *priceStr = [NSString stringWithFormat:@"扣除金额：¥123.00"];
+    CPDeductDetailDataModel *dataModel = self.models[section];
+    
+    cell.title =  dataModel.createtime;
+    NSString *priceStr = [NSString stringWithFormat:@"扣除金额：¥%.2f",dataModel.total_price];
     cell.detailTextLabel.text = priceStr;
 
     return header;
@@ -92,6 +97,48 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+}
+
+- (void)loadData {
+    
+    __weak typeof(self) weakSelf = self;
+    
+    NSDictionary *params = @{
+                             @"code" : @([CPUserInfoModel shareInstance].loginModel.ID),
+                             @"pagesize" : @"20",
+                             @"currentpage" : @(self.currentPageIndex)
+                             };
+
+    [CPDeductDetailModel modelRequestWith:@"http://leshouzhan.platline.com/api/Order/getDeductTheDetailsList"
+                               parameters:params
+                                    block:^(CPDeductDetailModel *result) {
+                                        [weakSelf handleLoadDataSuccessBlock:result];
+                                    } fail:^(CPError *error) {
+                                        
+                                    }];
+}
+
+- (void)handleLoadDataSuccessBlock:(CPDeductDetailModel *)result {
+    
+    if (!result.data ||
+        ![result isKindOfClass:[CPDeductDetailModel class]] ||
+        ![result.data isKindOfClass:[NSArray class]]) {
+        
+        [self.models removeAllObjects];
+        
+    } else {
+        [self.models addObjectsFromArray:result.data];
+    }
+    
+    if (self.models.count >= result.total) {
+        [self.dataTableView.mj_header endRefreshing];
+        [self.dataTableView.mj_footer endRefreshingWithNoMoreData];
+    } else {
+        [self.dataTableView.mj_header endRefreshing];
+        [self.dataTableView.mj_footer endRefreshing];
+    }
+    
+    [self.dataTableView reloadData];
 }
 
 

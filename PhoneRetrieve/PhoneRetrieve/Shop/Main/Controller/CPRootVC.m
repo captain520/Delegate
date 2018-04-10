@@ -34,8 +34,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [self setTitle:@"商家编号：123456"];
-    
+
     [self loadData];
     
     [self setupUI];
@@ -45,7 +44,26 @@
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    
+    NSString *title = nil;
+    NSString *code = [CPUserInfoModel shareInstance].loginModel.cp_code;;
+
+    if (IS_SHOP) {
+        title = [NSString stringWithFormat:@"商家编号：%@",code];
+        [self setTitle:@"商家编号：123456"];
+    } else if (IS_ASSISTANT) {
+        title = [NSString stringWithFormat:@"代理编号：%@",code];
+    }
+    
+    [self setTitle:title];
+}
+
 - (void)setupUI {
+    
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:CPImage(@"call") style:UIBarButtonItemStylePlain target:self action:@selector(showHelp)];
     
     {
         self.view.backgroundColor = BgColor;
@@ -93,7 +111,7 @@
     NSLog(@"%s%@",__FUNCTION__,@(index));
     
     CPHomeAdvModel *advModel = self.advModels[index];
-    
+
     [self push2WebView:advModel.clickurl title:advModel.name];
 }
 
@@ -129,7 +147,7 @@
 
 - (void)handleLoadDataBlock:(NSArray <CPHomeAdvModel *> *)result {
     self.advModels = result;
-//    self.adSV.imageURLStringsGroup = [self.advModels valueForKeyPath:@"imageurl"];
+    self.adSV.imageURLStringsGroup = [self.advModels valueForKeyPath:@"imageurl"];
 }
 
 #pragma mark -  返佣查询
@@ -181,8 +199,12 @@
 
 - (void)push2AccountManagerVC {
     
-    CPShopAccountManagerVC *vc = [[CPShopAccountManagerVC alloc] init];
+//    CPAccountManagerVC *vc = [[CPAccountManagerVC alloc] init];
+//
+//    [self.navigationController pushViewController:vc animated:YES];
     
+    CPShopAccountManagerVC *vc = [[CPShopAccountManagerVC alloc] init];
+
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -193,6 +215,10 @@
     
     [self.navigationController pushViewController:vc animated:YES];
     
+}
+
+- (void)showHelp {
+    [self push2VCWith:@"CPShopHelpVC" title:@"我的客服"];
 }
 
 @end

@@ -1,2 +1,2 @@
-/Users/wangzhangchuan/Library/Developer/Xcode/DerivedData/PhoneRetrieve-heqpsjlawatpgyazjgyngaehvlma/Build/Products/Debug-iphonesimulator/PhoneRetrieve.app
-iPhone Developer
+/Users/wangzhangchuan/Library/Developer/Xcode/DerivedData/PhoneRetrieve-exicynbbczudvzecubniezvgfqrp/Build/Products/Debug-iphonesimulator/PhoneRetrieve.app
+iPhone Developer: tingting zhu (DXR694BTZ4)

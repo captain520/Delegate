@@ -10,10 +10,12 @@
 #import "CPShopCheckUserInfoCell.h"
 #import "CPPayInfoCell.h"
 #import "CPSuccessVC.h"
+#import "CPUserDetailInfoModel.h"
 
 @interface CPShopCheckVC ()
 
 @property (nonatomic, strong) CPButton *passBT, *refuseBT;
+@property (nonatomic, strong) CPUserDetailInfoModel *model;
 
 @end
 
@@ -87,6 +89,8 @@
         cell.clipsToBounds = YES;
     }
     
+    cell.model = self.model;
+    
     return cell;
 }
 
@@ -100,6 +104,8 @@
         cell.clipsToBounds  = YES;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
+    
+    cell.model = self.model;
     
     return cell;
 }
@@ -140,6 +146,10 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     
+    if (self.type == CPShopCheckTypeDetail) {
+        return nil;
+    }
+    
     if (0 == section) {
         return nil;
     }
@@ -173,7 +183,7 @@
             [header.contentView addSubview:self.refuseBT];
             
             [self.refuseBT setTitle:@"审核不通过" forState:0];
-            [self.refuseBT addTarget:self action:@selector(pushSuccessVC) forControlEvents:64];
+            [self.refuseBT addTarget:self action:@selector(refuseAction:) forControlEvents:64];
             [self.refuseBT mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.mas_equalTo(cellSpaceOffset);
                 make.left.mas_equalTo(self.passBT.mas_right).offset(cellSpaceOffset);
@@ -191,10 +201,82 @@
 
 - (void)pushSuccessVC {
     
+    __weak typeof(self) weakSelf = self;
+    
+    NSDictionary *params = @{
+                             @"userid" : @(self.model.ID),
+                             @"operatorid" : @([CPUserInfoModel shareInstance].loginModel.ID),
+                             @"operatorname" : [CPUserInfoModel shareInstance].loginModel.linkname
+                             }.copy;
+
+    [CPBaseModel modelRequestWith:@"http://leshouzhan.platline.com/api/user/updateUserCheck"
+                       parameters:params
+                            block:^(id result) {
+                                [weakSelf handleCheckPassBlock:result];
+                            } fail:^(CPError *error) {
+                                
+                            }];
+    
+}
+
+- (void)handleCheckPassBlock:(CPBaseModel *)result {
+
     CPSuccessVC *vc = [[CPSuccessVC alloc] init];
     
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+- (void)refuseAction:(id)sender  {
+    
+    __weak typeof(self) weakSelf = self;
+    
+    NSDictionary *params = @{
+                             @"userid" : @(self.model.ID)
+                             }.copy;
+    
+    [CPBaseModel modelRequestWith:@"http://leshouzhan.platline.com/api/user/unUserCheck"
+                       parameters:params
+                            block:^(id result) {
+                                [weakSelf handleCheckPassBlock:result];
+                            } fail:^(CPError *error) {
+                                
+                            }];
+}
+
+- (void)handleRefuseBlock:(CPBaseModel *)result {
+    
+    [self.view makeToast:result.msg duration:1.0f position:CSToastPositionCenter];
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)loadData {
+    
+    DDLogInfo(@"------------------------------");
+    
+    __weak typeof(self) weakSelf = self;
+    
+    [CPUserDetailInfoModel modelRequestWith:@"http://leshouzhan.platline.com/api/user/getDetailUserInfo"
+                                 parameters:@{@"userid" : self.userID}//@([CPUserInfoModel shareInstance].loginModel.ID)}
+                                      block:^(CPUserDetailInfoModel *result) {
+                                          [weakSelf handleLoadDataSuccessBlock:result];
+                                      } fail:^(NSError *error) {
+                                          
+                                      }];
+}
+
+- (void)handleLoadDataSuccessBlock:(CPUserDetailInfoModel *)result {
+    
+    if (!result || ![result isKindOfClass:[CPUserDetailInfoModel class]]) {
+        
+        [self.view makeToast:result.msg duration:1.0f position:CSToastPositionCenter];
+        
+        return;
+    }
+    
+    self.model = result;
+    
+    [self.dataTableView reloadData];
+}
 
 @end

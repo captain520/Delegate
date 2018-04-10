@@ -15,16 +15,17 @@
 - (void)setupUI {
    
     {
-        dateLB      = [CPLabel new];
-        dateLB.text = @"2018-12-13";
-        dateLB.font = CPBoldFont_M;
+        dateLB               = [CPLabel new];
+        dateLB.text          = @"2018-12-13";
+        dateLB.font          = CPBoldFont_M;
+        dateLB.lineBreakMode = NSLineBreakByClipping;
 
         [self.contentView addSubview:dateLB];
         [dateLB mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(0);
             make.left.mas_equalTo(cellSpaceOffset);
             make.bottom.mas_equalTo(0);
-//            make.height.mas_equalTo(CELL_HEIGHT_F);
+            make.width.mas_equalTo(80);
         }];
     }
     
@@ -85,6 +86,23 @@
 //            make.bottom.mas_equalTo(self.contentView.mas_bottom);
 //        }];
 //    }
+}
+
+- (void)setModel:(CPRewardDataModel *)model {
+    _model = model;
+    
+    dateLB.text = _model.createtime;
+    dealAmountLB.text = [NSString stringWithFormat:@"交易金额：¥%.2f",_model.total_price];
+    rewardAmountLB.text = [NSString stringWithFormat:@"返佣金额：¥%.2f",_model.distribution_price];
+}
+
+- (void)setDataModel:(CPRetrieveOrderDataModel *)dataModel {
+    
+    _dataModel = dataModel;
+    
+    dateLB.text = _dataModel.createtime;
+    dealAmountLB.text = [NSString stringWithFormat:@"交易机器数量：%ld",_dataModel.number];
+    rewardAmountLB.text = [NSString stringWithFormat:@"交易金额：¥%.2f",_dataModel.total_price];
 }
 
 @end

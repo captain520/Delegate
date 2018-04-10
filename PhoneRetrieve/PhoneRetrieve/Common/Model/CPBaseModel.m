@@ -74,7 +74,7 @@
                     return;
                 }
 
-                if ([dictObject.allKeys containsObject:@"totalprice"]) {
+                if ([dictObject.allKeys containsObject:@"totalprice"] || [dictObject.allKeys containsObject:@"total"]) {
                     DDLogInfo(@"------------------------------需要结构体");
                     !successBlock ? : successBlock([[self class] mj_objectWithKeyValues:dictObject]);
                     return;

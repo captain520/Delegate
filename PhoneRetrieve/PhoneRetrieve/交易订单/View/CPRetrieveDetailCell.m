@@ -89,4 +89,24 @@
 
 }
 
+
+#pragma mark - setterr && getter
+
+- (void)setModel:(CPRetrieveOrderInfoModel *)model {
+    _model = model;
+    
+    orderNoLB.text    = [NSString stringWithFormat:@"评估单号：%@",_model.resultno];
+    deviceNameLB.text = [NSString stringWithFormat:@"%@(%@)",_model.brandname,_model.Typename];
+    priceuLB.text     = [NSString stringWithFormat:@"评估价格：¥：%.2f",_model.price];
+    shopNameLB.text   = [NSString stringWithFormat:@"门店名称：%@",_model.doorname];
+    
+    if (self.type == CPRetrieveOrderListTypeSuccess) {
+        statesLB.text = @"已回收";
+        statesLB.textColor = MainColor;
+    } else if (self.type == CPRetrieveOrderListTypeFail) {
+        statesLB.text = @"已失效";
+        statesLB.textColor = CPWARNING_COLOR;
+    }
+}
+
 @end

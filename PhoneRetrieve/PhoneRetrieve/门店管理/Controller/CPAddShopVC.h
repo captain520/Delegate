@@ -10,4 +10,8 @@
 
 @interface CPAddShopVC : CPBaseTableVC
 
+@property (nonatomic, assign) NSUInteger type;  //  0: add 1: edit
+@property (nonatomic,assign)  NSInteger ID;
+
+
 @end

@@ -11,8 +11,11 @@
 #import "CPRewardHeader.h"
 #import "CPOrderDetailVC.h"
 #import "CPOrderSearchVC.h"
+#import "CPRewardModel.h"
+#import "CPConsignResultVC.h"
 
 @interface CPShopRewardListVC ()
+
 
 @end
 
@@ -26,7 +29,7 @@
                        @[@"",@"",@""],
                        @[@"",@"",@""]
                        ];
-
+    
     [self setupUI];
     [self loadData];
 }
@@ -38,6 +41,17 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return self.models.count;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
+    CPRewardDataModel* rewardModel = self.models[section];
+    
+    return [rewardModel.info count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -58,6 +72,9 @@
         cell.clipsToBounds = YES;
     }
     
+    CPRewardDataModel* rewardModel = self.models[indexPath.section];
+    cell.model =  rewardModel.info[indexPath.row];
+
     return cell;
 }
 
@@ -75,6 +92,8 @@
         header.contentView.backgroundColor = UIColor.whiteColor;
     }
     
+    header.model = self.models[section];
+    
     return header;
 }
 
@@ -82,10 +101,19 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    CPOrderDetailVC *vc = [[CPOrderDetailVC alloc] init];
-    vc.orderID = @"319";
+    CPRewardDataModel* rewardModel = self.models[indexPath.section];
+    CPRewardInfoModel *infoModel =  rewardModel.info[indexPath.row];
+    
+    CPConsignResultVC *vc = [[CPConsignResultVC alloc] init];
+    vc.ID = infoModel.orderid;
+    vc.title = @"交易订单详情";
     
     [self.navigationController pushViewController:vc animated:YES];
+    
+//    CPOrderDetailVC *vc = [[CPOrderDetailVC alloc] init];
+//    vc.orderID = @"319";
+//
+//    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark -  返佣查询
@@ -97,6 +125,45 @@
     
     [self.navigationController pushViewController:searchVC animated:YES];
     
+}
+
+- (void)loadData {
+    
+    __weak typeof(self) weakSelf = self;
+    
+    NSDictionary *params = @{
+                             @"code" : @([CPUserInfoModel shareInstance].loginModel.ID),
+                             @"pagesize" : @"20",
+                             @"currentpage" : @(self.currentPageIndex)
+                             };
+
+    [CPRewardModel modelRequestWith:@"http://leshouzhan.platline.com/api/Distributionorder/getDistributionList"
+                       parameters:params
+                            block:^(CPRewardModel *result) {
+                                [weakSelf handleLoadDataSuccessBlock:result];
+                            } fail:^(CPError *error) {
+                                
+                            }];
+}
+
+- (void)handleLoadDataSuccessBlock:(CPRewardModel *)result {
+    
+
+    if (!result.data || ![result isKindOfClass:[CPRewardModel class]]|| ![result.data isKindOfClass:[NSArray class]]) {
+        [self.models removeAllObjects];
+    } else {
+        [self.models addObjectsFromArray:result.data];
+    }
+    
+    if (self.models.count >= result.total) {
+        [self.dataTableView.mj_header endRefreshing];
+        [self.dataTableView.mj_footer endRefreshingWithNoMoreData];
+    } else {
+        [self.dataTableView.mj_header endRefreshing];
+        [self.dataTableView.mj_footer endRefreshing];
+    }
+
+    [self.dataTableView reloadData];
 }
 
 @end

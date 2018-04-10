@@ -145,4 +145,16 @@
     }
 }
 
+- (void)setModel:(CPUserDetailInfoModel *)model {
+    _model = model;
+    
+    shopNameLB.text    = [NSString stringWithFormat:@"门店名称：%@",_model.companyname];
+    shopAddressLB.text = cp_jointString(@"门店地址：",_model.address);
+    nameLB.text        = cp_jointString(@"联系人：和平",_model.linkname);
+    phoneLB.text       = cp_jointString(@"联系电话：", _model.phone);
+    [licenseIV sd_setImageWithURL:CPUrl(_model.licenseurl) placeholderImage:nil];
+    [IDFrontIV sd_setImageWithURL:CPUrl(_model.idcard1url) placeholderImage:nil];
+    [IDBackIV sd_setImageWithURL:CPUrl(_model.idcard2url) placeholderImage:nil];
+}
+
 @end

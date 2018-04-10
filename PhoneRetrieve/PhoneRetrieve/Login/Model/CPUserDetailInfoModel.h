@@ -34,9 +34,9 @@
 
 @property (nonatomic, copy) NSString *idcard1url;
 
-@property (nonatomic, assign) NSInteger provinceid;
+@property (nonatomic, copy) NSString *provinceid;
 
-@property (nonatomic, assign) NSInteger cityid;
+@property (nonatomic, copy) NSString *cityid;
 
 @property (nonatomic, copy) NSString *email;
 
@@ -52,7 +52,7 @@
 
 @property (nonatomic, copy) NSString *aliname;
 
-@property (nonatomic, assign) NSInteger districtid;
+@property (nonatomic, copy) NSString *districtid;
 
 @property (nonatomic, assign) NSInteger Typeid;
 
@@ -63,6 +63,10 @@
 @property (nonatomic, copy) NSString *address;
 
 @property (nonatomic, copy) NSString *wxnum;
+
+@property (nonatomic, copy) NSString *province;
+@property (nonatomic, copy) NSString *city;
+@property (nonatomic, copy) NSString *district;
 
 @end
 

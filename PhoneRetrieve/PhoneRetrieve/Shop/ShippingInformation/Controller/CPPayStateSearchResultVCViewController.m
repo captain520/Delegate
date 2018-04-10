@@ -134,9 +134,9 @@
         [header.contentView addSubview:cell];
     }
     
-    cell.title = [NSString stringWithFormat:@"总计:%ld项",self.payStateOrderModel.total];
-    NSString *priceStr = [NSString stringWithFormat:@"¥%ld",self.payStateOrderModel.totalprice];
-    cell.detailTextLabel.attributedText = cp_commonRedAttr(@"总金额: ",priceStr);
+//    cell.title = [NSString stringWithFormat:@"总计:%ld项",self.payStateOrderModel.total];
+//    NSString *priceStr = [NSString stringWithFormat:@"¥%ld",self.payStateOrderModel.totalprice];
+//    cell.detailTextLabel.attributedText = cp_commonRedAttr(@"总金额: ",priceStr);
     
     return header;
 }

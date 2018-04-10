@@ -8,6 +8,7 @@
 
 #import "CPBaseCell.h"
 #import "CPMemeberListModel.h"
+#import "CPMemberManagerModel.h"
 
 typedef NS_ENUM(NSUInteger, CPAssistantInfoCellActionType) {
    CPAssistantInfoCellActionTypeDetail = 9527,
@@ -19,6 +20,6 @@ typedef NS_ENUM(NSUInteger, CPAssistantInfoCellActionType) {
 
 @property (nonatomic, copy) void (^actionBlock)(CPAssistantInfoCellActionType actionType);
 
-@property (nonatomic, strong) CPMemeberListModel *model;
+@property (nonatomic, strong) CPMemberManagerDataModel *model;
 
 @end

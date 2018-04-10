@@ -271,7 +271,10 @@
                            @[result.goodsname,result.price],
                            @[self.itemDatas],
                            @[@""],
-                           @[@"扣除金额：",@"扣除明细:"],
+                           @[
+                               [NSString stringWithFormat:@"¥%.2f",result.lossprice],
+                               cp_noEmptyString(result.Description)
+                               ],
                            @[result.customname ? result.customname : @"--",
                              result.customphone ? result.customphone : @"--",
                              result.customphone ? result.customimei : @"--"

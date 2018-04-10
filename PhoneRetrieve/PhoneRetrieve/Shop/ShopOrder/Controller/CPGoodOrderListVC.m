@@ -133,9 +133,9 @@
         [header.contentView addSubview:cell];
     }
     
-    cell.title = [NSString stringWithFormat:@"总计:%ld项",self.result.total];
-    NSString *priceStr = [NSString stringWithFormat:@"¥%ld",self.result.totalprice];
-    cell.detailTextLabel.attributedText = cp_commonRedAttr(@"总金额: ",priceStr);
+//    cell.title = [NSString stringWithFormat:@"总计:%ld项",self.result.total];
+//    NSString *priceStr = [NSString stringWithFormat:@"¥%ld",self.result.totalprice];
+//    cell.detailTextLabel.attributedText = cp_commonRedAttr(@"总金额: ",priceStr);
     
     return header;
 //    NSString *headerIdentify = @"headerIdentify";
@@ -223,15 +223,15 @@
     
     self.result = result;
     
-    if (!result || result.total == 0 ) {
-        self.models = nil;
-    } else {
-        self.models = result.cp_data;
-    }
-
-    [self.dataTableView reloadData];
-    
-    [self setupUI];
+//    if (!result || result.total == 0 ) {
+//        self.models = nil;
+//    } else {
+//        self.models = result.cp_data;
+//    }
+//
+//    [self.dataTableView reloadData];
+//
+//    [self setupUI];
 }
 
 - (void)back2Top:(id)sender {

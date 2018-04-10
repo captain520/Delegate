@@ -7,9 +7,12 @@
 //
 
 #import "CPBaseTableVC.h"
+#import "CPUserDetailInfoModel.h"
 
 @interface CPRemittanceInfoTBVC : CPBaseTableVC
 
 @property (nonatomic, assign) CPRegistType registType;
+
+@property (nonatomic,strong) CPUserDetailInfoModel *userDetailModel;
 
 @end

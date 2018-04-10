@@ -256,4 +256,21 @@
 
 }
 
+- (void)setModel:(CPUserDetailInfoModel *)model {
+    
+    _model = model;
+    
+    carOwnerLB.text       = cp_jointString(@"收款人：", _model.bname);
+    carNumLB.text         = cp_jointString(@"银行卡号：", _model.banknum);
+    bankNameLB.text       = cp_jointString(@"开忘银行：", _model.bankname);
+    bankBranchNameLB.text = cp_jointString(@"开户银行支行：", _model.bankbranch);
+
+    aliNameLB.text        = cp_jointString(@"账号名：", _model.aliname);
+    aliAccountLB.text     = cp_jointString(@"支付宝账号：", _model.alinum);
+
+    wxNameLB.text         = cp_jointString(@"账号名：", _model.wxname);
+    wxAccountLB.text      = cp_jointString(@"微信账号：", _model.wxnum);
+    
+}
+
 @end

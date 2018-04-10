@@ -7,7 +7,10 @@
 //
 
 #import "CPBaseCell.h"
+#import "CPUserDetailInfoModel.h"
 
 @interface CPPayInfoCell : CPBaseCell
+
+@property (nonatomic, strong) CPUserDetailInfoModel *model;
 
 @end

@@ -144,6 +144,12 @@
 		9C5E27802024609C003E32E7 /* CPRegisterTypeListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C5E277F2024609C003E32E7 /* CPRegisterTypeListVC.m */; };
 		9C5E2783202462C1003E32E7 /* CPButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C5E2782202462C1003E32E7 /* CPButton.m */; };
 		9C5E278620246A29003E32E7 /* CPShopRegistLoginVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C5E278520246A29003E32E7 /* CPShopRegistLoginVC.m */; };
+		9C67F2382079F30D001EDF9D /* CPRewardModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C67F2372079F30D001EDF9D /* CPRewardModel.m */; };
+		9C67F244207AF873001EDF9D /* CPDealOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C67F243207AF873001EDF9D /* CPDealOrderModel.m */; };
+		9C67F247207B006A001EDF9D /* CPDeductDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C67F246207B006A001EDF9D /* CPDeductDetailModel.m */; };
+		9C67F24D207B09DB001EDF9D /* CPRetireveOrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C67F24C207B09DB001EDF9D /* CPRetireveOrderModel.m */; };
+		9C67F250207B1766001EDF9D /* CPMemberManagerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C67F24F207B1766001EDF9D /* CPMemberManagerModel.m */; };
+		9C67F25A207B6329001EDF9D /* CPChangeUserBaseInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C67F259207B6329001EDF9D /* CPChangeUserBaseInfoVC.m */; };
 		9C7F64AE204D0E170029B193 /* CPLoginModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C7F64AD204D0E170029B193 /* CPLoginModel.m */; };
 		9C81F390202C1D4000837D96 /* CPAssistantInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C81F38F202C1D4000837D96 /* CPAssistantInfoCell.m */; };
 		9C81F393202C277800837D96 /* CPAssistantEditVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C81F392202C277800837D96 /* CPAssistantEditVC.m */; };
@@ -457,6 +463,18 @@
 		9C5E2782202462C1003E32E7 /* CPButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPButton.m; sourceTree = "<group>"; };
 		9C5E278420246A29003E32E7 /* CPShopRegistLoginVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPShopRegistLoginVC.h; sourceTree = "<group>"; };
 		9C5E278520246A29003E32E7 /* CPShopRegistLoginVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPShopRegistLoginVC.m; sourceTree = "<group>"; };
+		9C67F2362079F30D001EDF9D /* CPRewardModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPRewardModel.h; sourceTree = "<group>"; };
+		9C67F2372079F30D001EDF9D /* CPRewardModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPRewardModel.m; sourceTree = "<group>"; };
+		9C67F242207AF873001EDF9D /* CPDealOrderModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPDealOrderModel.h; sourceTree = "<group>"; };
+		9C67F243207AF873001EDF9D /* CPDealOrderModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPDealOrderModel.m; sourceTree = "<group>"; };
+		9C67F245207B006A001EDF9D /* CPDeductDetailModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPDeductDetailModel.h; sourceTree = "<group>"; };
+		9C67F246207B006A001EDF9D /* CPDeductDetailModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPDeductDetailModel.m; sourceTree = "<group>"; };
+		9C67F24B207B09DB001EDF9D /* CPRetireveOrderModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPRetireveOrderModel.h; sourceTree = "<group>"; };
+		9C67F24C207B09DB001EDF9D /* CPRetireveOrderModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPRetireveOrderModel.m; sourceTree = "<group>"; };
+		9C67F24E207B1766001EDF9D /* CPMemberManagerModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPMemberManagerModel.h; sourceTree = "<group>"; };
+		9C67F24F207B1766001EDF9D /* CPMemberManagerModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPMemberManagerModel.m; sourceTree = "<group>"; };
+		9C67F258207B6329001EDF9D /* CPChangeUserBaseInfoVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPChangeUserBaseInfoVC.h; sourceTree = "<group>"; };
+		9C67F259207B6329001EDF9D /* CPChangeUserBaseInfoVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPChangeUserBaseInfoVC.m; sourceTree = "<group>"; };
 		9C7F64AC204D0E170029B193 /* CPLoginModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPLoginModel.h; sourceTree = "<group>"; };
 		9C7F64AD204D0E170029B193 /* CPLoginModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPLoginModel.m; sourceTree = "<group>"; };
 		9C81F38E202C1D4000837D96 /* CPAssistantInfoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPAssistantInfoCell.h; sourceTree = "<group>"; };
@@ -582,6 +600,7 @@
 		9C07033C202404520080856C /* PhoneRetrieve */ = {
 			isa = PBXGroup;
 			children = (
+				9C67F251207B5A65001EDF9D /* 账号管理 */,
 				9C4C71602074BA71001C5D92 /* 扣除明细 */,
 				9C4C71532074A7C8001C5D92 /* 交易订单 */,
 				9C11495A2073290C00BBFABF /* 门店管理 */,
@@ -628,6 +647,8 @@
 		9C11494F2073110200BBFABF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				9C67F2362079F30D001EDF9D /* CPRewardModel.h */,
+				9C67F2372079F30D001EDF9D /* CPRewardModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -656,6 +677,8 @@
 		9C11495B2073290C00BBFABF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				9C9ED922202AABB900532826 /* CPAssistantManagerVC.h */,
+				9C9ED923202AABB900532826 /* CPAssistantManagerVC.m */,
 				9C11495E207342DC00BBFABF /* CPAddShopVC.h */,
 				9C11495F207342DC00BBFABF /* CPAddShopVC.m */,
 				9C1149612073508500BBFABF /* CPShopCheckVC.h */,
@@ -667,6 +690,8 @@
 		9C11495C2073290C00BBFABF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				9C67F24E207B1766001EDF9D /* CPMemberManagerModel.h */,
+				9C67F24F207B1766001EDF9D /* CPMemberManagerModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -796,6 +821,10 @@
 		9C4C71552074A7C8001C5D92 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				9C67F242207AF873001EDF9D /* CPDealOrderModel.h */,
+				9C67F243207AF873001EDF9D /* CPDealOrderModel.m */,
+				9C67F24B207B09DB001EDF9D /* CPRetireveOrderModel.h */,
+				9C67F24C207B09DB001EDF9D /* CPRetireveOrderModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -833,6 +862,8 @@
 		9C4C71622074BA71001C5D92 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				9C67F245207B006A001EDF9D /* CPDeductDetailModel.h */,
+				9C67F246207B006A001EDF9D /* CPDeductDetailModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -876,8 +907,6 @@
 				9C1A1F972048E44D00CA23C8 /* CPAssistantDetailVC.m */,
 				9C81F391202C277800837D96 /* CPAssistantEditVC.h */,
 				9C81F392202C277800837D96 /* CPAssistantEditVC.m */,
-				9C9ED922202AABB900532826 /* CPAssistantManagerVC.h */,
-				9C9ED923202AABB900532826 /* CPAssistantManagerVC.m */,
 				9CCE37822046593200DBF147 /* CPConsignDetailVC.h */,
 				9CCE37832046593200DBF147 /* CPConsignDetailVC.m */,
 				9CCE378E204691A100DBF147 /* CPConsignResultVC.h */,
@@ -1270,6 +1299,39 @@
 			path = Category;
 			sourceTree = "<group>";
 		};
+		9C67F251207B5A65001EDF9D /* 账号管理 */ = {
+			isa = PBXGroup;
+			children = (
+				9C67F252207B5A65001EDF9D /* Controller */,
+				9C67F253207B5A65001EDF9D /* Model */,
+				9C67F254207B5A65001EDF9D /* View */,
+			);
+			path = "账号管理";
+			sourceTree = "<group>";
+		};
+		9C67F252207B5A65001EDF9D /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9C67F258207B6329001EDF9D /* CPChangeUserBaseInfoVC.h */,
+				9C67F259207B6329001EDF9D /* CPChangeUserBaseInfoVC.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		9C67F253207B5A65001EDF9D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		9C67F254207B5A65001EDF9D /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		9CCE37972046ABA000DBF147 /* ShippingInformation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1523,6 +1585,7 @@
 				9C3774F62044F7050001B961 /* CPEvaluatedTypeHeader.m in Sources */,
 				9C1149562073124B00BBFABF /* CPRewardDetailCell.m in Sources */,
 				9C5C8B8D2029839D0053C50B /* CPShopMainActionView.m in Sources */,
+				9C67F25A207B6329001EDF9D /* CPChangeUserBaseInfoVC.m in Sources */,
 				9C9C74A62028247300B1CF66 /* CPCheckBox.m in Sources */,
 				9C9C74AF2028527400B1CF66 /* CPShopRegistInfoTBVC.m in Sources */,
 				9C5E274820240983003E32E7 /* CPBaseCell.m in Sources */,
@@ -1553,6 +1616,7 @@
 				9C5C8B6E20294A930053C50B /* CPRemittanceInfoTBVC.m in Sources */,
 				9C5E274320240983003E32E7 /* CPPickerCell.m in Sources */,
 				9CCE377E204647BA00DBF147 /* CPOrderActionView.m in Sources */,
+				9C67F247207B006A001EDF9D /* CPDeductDetailModel.m in Sources */,
 				9C0D95F2204E5DF500834B90 /* CPUserDetailInfoModel.m in Sources */,
 				9C5CFCCD2050DCC90053369F /* CPGoodTypeModel.m in Sources */,
 				9C3774F02044EAC80001B961 /* CPEvaluatedPriceVC.m in Sources */,
@@ -1567,6 +1631,7 @@
 				9C3774F92044F7330001B961 /* CPHeaderFooter.m in Sources */,
 				9C07034D202404520080856C /* main.m in Sources */,
 				9C5E276F20240DC6003E32E7 /* CPTestModel.m in Sources */,
+				9C67F2382079F30D001EDF9D /* CPRewardModel.m in Sources */,
 				9C5C8B7120296DAF0053C50B /* CPAssistantRegisterVC.m in Sources */,
 				9C5CFCDD205138BC0053369F /* CPNavView.m in Sources */,
 				9C5CFCC52050C4B50053369F /* CPHomeAdvModel.m in Sources */,
@@ -1577,12 +1642,14 @@
 				9C16EAC5204D2781007BE6FE /* CPRegistParam.m in Sources */,
 				9C56A1A02043A840009838B8 /* CPSearchVC.m in Sources */,
 				9C1A1F8F2047975300CA23C8 /* CPOrderCell.m in Sources */,
+				9C67F250207B1766001EDF9D /* CPMemberManagerModel.m in Sources */,
 				9C1A1F922047CB6C00CA23C8 /* CPHomeLeftBarItem.m in Sources */,
 				9C37752520457E2E0001B961 /* CPModifyShopInfoVC.m in Sources */,
 				9C37750E204536540001B961 /* CPTitleDetailCell.m in Sources */,
 				9C5E274120240983003E32E7 /* CPCollectionView.m in Sources */,
 				9C9C74A32027FEBC00B1CF66 /* CPRegistStepView.m in Sources */,
 				9C4F8EC8206F63F100873192 /* CPShippingListPageModel.m in Sources */,
+				9C67F24D207B09DB001EDF9D /* CPRetireveOrderModel.m in Sources */,
 				9C1A1F982048E44D00CA23C8 /* CPAssistantDetailVC.m in Sources */,
 				9C56A1A62043B379009838B8 /* CPShopGoodsListVC.m in Sources */,
 				9CDD9305205F937A0072A6C1 /* CPAssistanteOrderDetailModel.m in Sources */,
@@ -1627,6 +1694,7 @@
 				9C9ED91B202A95A000532826 /* CPShopHelpVC.m in Sources */,
 				9C19C2CC205F485700B00E3B /* CPRetrievePriceModel.m in Sources */,
 				9C5E277D20245D75003E32E7 /* CPSendCodeButton.m in Sources */,
+				9C67F244207AF873001EDF9D /* CPDealOrderModel.m in Sources */,
 				9C37752220455C3D0001B961 /* CPShopAccountManagerVC.m in Sources */,
 				9C5E274620240983003E32E7 /* CPResponderCell.m in Sources */,
 				9C5E276020240CB5003E32E7 /* CPBaseTableVC.m in Sources */,

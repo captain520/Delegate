@@ -7,7 +7,11 @@
 //
 
 #import "CPBaseCell.h"
+#import "CPDeductDetailModel.h"
 
 @interface CPDeductDetailCell : CPBaseCell
 
+@property (nonatomic, strong) CPDeductDetailInfoModel *model;
+
 @end
+

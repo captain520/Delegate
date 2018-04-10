@@ -11,6 +11,8 @@
 #import "CPRetrieveDetailCell.h"
 #import "CPOrderSearchVC.h"
 #import "CPOrderDetailVC.h"
+#import "CPDealOrderModel.h"
+#import "CPRetireveOrderModel.h"
 
 @interface CPRetrieveOrderListVC ()
 
@@ -37,11 +39,14 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 3;
+    return self.models.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    
+    CPRetrieveOrderDataModel *dataModel = self.models[section];
+
+    return dataModel.info.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -61,8 +66,10 @@
         //        cell.contentView.backgroundColor = tableView.backgroundColor;
     }
     
-    //    cell.model = self.models[indexPath.section];
-    
+    CPRetrieveOrderDataModel *dataModel = self.models[indexPath.section];
+    cell.type = self.type;
+    cell.model = dataModel.info[indexPath.row];
+
     return cell;
 }
 
@@ -80,6 +87,9 @@
         header.contentView.backgroundColor = UIColor.whiteColor;
     }
     
+    CPRetrieveOrderDataModel *dataModel = self.models[section];
+    header.dataModel = dataModel;
+
     return header;
 }
 
@@ -87,8 +97,11 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    CPRetrieveOrderDataModel *dataModel = self.models[indexPath.section];
+    CPRetrieveOrderInfoModel *infoModel = dataModel.info[indexPath.row];;
+    
     CPOrderDetailVC *vc = [[CPOrderDetailVC alloc] init];
-    vc.orderID = @"319";
+    vc.orderID =  infoModel.ID;
     
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -102,6 +115,57 @@
     
     [self.navigationController pushViewController:searchVC animated:YES];
     
+}
+
+- (void)loadData {
+    __weak typeof(self) weakSelf = self;
+    
+    NSDictionary *params = @{
+                             @"code" : @([CPUserInfoModel shareInstance].loginModel.ID),
+                             @"pagesize" : @"20",
+                             @"currentpage" : @(self.currentPageIndex)
+                             };
+    
+    NSString *requestUrl = nil;
+    if (self.type == CPRetrieveOrderListTypeSuccess) {
+        requestUrl = @"http://leshouzhan.platline.com/api/order/getRecyclingInformation";
+    } else if (self.type == CPRetrieveOrderListTypeFail) {
+        requestUrl = @"http://leshouzhan.platline.com/api/order/getFailureInformation";
+    } else {
+        
+    }
+    
+    [CPRetireveOrderModel modelRequestWith:requestUrl
+                         parameters:params
+                              block:^(CPRetireveOrderModel *result) {
+                                  [weakSelf handleLoadDataSuccessBlock:result];
+                              } fail:^(CPError *error) {
+                                  
+                              }];
+}
+
+- (void)handleLoadDataSuccessBlock:(CPRetireveOrderModel *)result {
+    
+    
+    if (!result.data ||
+        ![result isKindOfClass:[CPRetireveOrderModel class]] ||
+        ![result.data isKindOfClass:[NSArray class]]) {
+        
+        [self.models removeAllObjects];
+        
+    } else {
+        [self.models addObjectsFromArray:result.data];
+    }
+    
+    if (self.models.count >= result.total) {
+        [self.dataTableView.mj_header endRefreshing];
+        [self.dataTableView.mj_footer endRefreshingWithNoMoreData];
+    } else {
+        [self.dataTableView.mj_header endRefreshing];
+        [self.dataTableView.mj_footer endRefreshing];
+    }
+    
+    [self.dataTableView reloadData];
 }
 
 

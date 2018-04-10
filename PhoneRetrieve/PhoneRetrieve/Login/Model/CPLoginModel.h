@@ -40,5 +40,7 @@ typedef NS_ENUM(NSInteger,CPUserType) {
 
 @property (nonatomic, copy) NSString *cp_code;
 
+@property (nonatomic, assign) CGFloat totalcommission;
+
 @end
 

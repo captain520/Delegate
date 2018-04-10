@@ -73,39 +73,17 @@
             make.right.mas_equalTo(-cellSpaceOffset);
         }];
     }
-    return;
-    
-    
-    
 
-    
-    {
-        resultLB = [CPLabel new];
-        resultLB.text = @"实际返佣：¥20.12";
-        resultLB.textColor = CPERROR_COLOR;
-        
-        [self.contentView addSubview:rewardAmountLB];
-        [rewardAmountLB mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(shopNameLB.mas_top);
-            make.left.mas_equalTo(dealAmountLB.mas_right).offset(cellSpaceOffset);
-            make.height.mas_equalTo(shopNameLB.mas_height);
-            make.width.mas_equalTo(shopNameLB.mas_width);
-        }];
-    }
-    
-    {
-        deviceNameLB = [CPLabel new];
-        deviceNameLB.text = @"iPhone 5s Plus (手机)";
-        
-        [self.contentView addSubview:deviceNameLB];
-        [deviceNameLB mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(shopNameLB.mas_bottom);
-            make.left.mas_equalTo(shopNameLB.mas_left);
-            make.height.mas_equalTo(SMALL_CELL_HEIGHT_F);
-        }];
-    }
-    
+}
 
+- (void)setModel:(CPRewardInfoModel *)model {
+    
+    _model = model;
+    
+    orderNoLB.text = [NSString stringWithFormat:@"交易订单：%@",_model.ordersn];
+    shopNameLB.text = [NSString stringWithFormat:@"门店名称：%@",_model.doorname];
+    dealAmountLB.text = [NSString stringWithFormat:@"交易金额：¥%.2f",_model.totalprice];
+    rewardAmountLB.text = [NSString stringWithFormat:@"返佣金额：¥%.2f",_model.price];
 }
 
 @end

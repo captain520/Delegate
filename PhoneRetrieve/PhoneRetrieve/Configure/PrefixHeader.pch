@@ -40,7 +40,19 @@ typedef NS_ENUM(NSUInteger, CPRegistType) {
     CPRegistTypeShop,
     CPRegistTypeAssistant,
     CPRegistTypeCompanyDelegate,
-    CPRegistTypePersonalDelegate
+    CPRegistTypePersonalDelegate,
+    CPRegistTypePersonalAddShop,
+    CPRegistTypePersonalEditShop
+};
+
+typedef NS_ENUM(NSUInteger, CPRetrieveOrderListType) {
+    CPRetrieveOrderListTypeSuccess,
+    CPRetrieveOrderListTypeFail
+};
+
+typedef NS_ENUM(NSUInteger, CPShopCheckType) {
+    CPShopCheckTypeDetail,
+    CPShopCheckTypeCheck
 };
 
 #ifdef DEBUG
@@ -84,7 +96,7 @@ static const int ddLogLevel = DDLogLevelError;
 #define SMALL_CELL_HEIGHT_F (20.0f)
 #define CPTOP_BOTTOM_OFFSET_F   (4.0F)
 
-#define CPBoardWidth        (0.25f)
+#define CPBoardWidth        (0.5f)
 #define CPBASETAG           (9527)
 
 #define NAV_HEIGHT   (44.0f + [UIApplication sharedApplication].statusBarFrame.size.height)

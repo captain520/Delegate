@@ -10,6 +10,7 @@
 #import "CPPhotoUploadBT.h"
 #import "TZImagePickerController.h"
 #import "CPRemittanceInfoTBVC.h"
+#import "CPUserDetailInfoModel.h"
 
 @interface CPAddShopVC ()<CPSelectTextFieldDelegat>
 
@@ -20,6 +21,8 @@
 @property (nonatomic, strong) NSArray  *proviceArray, *cityArray, *areaArray;
 @property (nonatomic, strong) CPProviceCityAreaModel *cityModel, *proviceModel, *areaModel;
 
+@property (nonatomic, strong) CPUserDetailInfoModel *model;
+
 @end
 
 @implementation CPAddShopVC
@@ -28,6 +31,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    [self.dataTableView reloadData];
+    
     [self loadProvice];
     [self loadData];
 }
@@ -35,6 +40,12 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [self.shopNameTF becomeFirstResponder];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -66,9 +77,8 @@
             self.shopNameTF.placeholder = @"门店名称";
             self.shopNameTF.borderStyle = UITextBorderStyleRoundedRect;
             //        self.shopNameTF.keyboardType = UIKeyboardTypeNumberPad;
-            
+
             [cell.contentView addSubview:self.shopNameTF];
-            
             [self.shopNameTF mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.mas_equalTo(cellSpaceOffset);
                 make.left.mas_equalTo(cellSpaceOffset);
@@ -330,6 +340,24 @@
         }
     }
     
+    if (self.model) {
+        self.shopNameTF.text            = self.model.companyname;
+        self.proviceTF.text             = self.model.province;
+        self.cityTF.text                = self.model.city;
+        self.areaTF.text                = self.model.district;
+        self.shopAddressTF.text         = self.model.address;
+        self.shopOwnerTF.text           = self.model.linkname;
+        self.shopPhoneTF.text           = self.model.phone;
+        self.shopEmailT.text            = self.model.email;
+        self.businessLicenseBT.imageUrl = self.model.licenseurl;
+        self.IDFrontBT.imageUrl         = self.model.idcard1url;
+        self.IDBackBT.imageUrl          = self.model.idcard2url;
+        
+        [self.businessLicenseBT sd_setImageWithURL:CPUrl(self.model.licenseurl) forState:0];
+        [self.IDFrontBT sd_setImageWithURL:CPUrl(self.model.idcard1url) forState:0];
+        [self.IDBackBT sd_setImageWithURL:CPUrl(self.model.idcard2url) forState:0];
+    }
+
     return cell;
 }
 
@@ -355,6 +383,7 @@
         self.areaModel = model;
     }
     
+    [self handleImagePickImageBlock];
 }
 
 #pragma mark - private method
@@ -407,8 +436,27 @@
 - (void)nextAction:(id)sender {
     DDLogInfo(@"%s------------------------------",__FUNCTION__);
     
+    [CPRegistParam shareInstance].phone = self.shopPhoneTF.text;
+    [CPRegistParam shareInstance].companyname = self.shopNameTF.text;
+    [CPRegistParam shareInstance].provinceid = self.proviceModel.Code ? self.proviceModel.Code : self.model.provinceid;
+    [CPRegistParam shareInstance].cityid = self.cityModel.Code ? self.cityModel.Code : self.model.cityid;
+    [CPRegistParam shareInstance].districtid = self.areaModel.Code ? self.areaModel.Code : self.model.districtid;
+    [CPRegistParam shareInstance].address = self.shopAddressTF.text;
+    [CPRegistParam shareInstance].linkname = self.shopOwnerTF.text;
+    [CPRegistParam shareInstance].email = self.shopEmailT.text;
+    [CPRegistParam shareInstance].licenseurl = self.businessLicenseBT.imageUrl;
+    [CPRegistParam shareInstance].idcard1url = self.IDFrontBT.imageUrl;
+    [CPRegistParam shareInstance].idcard2url = self.IDBackBT.imageUrl;
+
     CPRemittanceInfoTBVC *vc = [[CPRemittanceInfoTBVC alloc] init];
-    
+    if (self.type == 0) {
+        vc.registType = CPRegistTypePersonalAddShop;
+    } else if (self.type == 1) {
+        vc.registType = CPRegistTypePersonalEditShop;
+        vc.userDetailModel = self.model;
+        vc.title = @"编辑门店收款账号";
+    }
+
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -483,6 +531,41 @@
     self.areaTF.dataArray = self.areaArray;
 }
 
+- (void)loadData {
+    if (self.type == 0) {
+        [self.dataTableView reloadData];
+    } else if (self.type == 1) {
+        [self loadUserDetail];
+    }
+}
 
+- (void)loadUserDetail {
+    
+    DDLogInfo(@"------------------------------");
+    
+    __weak typeof(self) weakSelf = self;
+    
+    [CPUserDetailInfoModel modelRequestWith:@"http://leshouzhan.platline.com/api/user/getDetailUserInfo"
+                                 parameters:@{@"userid" : @(self.ID)}
+                                      block:^(CPUserDetailInfoModel *result) {
+                                          [weakSelf handleLoadDataSuccessBlock:result];
+                                      } fail:^(NSError *error) {
+                                          
+                                      }];
+}
+
+- (void)handleLoadDataSuccessBlock:(CPUserDetailInfoModel *)result {
+    
+    if (!result || ![result isKindOfClass:[CPUserDetailInfoModel class]]) {
+        
+        [self.view makeToast:result.msg duration:1.0f position:CSToastPositionCenter];
+        
+        return;
+    }
+    
+    self.model = result;
+    
+    [self.dataTableView reloadData];
+}
 
 @end

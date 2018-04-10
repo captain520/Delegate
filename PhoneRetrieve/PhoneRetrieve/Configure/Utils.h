@@ -59,4 +59,10 @@ NSString *cp_int2String(NSInteger value) ;
 ////  将对象转为jsonstring
 //NSString *cp_jsonString(id object) ;
 
+//  用空格替换nil
+NSString *cp_noEmptyString(NSString *value);
+
+//  将字符串a b 拼接组合
+NSString *cp_jointString(NSString *a, NSString *b);
+
 @end

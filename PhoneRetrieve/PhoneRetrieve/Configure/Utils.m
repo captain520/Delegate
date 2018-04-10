@@ -182,6 +182,15 @@ NSString *cp_int2String(NSInteger value) {
     return [NSString stringWithFormat:@"%ld",(long)value];
 }
 
+//  用空格替换nil
+NSString *cp_noEmptyString(NSString *value) {
+    return value ? value : @"";
+}
+
+//  将字符串a b 拼接组合
+NSString *cp_jointString(NSString *a, NSString *b) {
+    return [NSString stringWithFormat:@"%@%@",a,b];
+}
 
 ////  将对象转为jsonstring
 //

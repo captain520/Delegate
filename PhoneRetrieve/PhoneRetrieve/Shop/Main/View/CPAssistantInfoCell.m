@@ -9,7 +9,7 @@
 #import "CPAssistantInfoCell.h"
 
 @implementation CPAssistantInfoCell {
-    UILabel *shopNoLB, *shopNameLB, *nameLB, *phoneLB, *performanceLB;
+    UILabel *shopNoLB, *shopNameLB, *nameLB, *phoneLB, *performanceLB, *createTimeLB;
     
     UIButton *detailBT, *editBT, *deleteBT;
 }
@@ -95,21 +95,21 @@
             make.height.mas_equalTo(CELL_HEIGHT_F / 2);
         }];
     }
-//
-//    if (nil == performanceLB) {
-//        performanceLB = [UILabel new];
-//        performanceLB.font = CPFont_M;
-//        performanceLB.text = @"总业绩：¥168.00";
-//
-//        [self.contentView addSubview:performanceLB];
-//
-//        [performanceLB mas_makeConstraints:^(MASConstraintMaker *make) {
-//            make.top.mas_equalTo(orderCountLB.mas_bottom);
-//            make.left.mas_equalTo(cellSpaceOffset);
-//            make.right.mas_equalTo(-cellSpaceOffset);
-//            make.height.mas_equalTo(CELL_HEIGHT_F / 2);
-//        }];
-//    }
+
+    if (nil == createTimeLB) {
+        createTimeLB = [UILabel new];
+        createTimeLB.font = CPFont_M;
+        createTimeLB.text = @"创建时间：2018-03-04 19:03:21";
+
+        [self.contentView addSubview:createTimeLB];
+
+        [createTimeLB mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(phoneLB.mas_bottom);
+            make.left.mas_equalTo(cellSpaceOffset);
+            make.right.mas_equalTo(-cellSpaceOffset);
+            make.height.mas_equalTo(CELL_HEIGHT_F / 2);
+        }];
+    }
     
     UIView *sepline = [UIView new];
     sepline.backgroundColor = CPBoardColor;
@@ -117,7 +117,7 @@
     [self.contentView addSubview:sepline];
     
     [sepline mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(phoneLB.mas_bottom);
+        make.top.mas_equalTo(createTimeLB.mas_bottom).offset(CPTOP_BOTTOM_OFFSET_F);
         make.left.mas_equalTo(cellSpaceOffset);
         make.right.mas_equalTo(0);
         make.height.mas_equalTo(0.25f);
@@ -139,8 +139,9 @@
         [detailBT mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(sepline.mas_bottom).offset(cellSpaceOffset / 2);
             make.left.mas_equalTo(cellSpaceOffset);
-            make.bottom.mas_equalTo(0).offset(-cellSpaceOffset / 2);
+//            make.bottom.mas_equalTo(0).offset(-cellSpaceOffset / 2);
             make.width.mas_equalTo(80);
+            make.height.mas_equalTo(30.0f);
         }];
     }
     
@@ -158,8 +159,9 @@
         [deleteBT mas_makeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(detailBT.mas_top);
             make.right.mas_equalTo(-cellSpaceOffset);
-            make.bottom.mas_equalTo(detailBT.mas_bottom);
+//            make.bottom.mas_equalTo(detailBT.mas_bottom);
             make.width.mas_equalTo(50);
+            make.height.mas_equalTo(detailBT.mas_height);
         }];
     }
     
@@ -187,8 +189,15 @@
     !self.actionBlock ? : self.actionBlock(sender.tag);
 }
 
-- (void)setModel:(CPMemeberListModel *)model {
+- (void)setModel:(CPMemberManagerDataModel *)model {
     _model = model;
+    
+    shopNoLB.text     = cp_jointString(@"门店编号：",_model.Code);
+    shopNameLB.text   = cp_jointString(@"门店名称：",_model.companyname);
+    nameLB.text       = cp_jointString(@"联系人：",_model.linkname);
+    phoneLB.text      = cp_jointString(@"联系电话：", _model.phone);
+    createTimeLB.text = cp_jointString(@"创建时间：", _model.createtime);
+    
     
 //    numberLB.text = [NSString stringWithFormat:@"店员编号:%@",_model.Code];
 //    nameLB.text = [NSString stringWithFormat:@"姓名:%@",_model.linkname];

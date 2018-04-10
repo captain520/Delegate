@@ -7,7 +7,12 @@
 //
 
 #import "CPBaseCell.h"
+#import "CPRetireveOrderModel.h"
 
 @interface CPRetrieveDetailCell : CPBaseCell
+
+@property (nonatomic, strong) CPRetrieveOrderInfoModel *model;
+
+@property (nonatomic, assign) CPRetrieveOrderListType type;
 
 @end

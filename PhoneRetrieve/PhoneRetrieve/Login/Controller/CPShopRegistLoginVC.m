@@ -23,7 +23,7 @@
 @property (nonatomic, strong) UIButton *compayBT, *personalBT;
 
 @property (nonatomic, strong) CPTextField *shopCodeTF;
-@property (nonatomic, assign) NSInteger currentRegistType;
+@property (nonatomic, assign) CPRegistType currentRegistType;
 
 @end
 

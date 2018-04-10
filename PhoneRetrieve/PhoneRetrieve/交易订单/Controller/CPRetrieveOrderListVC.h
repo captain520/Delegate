@@ -8,6 +8,9 @@
 
 #import "CPRefreshTableVC.h"
 
+
 @interface CPRetrieveOrderListVC : CPRefreshTableVC
+
+@property (nonatomic, assign) CPRetrieveOrderListType type;
 
 @end

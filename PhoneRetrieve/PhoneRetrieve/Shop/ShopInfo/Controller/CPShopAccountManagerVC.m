@@ -13,6 +13,7 @@
 #import "CPShopAboutHeader.h"
 #import "CPLoginVC.h"
 #import "CPUserDetailInfoModel.h"
+#import "CPChangeUserBaseInfoVC.h"
 
 @interface CPShopAccountManagerVC ()<UIAlertViewDelegate>
 
@@ -26,16 +27,31 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.u
     
-    if ([CPUserInfoModel shareInstance].isShop) {
+    if (IS_SHOP) {
+//        self.dataArray = @[
+//                           @[@"门店名称:",
+//                             @"门店编号:",
+//                             @"门店负责人:",
+//                             @"手机号码:",
+//                             @"邮箱:"
+//                             ],
+//                           @[@"安全设置"],
+//                           @[@"门店信息"]
+//                           ];
+        
         self.dataArray = @[
-                           @[@"门店名称:",
-                             @"门店编号:",
-                             @"门店负责人:",
-                             @"手机号码:",
-                             @"邮箱:"
-                             ],
-                           @[@"安全设置"],
-                           @[@"门店信息"]
+                           @[
+                               @"账号信息:",
+                               @"商家负责人:",
+                               @"手机号码:",
+                               @"邮   箱:",
+                               @"地   址:"
+                               ],
+                           @[@"登陆密码"],
+                           @[
+                               //                               @"收款账号",
+                               @"收款方式"
+                               ],
                            ];
         
         self.tempDataArray = @[
@@ -51,12 +67,20 @@
                                @[@"更改收款方式(支付宝)"]
                                ];
     } else {
+        
         self.dataArray = @[
-                           @[@"店员名称:",
-                             @"店员编号:",
-                             @"手机号码:",
-                             ],
-                           @[@"登陆密码"]
+                           @[
+                               @"账号信息:",
+                               @"代理负责人:",
+                               @"手机号码:",
+                               @"邮   箱:",
+                               @"地   址:"
+                               ],
+                           @[@"登陆密码"],
+                           @[
+//                               @"收款账号",
+                               @"收款方式"
+                               ],
                            ];
         
         self.tempDataArray = @[
@@ -109,17 +133,23 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
-    if (IS_ASSISTANT && indexPath.section == 0 && indexPath.row == 2) {
+    if (indexPath.section == 0 && indexPath.row == 0) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
     
-    if (/*IS_SHOP && */indexPath.section == 0) {
-        if (indexPath.row == 0 || indexPath.row == 1) {
-            cell.contentColor = CPERROR_COLOR;
-        }
-    }
+//    if (IS_ASSISTANT && indexPath.section == 0 && indexPath.row == 2) {
+//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//    } else {
+//        cell.accessoryType = UITableViewCellAccessoryNone;
+//    }
+//
+//    if (/*IS_SHOP && */indexPath.section == 0) {
+//        if (indexPath.row == 0 || indexPath.row == 1) {
+//            cell.contentColor = CPERROR_COLOR;
+//        }
+//    }
     
     cell.shouldShowBottomLine = indexPath.row != [self.dataArray[0] count] - 1;
     
@@ -147,9 +177,9 @@
     
     cell.title = [tempArray objectAtIndex:indexPath.row];;
     cell.subTitle = @"修改";
-    if (2 == indexPath.section) {
-        cell.contentColor = CPERROR_COLOR;
-    }
+//    if (2 == indexPath.section) {
+//        cell.contentColor = CPERROR_COLOR;
+//    }
     
     return cell;
 }
@@ -173,20 +203,18 @@
         
         if (IS_SHOP) {
             NSString *code = [CPUserInfoModel shareInstance].loginModel.cp_code;
-            header.content = [NSString stringWithFormat:@"门店编号:%@",code];
+            header.content = [NSString stringWithFormat:@"商家编号:%@",code];
             
             NSString *name = [CPUserInfoModel shareInstance].loginModel.companyname;
-            header.detail = [NSString stringWithFormat:@"门店名称：%@",name];
+            header.detail = [NSString stringWithFormat:@"商家名称：%@",name];
         } else if (IS_ASSISTANT) {
             
-            if (IS_SHOP) {
-                NSString *code = [CPUserInfoModel shareInstance].loginModel.linkname;
-                header.content = [NSString stringWithFormat:@"店员姓名:%@",code];
-                
-                NSString *name = [CPUserInfoModel shareInstance].loginModel.cp_code;
-                header.detail = [NSString stringWithFormat:@"店员编号：%@",name];
-            }
+            NSString *code = [CPUserInfoModel shareInstance].loginModel.companyname;
+            header.content = [NSString stringWithFormat:@"代理姓名：%@",code];
             
+            NSString *name = [CPUserInfoModel shareInstance].loginModel.cp_code;
+            header.detail = [NSString stringWithFormat:@"代理编号：%@",name];
+
         }
         
         return header;
@@ -252,7 +280,8 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return IS_SHOP ? @"" : @"账户信息";
+//            return IS_SHOP ? @"" : @"账户信息";
+            return @"";
             break;
         case 1:
             return @"安全设置";
@@ -316,9 +345,14 @@
     switch (indexPath.section) {
         case 0:
         {
-            if (IS_ASSISTANT && 2 == indexPath.row) {
-                [self push2VCWith:@"CPAssistantModifyPhoneVC" title:@"修改手机号码"];
-            }
+            CPChangeUserBaseInfoVC *vc = [[CPChangeUserBaseInfoVC alloc] init];
+            vc.title = @"用户信息修改";
+            
+            [self.navigationController pushViewController:vc animated:YES];
+            
+//            if (IS_ASSISTANT && 2 == indexPath.row) {
+//                [self push2VCWith:@"CPAssistantModifyPhoneVC" title:@"修改手机号码"];
+//            }
         }
             break;
         case 1:
@@ -392,45 +426,65 @@
         paytype = @"支付宝";
     }
     
-    if (result.Typeid == 3) {
-        
+//    if (result.Typeid == 2) {
+//
+//        NSString *paytype = @"";
+//
+//        if (result.paycfg == 1) {
+//            paytype = @"银行卡";
+//        } else if (result.paycfg == 2) {
+//            paytype = @"微信";
+//        } else if (result.paycfg == 3) {
+//            paytype = @"支付宝";
+//        }
+//
+//
+//        self.tempDataArray = @[
+//                               //                               @[@"茂业店",@"332*****",@"********:",@"158****3123",@"wang****@163.com"],
+//                               @[
+//                                   [CPUserInfoModel shareInstance].loginModel.companyname,
+//                                   [CPUserInfoModel shareInstance].loginModel.cp_code,
+//                                   [CPUserInfoModel shareInstance].loginModel.linkname,
+//                                   [CPUserInfoModel shareInstance].loginModel.phone,
+//                                   [CPUserInfoModel shareInstance].loginModel.email
+//                                   ],
+//                               @[@"登陆密码"],
+//                               //                           @[@"更改收款方式(支付宝)"]
+//                               @[
+//                                   [NSString stringWithFormat:@"收款方式(%@)",paytype]
+//                                   ]
+//                               ];
+//    } else if (result.Typeid == 1 || result.Typeid == 5) {
+//
+//
+//        NSString *paytype = @"";
+//
+//        if (result.paycfg == 1) {
+//            paytype = @"银行卡";
+//        } else if (result.paycfg == 2) {
+//            paytype = @"微信";
+//        } else if (result.paycfg == 3) {
+//            paytype = @"支付宝";
+//        }
+
         self.tempDataArray = @[
-                               //                               @[@"茂业店",@"332*****",@"********:",@"158****3123",@"wang****@163.com"],
                                @[
-                                   [CPUserInfoModel shareInstance].loginModel.companyname,
-                                   [CPUserInfoModel shareInstance].loginModel.cp_code,
-                                   [CPUserInfoModel shareInstance].loginModel.linkname,
-                                   [CPUserInfoModel shareInstance].loginModel.phone,
-                                   [CPUserInfoModel shareInstance].loginModel.email
-                                   ],
-                               @[@"登陆密码"],
-                               //                           @[@"更改收款方式(支付宝)"]
-                               @[
-                                   [NSString stringWithFormat:@"收款方式(%@)",paytype]
-                                   ]
-                               ];
-    } else if (result.Typeid == 4) {
-        
-        //        self.dataArray = @[
-        //                           @[@"店员名称:",
-        //                             @"店员编号:",
-        //                             @"手机号码:",
-        //                             ],
-        //                           @[@"登陆密码"]
-        //                           ];
-        
-        self.tempDataArray = @[
-                               @[
+                                   @"",
                                    result.linkname,
-                                   result.cpcode,
-                                   result.phone
+                                   result.phone,
+                                   result.email,
+                                   result.address
                                    ],
                                @[
                                    @"登陆密码"
+                                   ],
+                               @[
+//                                   @"收款账号",
+                                   [NSString stringWithFormat:@"收款方式(%@)",paytype]
                                    ]
                                ];
         
-    }
+//    }
     
     
     [self.dataTableView reloadData];

@@ -58,15 +58,16 @@
 
         [self addSubview:amountHintLB];
         [amountHintLB mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(topLine.mas_bottom).offset(cellSpaceOffset);
+            make.top.mas_equalTo(topLine.mas_bottom).offset(2 * cellSpaceOffset);
             make.left.mas_equalTo(cellSpaceOffset);
             make.right.mas_equalTo(topMidLine.mas_left).mas_equalTo(-cellSpaceOffset);;
         }];
         
         
+        CGFloat amount = [CPUserInfoModel shareInstance].loginModel.totalcommission;
         amountLB = [CPLabel new];
         amountLB.font          = CPFont_XL;
-        amountLB.text          = @"¥123.00";
+        amountLB.text          =  [NSString stringWithFormat:@"¥%.2f",amount];
         amountLB.textAlignment = NSTextAlignmentCenter;
         
         [self addSubview:amountLB];
@@ -84,7 +85,8 @@
             make.left.mas_equalTo(cellSpaceOffset);
             make.right.mas_equalTo(topMidLine.mas_right).offset(-cellSpaceOffset);
             make.bottom.mas_equalTo(bottomLine.mas_top).offset(-cellSpaceOffset);
-            make.height.mas_equalTo(30.0f);
+//            make.height.mas_equalTo(30.0f);
+            make.height.mas_equalTo(0);
         }];
         
         self.rewardRecordBT = [UIButton new];

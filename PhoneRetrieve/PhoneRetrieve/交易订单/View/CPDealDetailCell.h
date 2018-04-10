@@ -7,7 +7,10 @@
 //
 
 #import "CPBaseCell.h"
+#import "CPDealOrderModel.h"
 
 @interface CPDealDetailCell : CPBaseCell
+
+@property (nonatomic, strong) CPDealOrderInfoModel *model;
 
 @end

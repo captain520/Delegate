@@ -73,6 +73,7 @@
     }
     
     CPRegistStepView *stepView = [[CPRegistStepView alloc] initWithFrame:CGRectMake(0, 0, SCREENWIDTH, 44.0f)];
+    stepView.clipsToBounds = YES;
     stepView.titles =@[
                        @"注册只需3步",
                        @"1.登录信息",
@@ -82,6 +83,17 @@
     stepView.currentStep = 2;
     
     [cell.contentView addSubview:stepView];
+    [stepView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(0);
+        make.left.mas_equalTo(0);
+        make.right.mas_equalTo(0);
+        if (self.registType == CPRegistTypePersonalEditShop) {
+            make.height.mas_equalTo(0);
+        } else {
+            make.height.mas_equalTo(CELL_HEIGHT_F);
+        }
+    }];
+    
     //  银行账号
     UILabel *bankSectionLB = [UILabel new];
     bankSectionLB.text = @"银行账号";
@@ -349,6 +361,15 @@
     }
 
     if (nil == self.nextAction) {
+        
+        NSString *title = @"注册";
+        
+        if (self.registType == CPRegistTypePersonalEditShop) {
+            title = @"保存修改";
+        } else if (self.registType == CPRegistTypePersonalAddShop) {
+            title = @"增加门店";
+        }
+        
         self.nextAction = [[CPButton alloc] initWithFrame:CGRectZero];
         [self.nextAction setTitle:@"注册" forState:0];
         [self.nextAction addTarget:self action:@selector(nextAction:) forControlEvents:UIControlEventTouchUpInside];
@@ -386,6 +407,34 @@
                                                              
                                                          }];
         
+    }
+    
+    if (self.userDetailModel) {
+        self.bankOwerTF.text = self.userDetailModel.bname;
+        self.bankAccountTF.text = self.userDetailModel.banknum;
+        self.bankAreaTF.text = self.userDetailModel.bankname;
+        self.bankBranchTF.text = self.userDetailModel.bankbranch;
+        
+        self.wechatNameTF.text = self.userDetailModel.wxname;
+        self.wechatAccountTF.text = self.userDetailModel.wxnum;
+        
+        self.alipayNameTF.text = self.userDetailModel.aliname;
+        self.alipayAccountTF.text = self.userDetailModel.alinum;
+        
+        switch (self.userDetailModel.paycfg) {
+            case 1:
+                self.paymethodTF.text = @"银行卡";
+                break;
+            case 2:
+                self.paymethodTF.text = @"微信";
+                break;
+            case 3:
+                self.paymethodTF.text = @"支付宝";
+                break;
+
+            default:
+                break;
+        }
     }
     
 
@@ -435,16 +484,16 @@
 //
 //    return;
 
-    [CPRegistParam shareInstance].bname      = self.bankOwerTF.text;
-    [CPRegistParam shareInstance].banknum    = self.bankAccountTF.text;
-    [CPRegistParam shareInstance].bankname   = self.bankAreaTF.text;
-    [CPRegistParam shareInstance].bankbranch = self.bankBranchTF.text;
+    [CPRegistParam shareInstance].bname      = cp_noEmptyString(self.bankOwerTF.text);
+    [CPRegistParam shareInstance].banknum    = cp_noEmptyString(self.bankAccountTF.text);
+    [CPRegistParam shareInstance].bankname   = cp_noEmptyString(self.bankAreaTF.text);
+    [CPRegistParam shareInstance].bankbranch = cp_noEmptyString(self.bankBranchTF.text);
     
-    [CPRegistParam shareInstance].wxname     = self.wechatNameTF.text;
-    [CPRegistParam shareInstance].wxnum      = self.wechatAccountTF.text;
+    [CPRegistParam shareInstance].wxname     = cp_noEmptyString(self.wechatNameTF.text);
+    [CPRegistParam shareInstance].wxnum      = cp_noEmptyString(self.wechatAccountTF.text);
     
-    [CPRegistParam shareInstance].aliname    = self.alipayNameTF.text;
-    [CPRegistParam shareInstance].alinum     = self.alipayAccountTF.text;
+    [CPRegistParam shareInstance].aliname    = cp_noEmptyString(self.alipayNameTF.text);
+    [CPRegistParam shareInstance].alinum     = cp_noEmptyString(self.alipayAccountTF.text);
 
     if ([self.paymethodTF.text isEqualToString:@"银行卡"]) {
         [CPRegistParam shareInstance].paycfg = @"1";
@@ -460,6 +509,10 @@
         [self companyRegistDelegate];
     } else if (self.registType == CPRegistTypePersonalDelegate) {
         [self personalRegistDelegate];
+    } else if (self.registType == CPRegistTypePersonalAddShop) {
+        [self addShop];
+    } else if (self.registType == CPRegistTypePersonalEditShop) {
+        [self updateShop];
     }
 
 //    CPRegistParam *params = [CPRegistParam shareInstance];
@@ -512,11 +565,64 @@
 }
 
 - (void)companyRegistDelegate {
+    CPRegistParam *params = [CPRegistParam shareInstance];
+    NSDictionary *paramsDict = [params mj_keyValues];
     
+    __weak typeof(self) weakSelf = self;
+    
+    [CPShopRegisterModel modelRequestWith:@"http://leshouzhan.platline.com/api/user/register1"
+                               parameters:paramsDict
+                                    block:^(id result) {
+                                        [weakSelf handleRegiterBlock:result];
+                                    } fail:^(CPError *error) {
+                                        
+                                    }];
 }
 
 - (void)personalRegistDelegate {
+    CPRegistParam *params = [CPRegistParam shareInstance];
+    NSDictionary *paramsDict = [params mj_keyValues];
     
+    __weak typeof(self) weakSelf = self;
+    
+    [CPShopRegisterModel modelRequestWith:@"http://leshouzhan.platline.com/api/user/register5"
+                               parameters:paramsDict
+                                    block:^(id result) {
+                                        [weakSelf handleRegiterBlock:result];
+                                    } fail:^(CPError *error) {
+                                        
+                                    }];
+}
+
+- (void)addShop {
+    
+    CPRegistParam *params = [CPRegistParam shareInstance];
+    NSDictionary *paramsDict = [params mj_keyValues];
+    
+    __weak typeof(self) weakSelf = self;
+    
+    [CPShopRegisterModel modelRequestWith:@"http://leshouzhan.platline.com/api/user/addStore"
+                               parameters:paramsDict
+                                    block:^(id result) {
+                                        [weakSelf handleRegiterBlock:result];
+                                    } fail:^(CPError *error) {
+                                        
+                                    }];
+}
+
+- (void)updateShop {
+    CPRegistParam *params = [CPRegistParam shareInstance];
+    NSDictionary *paramsDict = [params mj_keyValues];
+    
+    __weak typeof(self) weakSelf = self;
+    
+    [CPShopRegisterModel modelRequestWith:@"http://leshouzhan.platline.com/api/user/updStore"
+                               parameters:paramsDict
+                                    block:^(id result) {
+                                        [weakSelf handleRegiterBlock:result];
+                                    } fail:^(CPError *error) {
+                                        
+                                    }];
 }
 
 @end

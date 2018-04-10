@@ -21,6 +21,8 @@
     
     self.automaticallyAdjustsScrollViewInsets = NO;
     
+    self.models = @[].mutableCopy;
+    
     self.currentPageIndex = 1;
 }
 
@@ -59,6 +61,8 @@
             
             self.currentPageIndex = 1;
             
+            [weakselff.models removeAllObjects];
+
             [weakselff loadData];
         }];
         _dataTableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingBlock:^{

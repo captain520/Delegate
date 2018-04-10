@@ -10,4 +10,8 @@
 
 @interface CPShopCheckVC : CPBaseTableVC
 
+@property (nonatomic, assign) CPShopCheckType type;
+
+@property (nonatomic, copy) NSString *userID;
+
 @end

@@ -11,7 +11,7 @@
 @implementation CPRetrieveOrderDetailModel
 
 + (NSDictionary *)mj_replacedKeyFromPropertyName {
-    return @{@"Typename" : @"typename"};
+    return @{@"Typename" : @"typename", @"Description" : @"description"};
 }
 
 @end

@@ -17,17 +17,18 @@
 #import "CPOrderListPageModel.h"
 #import "CPRewardHeader.h"
 #import "CPDealDetailCell.h"
+#import "CPDealOrderModel.h"
 
 
 @interface CPShippingInformationListVC ()
 
 @property (nonatomic, strong) CPTabBarView *tabbarView;
-@property (nonatomic, strong) NSArray <CPShopOrderDetailModel *> *models;
 @property (nonatomic, strong) CPOrderListPageModel *result;
 @property (nonatomic, strong) UIButton *topBt;
 @property (nonatomic, assign) NSInteger currentTabIndex;
 
 @end
+
 
 @implementation CPShippingInformationListVC
 
@@ -37,7 +38,7 @@
 
     [self setupUI];
     
-    [self loadData:0];
+    [self loadData];
 }
 
 - (void)setupUI {
@@ -47,7 +48,7 @@
     if (self.tabbarType == CPTabBarTypeShippingState) {
         self.tabbarView.dataArray = @[@"全部",@"待收货",@"已收货"];
     } else if (self.tabbarType == CPTabBarTypePayState) {
-        self.tabbarView.dataArray = @[@"待支付",@"已支付"];
+        self.tabbarView.dataArray = @[@"全部",@"待支付",@"已支付"];
     }
 
 
@@ -88,7 +89,7 @@
         _tabbarView.backgroundColor = [UIColor whiteColor];
         _tabbarView.selectBlock = ^(NSInteger index) {
             weakSelf.currentTabIndex = index;
-            [weakSelf loadData:index];
+            [weakSelf loadData];
         };
 
         [self.view addSubview:_tabbarView];
@@ -107,7 +108,10 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    
+    CPDealOrderDataModel *orderModel = self.models[section];
+
+    return orderModel.info.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -127,7 +131,8 @@
 //        cell.contentView.backgroundColor = tableView.backgroundColor;
     }
     
-//    cell.model = self.models[indexPath.section];
+    CPDealOrderDataModel *orderModel = self.models[indexPath.section];
+    cell.model = orderModel.info[indexPath.row];
 
     return cell;
 }
@@ -191,8 +196,10 @@
         [header.contentView addSubview:cell];
     }
 
-    cell.title = @"2018-03-14";
-    NSString *priceStr = [NSString stringWithFormat:@"交易金额：%ld",self.result.totalprice];
+    CPDealOrderDataModel *orderModel = self.models[section];
+
+    cell.title = orderModel.createtime;
+    NSString *priceStr = [NSString stringWithFormat:@"交易金额：¥%.2f",orderModel.total_price];
     cell.detailTextLabel.text = priceStr;
 
     return header;
@@ -205,14 +212,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    CPShopOrderDetailModel *sectionModel = self.models[indexPath.section];
+    CPDealOrderDataModel *orderModel = self.models[indexPath.section];
+    CPDealOrderInfoModel *infoModel = orderModel.info[indexPath.row];
 
     CPConsignResultVC *vc = [[CPConsignResultVC alloc] init];
-    vc.ID = sectionModel.ID;
+    vc.ID = infoModel.orderid;
     vc.title = @"交易订单详情";
 
     [self.navigationController pushViewController:vc animated:YES];
-//    [self push2VCWith:@"CPConsignResultVC" title:@"交易订单详情"];
 }
 
 - (void)searchAction:(id)sender {
@@ -235,18 +242,27 @@
     [self.navigationController pushViewController:vc animated:YES];
 }
 
-- (void)loadData:(NSInteger )index {
+- (void)loadData {
     
     __weak typeof(self) weakSelf = self;
+    
+    NSMutableDictionary *params = @{
+                                    @"pagesize" : @"20",
+                                     @"code" : @([CPUserInfoModel shareInstance].loginModel.ID),
+                                    @"currentpage" : @(self.currentPageIndex)
+                                    }.mutableCopy;
+    
+    if (self.currentTabIndex == 1) {
+        [params setObject:@"0" forKey:@"type"];
+    } else if (self.currentTabIndex == 2) {
+        [params setObject:@"1" forKey:@"type"];
+    } else {
+        
+    }
 
-    [CPOrderListPageModel modelRequestWith:@"http://leshouzhan.platline.com/api/Order/findOrderList"
-                                  parameters:@{
-                                               @"typeid" : @([CPUserInfoModel shareInstance].loginModel.Typeid),
-                                               @"userid" : @([CPUserInfoModel shareInstance].loginModel.ID),
-                                               @"paycfg" : @(index)
-                                               }
-//                                       block:^(NSArray <CPShopOrderDetailModel *> *result) {
-                                     block:^(CPOrderListPageModel *result) {
+    [CPDealOrderModel modelRequestWith:@"http://leshouzhan.platline.com/api/order/getTransactionOrder"
+                                  parameters:params
+                                     block:^(CPDealOrderModel *result) {
                                            [weakSelf handleLoadDataBlock:result];
                                        } fail:^(CPError *error) {
                                            
@@ -254,16 +270,22 @@
 }
 
 //- (void)handleLoadDataBlock:(NSArray <CPShopOrderDetailModel *> *)result {
-- (void)handleLoadDataBlock:(CPOrderListPageModel *)result {
+- (void)handleLoadDataBlock:(CPDealOrderModel *)result {
     
-    self.result = result;
-
-    if (!result || result.total == 0 ) {
-        self.models = nil;
+    if (!result.data || ![result isKindOfClass:[CPDealOrderModel class]]|| ![result.data isKindOfClass:[NSArray class]]) {
+        [self.models removeAllObjects];
     } else {
-        self.models = result.cp_data;
+        [self.models addObjectsFromArray:result.data];
     }
-
+    
+    if (self.models.count >= result.total) {
+        [self.dataTableView.mj_header endRefreshing];
+        [self.dataTableView.mj_footer endRefreshingWithNoMoreData];
+    } else {
+        [self.dataTableView.mj_header endRefreshing];
+        [self.dataTableView.mj_footer endRefreshing];
+    }
+    
     [self.dataTableView reloadData];
 }
 
@@ -297,3 +319,5 @@
 }
 
 @end
+
+
