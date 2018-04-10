@@ -91,7 +91,7 @@
         
         self.rewardRecordBT = [UIButton new];
         self.rewardRecordBT.titleLabel.font = CPFont_L;
-        [self.rewardRecordBT setImage:CPImage(@"home_car") forState:0];
+        [self.rewardRecordBT setImage:CPImage(@"返佣查询") forState:0];
         [self.rewardRecordBT setTitle:@"返佣查询" forState:0];
         [self.rewardRecordBT setTitleColor:C33 forState:0];
         [self.rewardRecordBT setImageEdgeInsets:UIEdgeInsetsMake(0, -8, 0, 0)];
@@ -156,7 +156,7 @@
         
         self.orderBT = [UIButton new];
         self.orderBT.titleLabel.font = CPFont_L;
-        [self.orderBT setImage:CPImage(@"home_car") forState:0];
+        [self.orderBT setImage:CPImage(@"订单中心") forState:0];
         [self.orderBT setTitle:@"订单中心" forState:0];
         [self.orderBT setTitleColor:C33 forState:0];
         [self.orderBT setImageEdgeInsets:UIEdgeInsetsMake(0, -8, 0, 0)];
@@ -171,7 +171,7 @@
         
         self.shopManagerBT = [UIButton new];
         self.shopManagerBT.titleLabel.font = CPFont_L;
-        [self.shopManagerBT setImage:CPImage(@"home_car") forState:0];
+        [self.shopManagerBT setImage:CPImage(@"门店管理") forState:0];
         [self.shopManagerBT setTitle:@"门店管理" forState:0];
         [self.shopManagerBT setTitleColor:C33 forState:0];
         [self.shopManagerBT setImageEdgeInsets:UIEdgeInsetsMake(0, -8, 0, 0)];
@@ -186,7 +186,7 @@
         
         self.logistisBT = [UIButton new];
         self.logistisBT.titleLabel.font = CPFont_L;
-        [self.logistisBT setImage:CPImage(@"home_car") forState:0];
+        [self.logistisBT setImage:CPImage(@"扣除明细") forState:0];
         [self.logistisBT setTitle:@"扣除明细" forState:0];
         [self.logistisBT setTitleColor:C33 forState:0];
         [self.logistisBT setImageEdgeInsets:UIEdgeInsetsMake(0, -8, 0, 0)];
@@ -201,7 +201,7 @@
         
         self.accountManagerBT = [UIButton new];
         self.accountManagerBT.titleLabel.font = CPFont_L;
-        [self.accountManagerBT setImage:CPImage(@"home_car") forState:0];
+        [self.accountManagerBT setImage:CPImage(@"账号管理") forState:0];
         [self.accountManagerBT setTitle:@"账号管理" forState:0];
         [self.accountManagerBT setTitleColor:C33 forState:0];
         [self.accountManagerBT setImageEdgeInsets:UIEdgeInsetsMake(0, -8, 0, 0)];

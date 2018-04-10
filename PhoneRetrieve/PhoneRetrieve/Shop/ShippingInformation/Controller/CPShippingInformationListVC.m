@@ -89,6 +89,7 @@
         _tabbarView.backgroundColor = [UIColor whiteColor];
         _tabbarView.selectBlock = ^(NSInteger index) {
             weakSelf.currentTabIndex = index;
+            [weakSelf.models removeAllObjects];
             [weakSelf loadData];
         };
 
