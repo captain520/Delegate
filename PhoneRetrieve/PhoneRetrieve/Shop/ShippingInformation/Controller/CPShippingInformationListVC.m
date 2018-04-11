@@ -17,7 +17,6 @@
 #import "CPOrderListPageModel.h"
 #import "CPRewardHeader.h"
 #import "CPDealDetailCell.h"
-#import "CPDealOrderModel.h"
 
 
 @interface CPShippingInformationListVC ()
@@ -126,10 +125,9 @@
     CPDealDetailCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentify];
     if (nil == cell) {
         cell = [[CPDealDetailCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentify];
-//        cell.clipsToBounds = YES;
+        cell.clipsToBounds = YES;
         cell.shouldShowBottomLine = YES;
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        cell.contentView.backgroundColor = tableView.backgroundColor;
     }
     
     CPDealOrderDataModel *orderModel = self.models[indexPath.section];
@@ -228,9 +226,12 @@
     CPOrderSearchVC *vc = [[CPOrderSearchVC alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
     if (self.currentTabIndex == 0) {
+        vc.type = CPOrderSearchTypeShopPayAndUnpaidOrder;
+        vc.title = @"订单查询";
+    } else if(self.currentTabIndex == 1){
         vc.type = CPOrderSearchTypeShopUnpaidOrder;
-        vc.title = @"待支付订单查询";
-    } else {
+        vc.title = @"未支付订单查询";
+    } else if (self.currentTabIndex == 2) {
         vc.type = CPOrderSearchTypeShopPaidOrder;
         vc.title = @"已支付订单查询";
     }
@@ -245,6 +246,14 @@
 
 - (void)loadData {
     
+    if (self.model) {
+        self.tabbarView.hidden = YES;
+        self.dataTableView.frame = CGRectMake(0, NAV_HEIGHT, SCREENWIDTH, SCREENHEIGHT - NAV_HEIGHT );
+        
+        [self handleLoadDataBlock:self.model];
+        return;
+    }
+
     __weak typeof(self) weakSelf = self;
     
     NSMutableDictionary *params = @{

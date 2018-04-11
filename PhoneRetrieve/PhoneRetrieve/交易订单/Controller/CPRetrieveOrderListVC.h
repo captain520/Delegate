@@ -7,10 +7,11 @@
 //
 
 #import "CPRefreshTableVC.h"
-
+#import "CPRetireveOrderModel.h"
 
 @interface CPRetrieveOrderListVC : CPRefreshTableVC
 
 @property (nonatomic, assign) CPRetrieveOrderListType type;
+@property (nonatomic, strong) CPRetireveOrderModel *model;
 
 @end

@@ -17,6 +17,11 @@
 #import "CPAssistantOrderListPageModel.h"
 #import "CPGoodOrderListVC.h"
 #import "CPShopRewardListVC.h"
+#import "CPRewardModel.h"
+#import "CPDealOrderModel.h"
+#import "CPShippingInformationListVC.h"
+#import "CPRetireveOrderModel.h"
+#import "CPRetrieveOrderListVC.h"
 
 @interface CPOrderSearchVC ()<UISearchBarDelegate>
 
@@ -150,10 +155,20 @@
     
 #warning Debug
     
-    CPShopRewardListVC *vc = [[CPShopRewardListVC alloc] init];
-    vc.title = @"返佣信息";
+    if (self.type == CPOrderSearchTypeReward) {
+        [self searchRewardData];
+    } else if(self.type == CPOrderSearchTypeShopPayAndUnpaidOrder ||
+              self.type == CPOrderSearchTypeShopUnpaidOrder ||
+              self.type == CPOrderSearchTypeShopPaidOrder) {
+        [self searchDealOrderData];
+    } else if (self.type == CPOrderSearchTypeOverFinishedOrder || self.type == CPOrderSearchTypeOverDueOrder) {
+        [self searchFinisheAdnOverDuedOrderData];
+    }
     
-    [self.navigationController pushViewController:vc animated:YES];
+//    CPShopRewardListVC *vc = [[CPShopRewardListVC alloc] init];
+//    vc.title = @"返佣信息";
+//
+//    [self.navigationController pushViewController:vc animated:YES];
 
     return;
     
@@ -227,6 +242,7 @@
                                     @"typeid": @([CPUserInfoModel shareInstance].loginModel.Typeid),
                                     @"userid": @([CPUserInfoModel shareInstance].loginModel.ID)
                                     }.mutableCopy;
+    
     if (self.searchBar.text.length > 0) {
         [params setObject:self.searchBar.text forKey:@"ordersn"];
     }
@@ -338,4 +354,174 @@
     [self.navigationController pushViewController:vc animated:YES];
 
 }
+
+//  反佣查询
+- (void)searchRewardData {
+    __weak typeof(self) weakSelf = self;
+    
+    NSMutableDictionary *params = @{
+                             @"code" : @([CPUserInfoModel shareInstance].loginModel.ID),
+                             @"pagesize" : @"100",
+                             @"currentpage" : @(1)
+                             }.mutableCopy;
+    if (self.searchBar.text.length > 0) {
+        [params setObject:self.searchBar.text forKey:@"ordersn"];
+    }
+    
+    if (self.begintInputTF.text.length > 0) {
+        [params setObject:self.begintInputTF.text forKey:@"start"];
+    }
+    
+    if (self.endInputTF.text.length > 0) {
+        [params setObject:self.endInputTF.text forKey:@"end"];
+    }
+
+    
+    [CPRewardModel modelRequestWith:@"http://leshouzhan.platline.com/api/Distributionorder/getDistributionList"
+                         parameters:params
+                              block:^(CPRewardModel *result) {
+                                  [weakSelf handleRewardSearchBlock:result];
+                              } fail:^(CPError *error) {
+                                  
+                              }];
+}
+
+- (void)handleRewardSearchBlock:(CPRewardModel *)result {
+    
+    if ([result isKindOfClass:[CPRewardModel class]] && result.data.count > 0) {
+        
+        CPShopRewardListVC *vc = [[CPShopRewardListVC alloc] init];
+        vc.model = result;
+        vc.title = @"返佣查询结果";
+        
+        [self.navigationController pushViewController:vc animated:YES];
+    } else {
+        [self.view makeToast:@"未查到符合的数据" duration:1.0f position:CSToastPositionCenter];
+    }
+    
+}
+
+
+#pragma mark - 成交订单查询
+
+- (void)searchDealOrderData {
+    
+    __weak typeof(self) weakSelf = self;
+    
+    NSMutableDictionary *params = @{
+                                    @"pagesize" : @"200",
+                                    @"code" : @([CPUserInfoModel shareInstance].loginModel.ID),
+                                    @"currentpage" : @(1)
+                                    }.mutableCopy;
+    
+    if (self.searchBar.text.length > 0) {
+        [params setObject:self.searchBar.text forKey:@"ordersn"];
+    }
+    
+    if (self.begintInputTF.text.length > 0) {
+        [params setObject:self.begintInputTF.text forKey:@"start"];
+    }
+    
+    if (self.endInputTF.text.length > 0) {
+        [params setObject:self.endInputTF.text forKey:@"end"];
+    }
+    
+    if (self.type == CPOrderSearchTypeShopUnpaidOrder) {
+        [params setObject:@"0" forKey:@"type"];
+    } else if (self.type == CPOrderSearchTypeShopPaidOrder) {
+        [params setObject:@"1" forKey:@"type"];
+    }
+
+
+    [CPDealOrderModel modelRequestWith:@"http://leshouzhan.platline.com/api/order/getTransactionOrder"
+                            parameters:params
+                                 block:^(CPDealOrderModel *result) {
+                                     [weakSelf handleDealOrderSearchBlock:result];
+                                 } fail:^(CPError *error) {
+                                     
+                                 }];
+    
+}
+
+- (void)handleDealOrderSearchBlock:(CPDealOrderModel *)result {
+    
+    if ([result isKindOfClass:[CPDealOrderModel class]] && result.data.count > 0) {
+        CPShippingInformationListVC *vc = [[CPShippingInformationListVC alloc] init];
+        vc.model = result;
+        
+        if(self.type == CPOrderSearchTypeShopPayAndUnpaidOrder) {
+            vc.title = @"交易订单查询结果-全部";
+        } else if(self.type == CPOrderSearchTypeShopUnpaidOrder) {
+            vc.title = @"交易订单查询结果-待支付";
+        } else if( self.type == CPOrderSearchTypeShopPaidOrder) {
+            vc.title = @"交易订单查询结果-已支付";
+        }
+
+        [self.navigationController pushViewController:vc animated:YES];
+
+    } else {
+        [self.view makeToast:@"未查到符合的数据" duration:1.0f position:CSToastPositionCenter];
+    }
+    
+}
+
+#pragma mark - 回收订单查询
+- (void)searchFinisheAdnOverDuedOrderData {
+    
+    __weak typeof(self) weakSelf = self;
+    
+    NSMutableDictionary *params = @{
+                                    @"pagesize" : @"100",
+                                    @"code" : @([CPUserInfoModel shareInstance].loginModel.ID),
+                                    @"currentpage" : @(1)
+                                    }.mutableCopy;
+
+    NSString *requestUrl = nil;
+    if (self.type == CPOrderSearchTypeOverFinishedOrder) {
+        requestUrl = @"http://leshouzhan.platline.com/api/order/getRecyclingInformation";
+    } else if (self.type == CPOrderSearchTypeOverDueOrder) {
+        requestUrl = @"http://leshouzhan.platline.com/api/order/getFailureInformation";
+    }
+    
+    if (self.searchBar.text.length > 0) {
+        [params setObject:self.searchBar.text forKey:@"ordersn"];
+    }
+    
+    if (self.begintInputTF.text.length > 0) {
+        [params setObject:self.begintInputTF.text forKey:@"start"];
+    }
+    
+    if (self.endInputTF.text.length > 0) {
+        [params setObject:self.endInputTF.text forKey:@"end"];
+    }
+    
+    [CPRetireveOrderModel modelRequestWith:requestUrl
+                                parameters:params
+                                     block:^(CPRetireveOrderModel *result) {
+                                         [weakSelf handlesearchFinisheAdnOverDuedOrderDataBlock:result];
+                                     } fail:^(CPError *error) {
+                                         
+                                     }];
+}
+
+- (void)handlesearchFinisheAdnOverDuedOrderDataBlock:(CPRetireveOrderModel *)result {
+    
+    if ([result isKindOfClass:[CPRetireveOrderModel class]] && result.data.count > 0) {
+        
+        CPRetrieveOrderListVC *vc = [[CPRetrieveOrderListVC alloc] init];
+        if (self.type == CPOrderSearchTypeOverDueOrder) {
+            vc.title = @"失效订单";
+        } else if (self.type == CPOrderSearchTypeOverFinishedOrder) {
+            vc.title = @"回收订单";
+        }
+        vc.model = result;
+        
+        [self.navigationController pushViewController:vc animated:YES];
+    } else {
+        [self.view makeToast:@"未查到符合的数据" duration:1.0f position:CSToastPositionCenter];
+    }
+    
+}
+
+
 @end

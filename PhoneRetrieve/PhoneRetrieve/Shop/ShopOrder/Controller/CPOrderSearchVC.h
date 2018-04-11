@@ -14,9 +14,11 @@ typedef NS_ENUM(NSUInteger,CPOrderSearchType) {
     CPOrderSearchTypeOrder,
     CPOrderSearchTypeOther,
     CPOrderSearchTypeShopPaidOrder,
+    CPOrderSearchTypeShopPayAndUnpaidOrder,
     CPOrderSearchTypeShopUnpaidOrder,
     CPOrderSearchTypeOverDueOrder,
-    CPOrderSearchTypeOverFinishedOrder
+    CPOrderSearchTypeOverFinishedOrder,
+    CPOrderSearchTypeReward
 };
 
 @interface CPOrderSearchVC : CPBaseVC

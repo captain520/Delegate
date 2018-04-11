@@ -11,6 +11,7 @@
 #import "CPShopRegisterModel.h"
 #import "CPLoginVC.h"
 #import "CPSuccessVC.h"
+#import "CPAssistantManagerVC.h"
 
 @interface CPRemittanceInfoTBVC ()<UITextFieldDelegate, UIPickerViewDelegate,UIPickerViewDataSource> {
     UIPickerView *consignCompanyPicker;
@@ -371,7 +372,7 @@
         }
         
         self.nextAction = [[CPButton alloc] initWithFrame:CGRectZero];
-        [self.nextAction setTitle:@"注册" forState:0];
+        [self.nextAction setTitle:title forState:0];
         [self.nextAction addTarget:self action:@selector(nextAction:) forControlEvents:UIControlEventTouchUpInside];
         
         [cell.contentView addSubview:self.nextAction];
@@ -604,10 +605,16 @@
     [CPShopRegisterModel modelRequestWith:@"http://leshouzhan.platline.com/api/user/addStore"
                                parameters:paramsDict
                                     block:^(id result) {
-                                        [weakSelf handleRegiterBlock:result];
+                                        [weakSelf handleAddShopBlock];
                                     } fail:^(CPError *error) {
                                         
                                     }];
+}
+
+- (void)handleAddShopBlock {
+    [[CPProgress Instance] showSuccess:self.view message:@"新增成功" finish:^(BOOL finished) {
+        [self pop2MemberManager];
+    }];
 }
 
 - (void)updateShop {
@@ -619,10 +626,27 @@
     [CPShopRegisterModel modelRequestWith:@"http://leshouzhan.platline.com/api/user/updStore"
                                parameters:paramsDict
                                     block:^(id result) {
-                                        [weakSelf handleRegiterBlock:result];
+                                        [weakSelf handleUpdateShopBlock];
                                     } fail:^(CPError *error) {
                                         
                                     }];
+}
+
+- (void)handleUpdateShopBlock {
+    [[CPProgress Instance] showSuccess:self.view message:@"修改成功" finish:^(BOOL finished) {
+        [self pop2MemberManager];
+    }];
+}
+
+- (void)pop2MemberManager {
+    
+    [self.navigationController.viewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        
+        if ([obj isKindOfClass:[CPAssistantManagerVC class]]) {
+            [self.navigationController popToViewController:obj animated:YES];
+            *stop = YES;
+        }
+    }];
 }
 
 @end

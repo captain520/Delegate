@@ -1,0 +1,1 @@
+../../../SCLoopScrollView/Classes/SCLoopItem.h

@@ -7,6 +7,7 @@
 //
 
 #import "CPRefreshTableVC.h"
+#import "CPDealOrderModel.h"
 
 typedef NS_ENUM(NSUInteger, CPTabBarType) {
     CPTabBarTypeShippingState,
@@ -19,5 +20,7 @@ typedef NS_ENUM(NSUInteger, CPTabBarType) {
 @interface CPShippingInformationListVC : CPRefreshTableVC
 
 @property (nonatomic, assign) CPTabBarType tabbarType;
+
+@property (nonatomic, strong) CPDealOrderModel *model;
 
 @end

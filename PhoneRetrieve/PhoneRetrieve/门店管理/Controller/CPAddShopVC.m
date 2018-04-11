@@ -45,7 +45,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [self.shopNameTF becomeFirstResponder];
+//    [self.shopNameTF becomeFirstResponder];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -434,27 +434,30 @@
 }
 
 - (void)nextAction:(id)sender {
+    
     DDLogInfo(@"%s------------------------------",__FUNCTION__);
     
-    [CPRegistParam shareInstance].phone = self.shopPhoneTF.text;
+    [CPRegistParam shareInstance].phone       = self.shopPhoneTF.text;
     [CPRegistParam shareInstance].companyname = self.shopNameTF.text;
-    [CPRegistParam shareInstance].provinceid = self.proviceModel.Code ? self.proviceModel.Code : self.model.provinceid;
-    [CPRegistParam shareInstance].cityid = self.cityModel.Code ? self.cityModel.Code : self.model.cityid;
-    [CPRegistParam shareInstance].districtid = self.areaModel.Code ? self.areaModel.Code : self.model.districtid;
-    [CPRegistParam shareInstance].address = self.shopAddressTF.text;
-    [CPRegistParam shareInstance].linkname = self.shopOwnerTF.text;
-    [CPRegistParam shareInstance].email = self.shopEmailT.text;
-    [CPRegistParam shareInstance].licenseurl = self.businessLicenseBT.imageUrl;
-    [CPRegistParam shareInstance].idcard1url = self.IDFrontBT.imageUrl;
-    [CPRegistParam shareInstance].idcard2url = self.IDBackBT.imageUrl;
+    [CPRegistParam shareInstance].provinceid  = self.proviceModel.Code ? self.proviceModel.Code : self.model.provinceid;
+    [CPRegistParam shareInstance].cityid      = self.cityModel.Code ? self.cityModel.Code : self.model.cityid;
+    [CPRegistParam shareInstance].districtid  = self.areaModel.Code ? self.areaModel.Code : self.model.districtid;
+    [CPRegistParam shareInstance].address     = self.shopAddressTF.text;
+    [CPRegistParam shareInstance].linkname    = self.shopOwnerTF.text;
+    [CPRegistParam shareInstance].email       = self.shopEmailT.text;
+    [CPRegistParam shareInstance].licenseurl  = self.businessLicenseBT.imageUrl;
+    [CPRegistParam shareInstance].idcard1url  = self.IDFrontBT.imageUrl;
+    [CPRegistParam shareInstance].idcard2url  = self.IDBackBT.imageUrl;
 
     CPRemittanceInfoTBVC *vc = [[CPRemittanceInfoTBVC alloc] init];
     if (self.type == 0) {
+        [CPRegistParam shareInstance].code = [NSString stringWithFormat:@"%ld",[CPUserInfoModel shareInstance].loginModel.ID];
         vc.registType = CPRegistTypePersonalAddShop;
     } else if (self.type == 1) {
         vc.registType = CPRegistTypePersonalEditShop;
+        [CPRegistParam shareInstance].code = [NSString stringWithFormat:@"%ld",self.model.ID];
         vc.userDetailModel = self.model;
-        vc.title = @"编辑门店收款账号";
+        vc.title = IS_SHOP ? @"编辑门店收款账号":@"编辑商家收款账号";
     }
 
     [self.navigationController pushViewController:vc animated:YES];

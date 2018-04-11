@@ -19,7 +19,6 @@
     // Override point for customization after application launch.
     
     Byte test = 200;
-    
 
     [self setUINavigatinoBarProperities];
     

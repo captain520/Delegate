@@ -101,8 +101,8 @@
     _dataModel = dataModel;
     
     dateLB.text = _dataModel.createtime;
-    dealAmountLB.text = [NSString stringWithFormat:@"交易机器数量：%ld",_dataModel.number];
-    rewardAmountLB.text = [NSString stringWithFormat:@"交易金额：¥%.2f",_dataModel.total_price];
+    dealAmountLB.text = [NSString stringWithFormat:@"机器数量：%ld",_dataModel.number];
+    rewardAmountLB.text = [NSString stringWithFormat:@"金额：¥%.2f",_dataModel.total_price];
 }
 
 @end

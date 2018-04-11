@@ -3,7 +3,7 @@
 */
 
 #define INJECTION_NOIMPL
-#define INJECTION_BUNDLE InjectionBundle86
+#define INJECTION_BUNDLE InjectionBundle33
 
 #define INJECTION_ENABLED
 #import "/tmp/injectionforxcode/BundleInjection.h"
@@ -28,7 +28,7 @@ extern
 };
 #endif
 
-@implementation NSObject(InjectionBundle86)
+@implementation NSObject(InjectionBundle33)
 
 + (void)load {
     Class bundleInjection = NSClassFromString(@"BundleInjection");

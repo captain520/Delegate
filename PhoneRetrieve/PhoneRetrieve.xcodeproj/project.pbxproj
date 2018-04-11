@@ -22,6 +22,9 @@
 		9C070345202404520080856C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C070343202404520080856C /* Main.storyboard */; };
 		9C070347202404520080856C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9C070346202404520080856C /* Assets.xcassets */; };
 		9C07034D202404520080856C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C07034C202404520080856C /* main.m */; };
+		9C072F1B207D998B004D378C /* CPBankListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C072F1A207D998B004D378C /* CPBankListVC.m */; };
+		9C072F1E207D99B6004D378C /* CPBankListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C072F1D207D99B6004D378C /* CPBankListModel.m */; };
+		9C072F21207D9C8D004D378C /* CPBankListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C072F20207D9C8D004D378C /* CPBankListCell.m */; };
 		9C0D95EE204E255600834B90 /* CPAssistantRegisterParam.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C0D95ED204E255600834B90 /* CPAssistantRegisterParam.m */; };
 		9C0D95F2204E5DF500834B90 /* CPUserDetailInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C0D95F1204E5DF500834B90 /* CPUserDetailInfoModel.m */; };
 		9C1149482072174C00BBFABF /* CPRootVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1149472072174C00BBFABF /* CPRootVC.m */; };
@@ -127,7 +130,6 @@
 		9C5E274C20240983003E32E7 /* CPCircularProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C5E273720240982003E32E7 /* CPCircularProgress.m */; };
 		9C5E274D20240983003E32E7 /* CPStar.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C5E273A20240982003E32E7 /* CPStar.m */; };
 		9C5E274E20240983003E32E7 /* CPStartView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C5E273B20240982003E32E7 /* CPStartView.m */; };
-		9C5E2756202409AF003E32E7 /* FunctionList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9C5E2751202409AF003E32E7 /* FunctionList.plist */; };
 		9C5E2757202409AF003E32E7 /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C5E2753202409AF003E32E7 /* Utils.m */; };
 		9C5E2758202409AF003E32E7 /* header.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9C5E2754202409AF003E32E7 /* header.jpg */; };
 		9C5E275A20240C10003E32E7 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9C5E275920240C10003E32E7 /* Launch Screen.storyboard */; };
@@ -223,6 +225,12 @@
 		9C070346202404520080856C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9C07034B202404520080856C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9C07034C202404520080856C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		9C072F19207D998B004D378C /* CPBankListVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPBankListVC.h; sourceTree = "<group>"; };
+		9C072F1A207D998B004D378C /* CPBankListVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPBankListVC.m; sourceTree = "<group>"; };
+		9C072F1C207D99B6004D378C /* CPBankListModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPBankListModel.h; sourceTree = "<group>"; };
+		9C072F1D207D99B6004D378C /* CPBankListModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPBankListModel.m; sourceTree = "<group>"; };
+		9C072F1F207D9C8D004D378C /* CPBankListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPBankListCell.h; sourceTree = "<group>"; };
+		9C072F20207D9C8D004D378C /* CPBankListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPBankListCell.m; sourceTree = "<group>"; };
 		9C0D95EC204E255600834B90 /* CPAssistantRegisterParam.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPAssistantRegisterParam.h; sourceTree = "<group>"; };
 		9C0D95ED204E255600834B90 /* CPAssistantRegisterParam.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPAssistantRegisterParam.m; sourceTree = "<group>"; };
 		9C0D95F0204E5DF500834B90 /* CPUserDetailInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPUserDetailInfoModel.h; sourceTree = "<group>"; };
@@ -432,7 +440,6 @@
 		9C5E273C20240982003E32E7 /* CPImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPImageCell.h; sourceTree = "<group>"; };
 		9C5E273D20240982003E32E7 /* CPBaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPBaseCell.h; sourceTree = "<group>"; };
 		9C5E2750202409AF003E32E7 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
-		9C5E2751202409AF003E32E7 /* FunctionList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = FunctionList.plist; sourceTree = "<group>"; };
 		9C5E2752202409AF003E32E7 /* API.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = API.h; sourceTree = "<group>"; };
 		9C5E2753202409AF003E32E7 /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 		9C5E2754202409AF003E32E7 /* header.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = header.jpg; sourceTree = "<group>"; };
@@ -600,6 +607,7 @@
 		9C07033C202404520080856C /* PhoneRetrieve */ = {
 			isa = PBXGroup;
 			children = (
+				9C072F15207D996E004D378C /* 打款记录 */,
 				9C67F251207B5A65001EDF9D /* 账号管理 */,
 				9C4C71602074BA71001C5D92 /* 扣除明细 */,
 				9C4C71532074A7C8001C5D92 /* 交易订单 */,
@@ -623,6 +631,43 @@
 				9C5E275920240C10003E32E7 /* Launch Screen.storyboard */,
 			);
 			path = PhoneRetrieve;
+			sourceTree = "<group>";
+		};
+		9C072F15207D996E004D378C /* 打款记录 */ = {
+			isa = PBXGroup;
+			children = (
+				9C072F16207D996E004D378C /* Controller */,
+				9C072F17207D996E004D378C /* Model */,
+				9C072F18207D996E004D378C /* View */,
+			);
+			path = "打款记录";
+			sourceTree = "<group>";
+		};
+		9C072F16207D996E004D378C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9C072F19207D998B004D378C /* CPBankListVC.h */,
+				9C072F1A207D998B004D378C /* CPBankListVC.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		9C072F17207D996E004D378C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9C072F1C207D99B6004D378C /* CPBankListModel.h */,
+				9C072F1D207D99B6004D378C /* CPBankListModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		9C072F18207D996E004D378C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9C072F1F207D9C8D004D378C /* CPBankListCell.h */,
+				9C072F20207D9C8D004D378C /* CPBankListCell.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		9C11494D2073110200BBFABF /* 返佣信息 */ = {
@@ -1214,7 +1259,6 @@
 				9C5C8B8E20298F1B0053C50B /* test.jpg */,
 				9C5C8B8620297DB70053C50B /* Apple.png */,
 				9C5E2750202409AF003E32E7 /* Utils.h */,
-				9C5E2751202409AF003E32E7 /* FunctionList.plist */,
 				9C5E2752202409AF003E32E7 /* API.h */,
 				9C5E2753202409AF003E32E7 /* Utils.m */,
 				9C5E2754202409AF003E32E7 /* header.jpg */,
@@ -1485,7 +1529,6 @@
 				9C5E275A20240C10003E32E7 /* Launch Screen.storyboard in Resources */,
 				9C5C8B8720297DB70053C50B /* Apple.png in Resources */,
 				9C070347202404520080856C /* Assets.xcassets in Resources */,
-				9C5E2756202409AF003E32E7 /* FunctionList.plist in Resources */,
 				9C5E2758202409AF003E32E7 /* header.jpg in Resources */,
 				9C5E276E20240DC6003E32E7 /* TexturesCom_FoodSpices0018_S.jpg in Resources */,
 				9C070345202404520080856C /* Main.storyboard in Resources */,
@@ -1566,6 +1609,7 @@
 				9CF5AE4520591F2C0026C4F2 /* CPAppearanceHintView.m in Sources */,
 				9CCE37A02046B1FC00DBF147 /* CPShippingListCell.m in Sources */,
 				9C377528204581500001B961 /* CPModifyShopPasswdVC.m in Sources */,
+				9C072F1B207D998B004D378C /* CPBankListVC.m in Sources */,
 				9C5C8B7C202978760053C50B /* CPTabBarController.m in Sources */,
 				9C5E2783202462C1003E32E7 /* CPButton.m in Sources */,
 				9C5C8B82202979FA0053C50B /* CPNavigationController.m in Sources */,
@@ -1643,6 +1687,8 @@
 				9C56A1A02043A840009838B8 /* CPSearchVC.m in Sources */,
 				9C1A1F8F2047975300CA23C8 /* CPOrderCell.m in Sources */,
 				9C67F250207B1766001EDF9D /* CPMemberManagerModel.m in Sources */,
+				9C072F1E207D99B6004D378C /* CPBankListModel.m in Sources */,
+				9C072F21207D9C8D004D378C /* CPBankListCell.m in Sources */,
 				9C1A1F922047CB6C00CA23C8 /* CPHomeLeftBarItem.m in Sources */,
 				9C37752520457E2E0001B961 /* CPModifyShopInfoVC.m in Sources */,
 				9C37750E204536540001B961 /* CPTitleDetailCell.m in Sources */,

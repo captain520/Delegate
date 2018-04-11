@@ -51,7 +51,11 @@
     
     [self loadNavItem];
     
-    self.tabbarView.dataArray = @[@"门店信息",@"门店审核"];
+    if (IS_SHOP) {
+        self.tabbarView.dataArray = @[@"门店信息",@"门店审核"];
+    } else if (IS_ASSISTANT) {
+        self.tabbarView.dataArray = @[@"商家信息",@"商家审核"];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -186,10 +190,10 @@
     CPShopCheckVC *vc = [[CPShopCheckVC alloc] init];
     
     if (self.currentTabIndex == 0) {
-        title = @"门店详情";
+        title = IS_SHOP ? @"门店详情" : @"商家详情";
         vc.type = CPShopCheckTypeDetail;
     } else if (self.currentTabIndex == 1) {
-        title = @"门店审核";
+        title = IS_SHOP ? @"门店审核" : @"商家审核";
         vc.type = CPShopCheckTypeCheck;
     }
     
@@ -215,7 +219,7 @@
 - (void)itemAction:(id)sender {
     
     CPAddShopVC *vc = [[CPAddShopVC alloc] init];
-    vc.title = @"新增门店";
+    vc.title = IS_SHOP ? @"新增门店" : @"新增商家";
 
     [self.navigationController pushViewController:vc animated:YES];
 }
@@ -227,7 +231,7 @@
         CPMemberManagerDataModel *dataModel = self.models[indexPath.section];
         
         CPAddShopVC *vc = [[CPAddShopVC alloc] init];
-        vc.title = @"编辑门店";
+        vc.title = IS_SHOP ? @"编辑门店" : @"编辑商家";
         vc.type = 1;
         vc.ID = dataModel.ID.integerValue;
         
@@ -249,7 +253,11 @@
     
     self.willDeleteidnexPath = indexPath;
     
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"是否删除该店员信息" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"提示"
+                                                        message: IS_SHOP ?  @"是否删除该店员信息" : @"是否删除该商家信息"
+                                                       delegate:self
+                                              cancelButtonTitle:@"取消"
+                                              otherButtonTitles:@"确定", nil];
 
     [alertView show];
 }

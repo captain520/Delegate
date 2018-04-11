@@ -192,9 +192,9 @@
 - (void)setModel:(CPMemberManagerDataModel *)model {
     _model = model;
     
-    shopNoLB.text     = cp_jointString(@"门店编号：",_model.Code);
-    shopNameLB.text   = cp_jointString(@"门店名称：",_model.companyname);
-    nameLB.text       = cp_jointString(@"联系人：",_model.linkname);
+    shopNoLB.text     = cp_jointString(IS_SHOP ? @"门店编号：" : @"商家编号：",_model.Code);
+    shopNameLB.text   = cp_jointString(IS_SHOP ? @"门店名称：" : @"商家名称：",_model.companyname);
+    nameLB.text       = cp_jointString(@"联系人：" ,_model.linkname);
     phoneLB.text      = cp_jointString(@"联系电话：", _model.phone);
     createTimeLB.text = cp_jointString(@"创建时间：", _model.createtime);
     

@@ -14,4 +14,6 @@ pod 'ReactiveCocoa'
 pod 'DACircularProgress'
 pod 'SDCycleScrollView'
 pod 'CocoaLumberjack', '~> 3.3.0'
+#pod 'YJBannerView'
+pod 'SCLoopScrollView'
 end

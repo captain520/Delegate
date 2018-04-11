@@ -108,7 +108,11 @@
     orderNoLB.text = [NSString stringWithFormat:@"交易订单：%@",_model.ordersn];
     payStatesLB.text = _model.paycfg == 0 ? @"未支付" : @"已支付";
     payStatesLB.textColor = _model.paycfg == 0 ? CPERROR_COLOR : MainColor;
-    shopNameLB.text = [NSString stringWithFormat:@"门店名称：%@",_model.doorname];
+    if (IS_SHOP) {
+        shopNameLB.text = [NSString stringWithFormat:@"门店名称：%@",_model.doorname];
+    } else {
+        shopNameLB.text = [NSString stringWithFormat:@"商家名称：%@",_model.doorname];
+    }
     iitemCountLB.text = [NSString stringWithFormat:@"共%ld件商品，共计¥%.2f",(long)_model.number,_model.total_price];
     rewardAmountLB.text = [NSString stringWithFormat:@"返佣金额：¥%.2f",_model.distribution_price];
     deductAmountLB.text = [NSString stringWithFormat:@"扣除金额：¥%.2f",_model.kou_price];

@@ -27,7 +27,7 @@
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField {
-    self.text = cp_date2String(self.datePicker.date, @"yyyy/MM/dd HH:mm:ss");
+    self.text = cp_date2String(self.datePicker.date, @"yyyy-MM-dd HH:mm:ss");
 
 }
 

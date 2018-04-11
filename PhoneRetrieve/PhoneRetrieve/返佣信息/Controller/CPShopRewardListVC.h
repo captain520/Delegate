@@ -7,7 +7,10 @@
 //
 
 #import "CPRefreshTableVC.h"
+#import "CPRewardModel.h"
 
 @interface CPShopRewardListVC : CPRefreshTableVC
+
+@property (nonatomic, strong) CPRewardModel *model;
 
 @end

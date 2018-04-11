@@ -12,7 +12,6 @@
 #import "CPOrderSearchVC.h"
 #import "CPOrderDetailVC.h"
 #import "CPDealOrderModel.h"
-#import "CPRetireveOrderModel.h"
 
 @interface CPRetrieveOrderListVC ()
 
@@ -111,13 +110,26 @@
 - (void)searchAction:(UIButton *)sender {
     
     CPOrderSearchVC *searchVC = [[CPOrderSearchVC alloc] init];
-    searchVC.title = @"回收订单查询";
-    
+    if (self.type == CPRetrieveOrderListTypeSuccess) {
+        searchVC.title = @"回收订单查询";
+        searchVC.type = CPOrderSearchTypeOverFinishedOrder;
+    } else if (self.type == CPRetrieveOrderListTypeFail) {
+        searchVC.title = @"失效订单查询";
+        searchVC.type = CPOrderSearchTypeOverDueOrder;
+    }
+
     [self.navigationController pushViewController:searchVC animated:YES];
     
 }
 
 - (void)loadData {
+    
+    if (self.model) {
+        [self handleLoadDataSuccessBlock:self.model];
+        
+        return;
+    }
+    
     __weak typeof(self) weakSelf = self;
     
     NSDictionary *params = @{

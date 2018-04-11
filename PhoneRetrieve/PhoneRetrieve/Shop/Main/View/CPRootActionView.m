@@ -51,42 +51,52 @@
         }];
         
         
-        amountHintLB = [CPLabel new];
-        amountHintLB.font          = CPFont_XL;
-        amountHintLB.text          = @"账户余额";
-        amountHintLB.textAlignment = NSTextAlignmentCenter;
-
-        [self addSubview:amountHintLB];
-        [amountHintLB mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(topLine.mas_bottom).offset(2 * cellSpaceOffset);
-            make.left.mas_equalTo(cellSpaceOffset);
-            make.right.mas_equalTo(topMidLine.mas_left).mas_equalTo(-cellSpaceOffset);;
-        }];
-        
-        
+//        amountHintLB = [CPLabel new];
+//        amountHintLB.font          = CPFont_XL;
+//        amountHintLB.text          = @"账户余额";
+//        amountHintLB.textAlignment = NSTextAlignmentCenter;
+//
+//        [self addSubview:amountHintLB];
+//        [amountHintLB mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.top.mas_equalTo(topLine.mas_bottom).offset(2 * cellSpaceOffset);
+//            make.left.mas_equalTo(cellSpaceOffset);
+//            make.right.mas_equalTo(topMidLine.mas_left).mas_equalTo(-cellSpaceOffset);;
+//        }];
+//
+//
         CGFloat amount = [CPUserInfoModel shareInstance].loginModel.totalcommission;
-        amountLB = [CPLabel new];
-        amountLB.font          = CPFont_XL;
-        amountLB.text          =  [NSString stringWithFormat:@"¥%.2f",amount];
-        amountLB.textAlignment = NSTextAlignmentCenter;
-        
-        [self addSubview:amountLB];
-        [amountLB mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.top.mas_equalTo(amountHintLB.mas_bottom).offset(cellSpaceOffset/3);
-            make.left.mas_equalTo(cellSpaceOffset);
-            make.right.mas_equalTo(topMidLine.mas_left).mas_equalTo(-cellSpaceOffset);;
-        }];
+//        amountLB = [CPLabel new];
+//        amountLB.font          = CPFont_XL;
+//        amountLB.text          =  [NSString stringWithFormat:@"¥%.2f",amount];
+//        amountLB.textAlignment = NSTextAlignmentCenter;
+//
+//        [self addSubview:amountLB];
+//        [amountLB mas_makeConstraints:^(MASConstraintMaker *make) {
+//            make.top.mas_equalTo(amountHintLB.mas_bottom).offset(cellSpaceOffset/3);
+//            make.left.mas_equalTo(cellSpaceOffset);
+//            make.right.mas_equalTo(topMidLine.mas_left).mas_equalTo(-cellSpaceOffset);;
+//        }];
 
-        self.rewardBT = [CPButton new];
-        [self.rewardBT setTitle:@"提现" forState:0];
+        
+        NSString *title  = [NSString stringWithFormat:@"账户余额\n¥%.2f",amount];
+        
+        self.rewardBT = [UIButton new];
+        self.rewardBT.titleLabel.numberOfLines = 0;
+        self.rewardBT.titleLabel.textAlignment = NSTextAlignmentCenter;
+        [self.rewardBT setTitleColor:C33 forState:0];
+        [self.rewardBT setTitle:title forState:0];
         
         [self addSubview:self.rewardBT];
         [self.rewardBT mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(topLine.mas_bottom).offset(cellSpaceOffset);
             make.left.mas_equalTo(cellSpaceOffset);
-            make.right.mas_equalTo(topMidLine.mas_right).offset(-cellSpaceOffset);
-            make.bottom.mas_equalTo(bottomLine.mas_top).offset(-cellSpaceOffset);
+            make.right.mas_equalTo(topMidLine.mas_left).offset(-cellSpaceOffset);
+            make.bottom.mas_equalTo(bottomLine.mas_bottom).offset(-cellSpaceOffset);
+//            make.left.mas_equalTo(cellSpaceOffset);
+//            make.right.mas_equalTo(topMidLine.mas_right).offset(-cellSpaceOffset);
+//            make.bottom.mas_equalTo(bottomLine.mas_top).offset(-cellSpaceOffset);
 //            make.height.mas_equalTo(30.0f);
-            make.height.mas_equalTo(0);
+//            make.height.mas_equalTo(0);
         }];
         
         self.rewardRecordBT = [UIButton new];
@@ -172,7 +182,12 @@
         self.shopManagerBT = [UIButton new];
         self.shopManagerBT.titleLabel.font = CPFont_L;
         [self.shopManagerBT setImage:CPImage(@"门店管理") forState:0];
-        [self.shopManagerBT setTitle:@"门店管理" forState:0];
+//        if (IS_SHOP) {
+//            [self.shopManagerBT setTitle:@"门店管理" forState:0];
+//        } else if (IS_ASSISTANT) {
+//            [self.shopManagerBT setTitle:@"商家管理" forState:0];
+//        }
+
         [self.shopManagerBT setTitleColor:C33 forState:0];
         [self.shopManagerBT setImageEdgeInsets:UIEdgeInsetsMake(0, -8, 0, 0)];
         
@@ -215,6 +230,17 @@
         }];
     }
     
+}
+
+- (void)setIsShop:(BOOL)isShop {
+    
+    _isShop = isShop;
+    
+    if (_isShop == YES) {
+        [self.shopManagerBT setTitle:@"门店管理" forState:0];
+    } else {
+        [self.shopManagerBT setTitle:@"商家管理" forState:0];
+    }
 }
 
 @end

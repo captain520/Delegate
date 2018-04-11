@@ -108,7 +108,7 @@
     if (nil == self.shopCodeTF) {
         self.shopCodeTF = [CPTextField new];
         self.shopCodeTF.font = [UIFont systemFontOfSize:13.0f];
-        self.shopCodeTF.placeholder = @"授权码";
+        self.shopCodeTF.placeholder = @"代理编码";
         self.shopCodeTF.borderStyle = UITextBorderStyleRoundedRect;
 //        self.shopCodeTF.keyboardType = UIKeyboardTypeNumberPad;
         
@@ -207,7 +207,11 @@
     if (nil == self.shopAddressTF) {
         self.shopAddressTF = [CPTextField new];
         self.shopAddressTF.font = [UIFont systemFontOfSize:13.0f];
-        self.shopAddressTF.placeholder = @"详细地址";
+        if (self.registType == CPRegistTypeCompanyDelegate || self.registType == CPRegistTypeShop) {
+            self.shopAddressTF.placeholder = @"公司详细地址";
+        } else if (self.registType == CPRegistTypePersonalDelegate) {
+            self.shopAddressTF.placeholder = @"联系地址";
+        }
         self.shopAddressTF.borderStyle = UITextBorderStyleRoundedRect;
 //        self.shopAddressTF.keyboardType = UIKeyboardTypeNumberPad;
         

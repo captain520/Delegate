@@ -18,10 +18,13 @@
 #import "CPTabBarView.h"
 #import "CPShopAccountManagerVC.h"
 #import "CPDeductDetailVC.h"
+#import "CPBankListVC.h"
+#import <SCLoopScrollView/SCLoopScrollView.h>
 
 @interface CPRootVC ()<SDCycleScrollViewDelegate>
 
 @property (nonatomic, strong) SDCycleScrollView *adSV;
+//@property (nonatomic, strong) SCLoopScrollView *adSV;
 @property (nonatomic, strong) NSArray <CPHomeAdvModel *> *advModels;
 @property (nonatomic, strong) CPRootActionView *actionView;
 
@@ -35,9 +38,10 @@
     // Do any additional setup after loading the view.
     
 
+    [self setupUI];
+    
     [self loadData];
     
-    [self setupUI];
     
     if ([CPUserInfoModel shareInstance].isLogined == NO) {
         [self push2LoginVC];
@@ -50,15 +54,38 @@
     
     NSString *title = nil;
     NSString *code = [CPUserInfoModel shareInstance].loginModel.cp_code;;
-
-    if (IS_SHOP) {
-        title = [NSString stringWithFormat:@"商家编号：%@",code];
-        [self setTitle:@"商家编号：123456"];
-    } else if (IS_ASSISTANT) {
-        title = [NSString stringWithFormat:@"代理编号：%@",code];
-    }
     
-    [self setTitle:title];
+    [self setTitle:code];
+    
+    self.adSV.imageURLStringsGroup = [self.advModels valueForKeyPath:@"imageurl"];
+
+//    if (IS_SHOP) {
+//        title = [NSString stringWithFormat:@"商家编号：%@",code];
+//        [self setTitle:@"商家编号：123456"];
+//    } else if (IS_ASSISTANT) {
+//        title = [NSString stringWithFormat:@"代理编号：%@",code];
+//    }
+//
+//    [self setTitle:title];
+    
+    self.actionView.isShop = IS_SHOP;
+}
+
+- (SDCycleScrollView *)adSV {
+    
+    if (nil == _adSV) {
+        CGRect adFrame = CGRectMake(0, NAV_HEIGHT, SCREENWIDTH, 200.0f);
+        self.adSV = [SDCycleScrollView cycleScrollViewWithFrame:adFrame
+                                                       delegate:self
+                                               placeholderImage:CPImage(@"Apple")];
+        
+        //        [self.adSV clearCache];
+        //        self.adSV.bannerImageViewContentMode = UIViewContentModeScaleAspectFit;
+        
+        [self.view addSubview:self.adSV];
+    }
+
+    return _adSV;
 }
 
 - (void)setupUI {
@@ -70,17 +97,41 @@
     }
     
     {
-        CGRect adFrame = CGRectMake(0, NAV_HEIGHT, SCREENWIDTH, 200.0f);
-        self.adSV = [SDCycleScrollView cycleScrollViewWithFrame:adFrame
-                                                       delegate:self
-                                               placeholderImage:CPImage(@"Apple")];
-        self.adSV.imageURLStringsGroup = @[
-                                           @"http://f.hiphotos.baidu.com/image/pic/item/503d269759ee3d6db032f61b48166d224e4ade6e.jpg",
-                                           @"http://a.hiphotos.baidu.com/image/pic/item/500fd9f9d72a6059f550a1832334349b023bbae3.jpg",
-                                           @"http://d.hiphotos.baidu.com/image/pic/item/a044ad345982b2b713b5ad7d3aadcbef76099b65.jpg"
-                                           ];
-        
-        [self.view addSubview:self.adSV];
+//        CGRect adFrame = CGRectMake(0, NAV_HEIGHT, SCREENWIDTH, 200.0f);
+//        self.adSV = [SDCycleScrollView cycleScrollViewWithFrame:adFrame
+//                                                       delegate:self
+//                                               placeholderImage:CPImage(@"Apple")];
+//
+////        [self.adSV clearCache];
+////        self.adSV.bannerImageViewContentMode = UIViewContentModeScaleAspectFit;
+//
+//        [self.view addSubview:self.adSV];
+//
+//        self.adSV.imageURLStringsGroup = @[
+//                                           @"http://f.hiphotos.baidu.com/image/pic/item/503d269759ee3d6db032f61b48166d224e4ade6e.jpg",
+//                                           @"http://a.hiphotos.baidu.com/image/pic/item/500fd9f9d72a6059f550a1832334349b023bbae3.jpg",
+//                                           @"http://d.hiphotos.baidu.com/image/pic/item/a044ad345982b2b713b5ad7d3aadcbef76099b65.jpg"
+//                                           ];
+//        _adSV = [[SCLoopScrollView alloc] initWithFrame:adFrame];
+//        _adSV.backgroundColor = [UIColor redColor];
+//        _adSV.dataSource = @[
+//                             @"http://f.hiphotos.baidu.com/image/pic/item/503d269759ee3d6db032f61b48166d224e4ade6e.jpg",
+//                             @"http://a.hiphotos.baidu.com/image/pic/item/500fd9f9d72a6059f550a1832334349b023bbae3.jpg",
+//                             @"http://d.hiphotos.baidu.com/image/pic/item/a044ad345982b2b713b5ad7d3aadcbef76099b65.jpg"
+//                             ];
+//        [self.view addSubview:_adSV];
+//
+//        [_adSV showWithAutoScroll:YES
+//                            taped:^(NSInteger index) {
+//
+//                            } scrolled:^(NSInteger index) {
+//
+//                            }];
+//        [_adSV show:^(NSInteger index) {
+//            NSLog(@"Tap Index:%@", @(index));
+//        } scrolled:^(NSInteger index) {
+//            NSLog(@"Current Index:%@", @(index));
+//        }];
     }
     
     {
@@ -90,6 +141,7 @@
         [self.actionView.shopManagerBT addTarget:self action:@selector(push2ShopManagerVC) forControlEvents:64];
         [self.actionView.accountManagerBT addTarget:self action:@selector(push2AccountManagerVC) forControlEvents:64];
         [self.actionView.logistisBT addTarget:self action:@selector(push2DeductVC) forControlEvents:64];
+        [self.actionView.rewardBT addTarget:self action:@selector(push2BankListVC) forControlEvents:64];
 
         [self.view addSubview:self.actionView];
         [self.actionView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -147,7 +199,8 @@
 
 - (void)handleLoadDataBlock:(NSArray <CPHomeAdvModel *> *)result {
     self.advModels = result;
-    self.adSV.imageURLStringsGroup = [self.advModels valueForKeyPath:@"imageurl"];
+//    self.adSV.imageURLStringsGroup = [self.advModels valueForKeyPath:@"imageurl"];
+//    self.adSV.dataSource = [self.advModels valueForKeyPath:@"imageurl"];
 }
 
 #pragma mark -  返佣查询
@@ -184,8 +237,12 @@
 - (void)push2ShopManagerVC {
     
     CPAssistantManagerVC *vc = [[CPAssistantManagerVC alloc] init];
-    vc.title = @"门店管理";
-    
+    if (IS_SHOP) {
+        vc.title = @"门店管理";
+    } else if (IS_ASSISTANT) {
+        vc.title = @"商家管理";
+    }
+
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -215,6 +272,14 @@
     
     [self.navigationController pushViewController:vc animated:YES];
     
+}
+
+- (void)push2BankListVC {
+    
+    CPBankListVC *bankListVC = [[CPBankListVC alloc] init];
+    bankListVC.title = @"打款记录";
+    
+    [self.navigationController pushViewController:bankListVC animated:YES];
 }
 
 - (void)showHelp {

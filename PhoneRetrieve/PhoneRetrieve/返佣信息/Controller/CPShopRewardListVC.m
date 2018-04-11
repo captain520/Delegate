@@ -11,7 +11,6 @@
 #import "CPRewardHeader.h"
 #import "CPOrderDetailVC.h"
 #import "CPOrderSearchVC.h"
-#import "CPRewardModel.h"
 #import "CPConsignResultVC.h"
 
 @interface CPShopRewardListVC ()
@@ -122,6 +121,7 @@
     
     CPOrderSearchVC *searchVC = [[CPOrderSearchVC alloc] init];
     searchVC.title = @"返佣查询";
+    searchVC.type = CPOrderSearchTypeReward;
     
     [self.navigationController pushViewController:searchVC animated:YES];
     
@@ -129,6 +129,11 @@
 
 - (void)loadData {
     
+    
+    if (self.model) {
+        [self handleLoadDataSuccessBlock:self.model];
+    }
+
     __weak typeof(self) weakSelf = self;
     
     NSDictionary *params = @{

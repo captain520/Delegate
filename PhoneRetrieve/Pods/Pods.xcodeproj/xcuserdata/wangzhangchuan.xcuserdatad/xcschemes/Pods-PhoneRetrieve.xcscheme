@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'EBDB33AA08FCFC7A54C09730BED1FD99'
+               BlueprintIdentifier = '032476C1CE7C5F5D5A965DB787B0A4E4'
                BlueprintName = 'Pods-PhoneRetrieve'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libPods-PhoneRetrieve.a'>

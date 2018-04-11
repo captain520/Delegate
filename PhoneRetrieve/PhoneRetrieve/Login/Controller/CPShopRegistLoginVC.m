@@ -66,7 +66,7 @@
     if (nil == self.accountTF) {
         self.accountTF = [CPTextField new];
         self.accountTF.font = [UIFont systemFontOfSize:13.0f];
-        self.accountTF.placeholder = @"手机号码(门店负责人联系方式)";
+        self.accountTF.placeholder = @"手机号码";
         self.accountTF.borderStyle = UITextBorderStyleRoundedRect;
         self.accountTF.keyboardType = UIKeyboardTypeNumberPad;
         

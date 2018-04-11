@@ -10,7 +10,9 @@
 
 @interface CPRootActionView : CPView
 
-@property (nonatomic, strong) CPButton *rewardBT;
+@property (nonatomic, strong) UIButton *rewardBT;
 @property (nonatomic, strong) UIButton *rewardRecordBT, *orderBT, *shopManagerBT, *logistisBT, *accountManagerBT;
+
+@property (nonatomic, assign) BOOL isShop;
 
 @end
