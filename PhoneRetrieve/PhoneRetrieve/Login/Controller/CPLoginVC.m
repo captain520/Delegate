@@ -354,13 +354,14 @@ typedef NS_ENUM(NSInteger, CPLoginType){
 //                                    } else {
 //                                        [tbVC initializedBaseViewControllersFor:CPTabVCTypeAssistant];
 //                                    }
-                                    [self.navigationController popViewControllerAnimated:NO];
+                                    [self.navigationController popToRootViewControllerAnimated:YES];
                                 }];
 }
 
 - (void)segmentAction:(UISegmentedControl *)sc {
     if (sc.selectedSegmentIndex == 0) {
-        self.accountTF.text = @"15814099328";
+//        self.accountTF.text = @"15814099328";
+        self.accountTF.text = @"15555555555";
     } else if (sc.selectedSegmentIndex == 1) {
         self.accountTF.text = @"15814099329";
     }

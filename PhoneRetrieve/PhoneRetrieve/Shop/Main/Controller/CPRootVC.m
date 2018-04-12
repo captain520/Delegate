@@ -69,6 +69,9 @@
 //    [self setTitle:title];
     
     self.actionView.isShop = IS_SHOP;
+    
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
 }
 
 - (SDCycleScrollView *)adSV {

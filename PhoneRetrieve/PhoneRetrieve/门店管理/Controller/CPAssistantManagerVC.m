@@ -310,6 +310,19 @@
     
     if (self.currentTabIndex == 1) {
         [params setObject:@"1" forKey:@"type"];
+        
+        if (IS_SHOP) {
+            [params setObject:@"3" forKey:@"typeid"];
+        } else if (IS_ASSISTANT) {
+            [params setObject:@"2" forKey:@"typeid"];
+        }
+    } else if (self.currentTabIndex == 0) {
+        
+        if (IS_SHOP) {
+            [params setObject:@"3" forKey:@"typeid"];
+        } else if (IS_ASSISTANT) {
+            [params setObject:@"2" forKey:@"typeid"];
+        }
     }
 
     [CPMemberManagerModel modelRequestWith:@"http://leshouzhan.platline.com/api/user/findUserList"

@@ -132,6 +132,8 @@
     
     if (self.model) {
         [self handleLoadDataSuccessBlock:self.model];
+        
+        return;
     }
 
     __weak typeof(self) weakSelf = self;

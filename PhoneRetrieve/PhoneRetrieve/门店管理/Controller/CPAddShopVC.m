@@ -74,7 +74,7 @@
         if (nil == self.shopNameTF) {
             self.shopNameTF = [CPTextField new];
             self.shopNameTF.font = [UIFont systemFontOfSize:13.0f];
-            self.shopNameTF.placeholder = @"门店名称";
+            self.shopNameTF.placeholder = @"公司名称";
             self.shopNameTF.borderStyle = UITextBorderStyleRoundedRect;
             //        self.shopNameTF.keyboardType = UIKeyboardTypeNumberPad;
 
@@ -182,11 +182,12 @@
         if (nil == self.shopPhoneTF) {
             
             self.shopPhoneTF = [CPTextField new];
-            self.shopPhoneTF.font         = [UIFont systemFontOfSize:13.0f];
-            self.shopPhoneTF.placeholder  = @"负责人联系方式";
-            self.shopPhoneTF.borderStyle  = UITextBorderStyleRoundedRect;
-            self.shopPhoneTF.keyboardType = UIKeyboardTypeNumberPad;
-            
+            self.shopPhoneTF.font                   = [UIFont systemFontOfSize:13.0f];
+            self.shopPhoneTF.placeholder            = @"负责人联系方式";
+            self.shopPhoneTF.borderStyle            = UITextBorderStyleRoundedRect;
+            self.shopPhoneTF.keyboardType           = UIKeyboardTypeNumberPad;
+            self.shopPhoneTF.userInteractionEnabled = self.type == 0;
+
             [cell.contentView addSubview:self.shopPhoneTF];
             [self.shopPhoneTF mas_makeConstraints:^(MASConstraintMaker *make) {
                 make.top.mas_equalTo(self.shopOwnerTF.mas_bottom).offset(cellSpaceOffset);
