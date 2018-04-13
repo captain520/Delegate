@@ -484,7 +484,7 @@
     }
     
     if (self.searchBar.text.length > 0) {
-        [params setObject:self.searchBar.text forKey:@"ordersn"];
+        [params setObject:self.searchBar.text forKey:@"resultno"];
     }
     
     if (self.begintInputTF.text.length > 0) {
