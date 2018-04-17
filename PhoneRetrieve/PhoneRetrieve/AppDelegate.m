@@ -7,6 +7,9 @@
 //
 
 #import "AppDelegate.h"
+#import <UMPush/UMessage.h>
+#import <UMCommon/UMCommon.h>
+#import <UserNotifications/UserNotifications.h>
 
 @interface AppDelegate ()
 
@@ -23,6 +26,8 @@
     [self setUINavigatinoBarProperities];
     
     [self configLogColors];
+    
+    [self configUMPush:launchOptions];
     
     DDLogInfo(@"------------------------------%d",test);
 
@@ -99,6 +104,67 @@
     
     [[DDTTYLogger sharedInstance] setForegroundColor:UIColor.whiteColor backgroundColor:UIColor.redColor forFlag:DDLogFlagError];
     [[DDTTYLogger sharedInstance] setForegroundColor:UIColor.greenColor backgroundColor:nil forFlag:DDLogFlagInfo];
+}
+
+- (void)configUMPush:(NSDictionary *)launchOptions {
+    
+    [UMConfigure initWithAppkey:@"5ad5586df43e480eb80000c7" channel:@"App Store"];
+    
+    // Push组件基本功能配置
+    UMessageRegisterEntity * entity = [[UMessageRegisterEntity alloc] init];
+    //type是对推送的几个参数的选择，可以选择一个或者多个。默认是三个全部打开，即：声音，弹窗，角标
+    entity.types = UMessageAuthorizationOptionBadge|UMessageAuthorizationOptionSound|UMessageAuthorizationOptionAlert;
+    [UNUserNotificationCenter currentNotificationCenter].delegate=self;
+    [UMessage registerForRemoteNotificationsWithLaunchOptions:launchOptions
+                                                       Entity:entity
+                                            completionHandler:^(BOOL granted, NSError * _Nullable error) {
+                                                if (granted) {
+                                                }else{
+                                                }
+                                            }];
+    
+    
+}
+
+//iOS10以下使用这两个方法接收通知
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    [UMessage setAutoAlert:YES];
+    if([[[UIDevice currentDevice] systemVersion]intValue] < 10){
+        [UMessage didReceiveRemoteNotification:userInfo];
+    }
+    completionHandler(UIBackgroundFetchResultNewData);
+}
+//iOS10新增：处理前台收到通知的代理方法
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler{
+    NSDictionary * userInfo = notification.request.content.userInfo;
+    if([notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+        [UMessage setAutoAlert:YES];
+        //应用处于前台时的远程推送接受
+        //必须加这句代码
+        [UMessage didReceiveRemoteNotification:userInfo];
+    }else{
+        //应用处于前台时的本地推送接受
+    }
+    completionHandler(UNNotificationPresentationOptionSound|UNNotificationPresentationOptionBadge|UNNotificationPresentationOptionAlert);
+}
+//iOS10新增：处理后台点击通知的代理方法
+-(void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)())completionHandler{
+    NSDictionary * userInfo = response.notification.request.content.userInfo;
+    if([response.notification.request.trigger isKindOfClass:[UNPushNotificationTrigger class]]) {
+        //应用处于后台时的远程推送接受
+        //必须加这句代码
+        [UMessage didReceiveRemoteNotification:userInfo];
+    }else{
+        //应用处于后台时的本地推送接受
+    }
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    //    DDLogInfo(@"%@",[deviceToken description]);
+    DDLogInfo(@"%@",[[[[deviceToken description] stringByReplacingOccurrencesOfString: @"<" withString: @""]
+                      stringByReplacingOccurrencesOfString: @">" withString: @""]
+                     stringByReplacingOccurrencesOfString: @" " withString: @""]);
 }
 
 @end
