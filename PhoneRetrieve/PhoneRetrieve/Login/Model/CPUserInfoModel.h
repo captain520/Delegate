@@ -27,4 +27,6 @@
 
 @property (nonatomic, copy) NSString *operationDes;
 
+@property (nonatomic, copy) NSString *push_token;
+
 @end

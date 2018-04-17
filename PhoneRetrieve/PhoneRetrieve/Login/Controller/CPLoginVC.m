@@ -276,7 +276,9 @@ typedef NS_ENUM(NSInteger, CPLoginType){
     
     NSDictionary *params = @{
                              @"phone" : self.accountTF.text,
-                             @"password" : self.passwdTF.text
+                             @"password" : self.passwdTF.text,
+                             @"type" : @"2",
+                             @"push_token" : [CPUserInfoModel shareInstance].push_token
                              };
     
     if (self.loginType == CPLoginTypePasswd) {
