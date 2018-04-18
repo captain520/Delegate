@@ -11,6 +11,7 @@
 #import "CPLeftRightCell.h"
 #import "CPDeductDetailCell.h"
 #import "CPDeductDetailModel.h"
+#import "CPConsignResultVC.h"
 
 @interface CPDeductDetailVC ()
 
@@ -97,6 +98,14 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    CPDeductDetailDataModel *dataModel = self.models[indexPath.section];
+    CPDeductDetailInfoModel *infoModel = dataModel.info[indexPath.row];
+    
+    CPConsignResultVC *vc = [[CPConsignResultVC alloc] init];
+    vc.ID = infoModel.orderid;
+    vc.title = @"交易订单详情";
+    
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 - (void)loadData {

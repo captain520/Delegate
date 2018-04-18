@@ -108,7 +108,7 @@
 
 - (void)configUMPush:(NSDictionary *)launchOptions {
     
-    [UMConfigure initWithAppkey:@"5ad5586df43e480eb80000c7" channel:@"App Store"];
+    [UMConfigure initWithAppkey:@"5ad5f00bf43e48604200000c" channel:@"App Store"];
     
     // Push组件基本功能配置
     UMessageRegisterEntity * entity = [[UMessageRegisterEntity alloc] init];

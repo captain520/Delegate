@@ -96,12 +96,12 @@
     _model = model;
     
     orderNoLB.text    = [NSString stringWithFormat:@"评估单号：%@",_model.resultno];
-    deviceNameLB.text = [NSString stringWithFormat:@"%@(%@)",_model.brandname,_model.Typename];
+    deviceNameLB.text = [NSString stringWithFormat:@"%@(%@)",_model.goodsname,_model.Typename];
     priceuLB.text     = [NSString stringWithFormat:@"评估价格：¥：%.2f",_model.price];
     if (IS_SHOP) {
-        shopNameLB.text   = [NSString stringWithFormat:@"门店名称：%@",_model.doorname];
+        shopNameLB.text   = [NSString stringWithFormat:@"门店名称：%@",_model.shopname];
     } else {
-        shopNameLB.text   = [NSString stringWithFormat:@"商家名称：%@",_model.doorname];
+        shopNameLB.text   = [NSString stringWithFormat:@"商家名称：%@",_model.agentname];
     }
 
     if (self.type == CPRetrieveOrderListTypeSuccess) {

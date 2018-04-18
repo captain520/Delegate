@@ -53,5 +53,12 @@
 
 @property (nonatomic, copy) NSString *orderid;
 
+@property (nonatomic, copy) NSString *shopname;
+@property (nonatomic, copy) NSString *shopid;
+
+@property (nonatomic, copy) NSString *agentname;
+@property (nonatomic, copy) NSString *agentid;
+
+
 @end
 

@@ -48,5 +48,9 @@
 
 @property (nonatomic, copy) NSString *resultno;
 
+@property (nonatomic, copy) NSString *orderid;
+
+@property (nonatomic, copy) NSString *goodsname;
+
 @end
 

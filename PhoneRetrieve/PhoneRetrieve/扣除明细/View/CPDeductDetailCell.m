@@ -94,7 +94,7 @@
     _model = model;
     
     orderNoLB.text      = [NSString stringWithFormat:@"交易订单：%@",_model.resultno];
-    deviceNameLB.text   = [NSString stringWithFormat:@"%@(%@)",_model.brandname,_model.Typename];
+    deviceNameLB.text   = [NSString stringWithFormat:@"%@(%@)",_model.goodsname,_model.Typename];
     priceLB.text        = [NSString stringWithFormat:@"评估价格：¥：%.2f",_model.price];
     deductAmountLB.text = [NSString stringWithFormat:@"扣除金额：¥%.2f",_model.kou_price];
     shopNameLB.text     = [NSString stringWithFormat:@"门店名称：%@",_model.shopname];
