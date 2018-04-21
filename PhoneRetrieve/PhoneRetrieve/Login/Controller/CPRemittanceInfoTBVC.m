@@ -553,7 +553,8 @@
     
     CPRegistParam *params = [CPRegistParam shareInstance];
     NSDictionary *paramsDict = [params mj_keyValues];
-    
+    params.type = @"2";
+
     __weak typeof(self) weakSelf = self;
     
     [CPShopRegisterModel modelRequestWith:@"http://leshouzhan.platline.com/api/user/register2"
@@ -567,6 +568,7 @@
 
 - (void)companyRegistDelegate {
     CPRegistParam *params = [CPRegistParam shareInstance];
+    params.type = @"2";
     NSDictionary *paramsDict = [params mj_keyValues];
     
     __weak typeof(self) weakSelf = self;
@@ -582,6 +584,7 @@
 
 - (void)personalRegistDelegate {
     CPRegistParam *params = [CPRegistParam shareInstance];
+    params.type = @"2";
     NSDictionary *paramsDict = [params mj_keyValues];
     
     __weak typeof(self) weakSelf = self;

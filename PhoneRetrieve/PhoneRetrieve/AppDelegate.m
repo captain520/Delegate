@@ -167,6 +167,7 @@
                      stringByReplacingOccurrencesOfString: @" " withString: @""];
     
     [CPUserInfoModel shareInstance].push_token = push_token;
+    [CPRegistParam shareInstance].push_token = push_token;
 }
 
 @end
