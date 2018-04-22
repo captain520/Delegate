@@ -99,9 +99,9 @@
     deviceNameLB.text = [NSString stringWithFormat:@"%@(%@)",_model.goodsname,_model.Typename];
     priceuLB.text     = [NSString stringWithFormat:@"评估价格：¥：%.2f",_model.price];
     if (IS_SHOP) {
-        shopNameLB.text   = [NSString stringWithFormat:@"门店名称：%@",_model.shopname];
+        shopNameLB.text   = [NSString stringWithFormat:@"门店名称：%@",_model.doorname];
     } else {
-        shopNameLB.text   = [NSString stringWithFormat:@"商家名称：%@",_model.agentname];
+        shopNameLB.text   = [NSString stringWithFormat:@"商家名称：%@",_model.shopname];
     }
 
     if (self.type == CPRetrieveOrderListTypeSuccess) {

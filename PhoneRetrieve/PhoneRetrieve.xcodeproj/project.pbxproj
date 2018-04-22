@@ -54,6 +54,7 @@
 		9C1A1F952047E3AA00CA23C8 /* CPMainActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1A1F942047E3AA00CA23C8 /* CPMainActionButton.m */; };
 		9C1A1F982048E44D00CA23C8 /* CPAssistantDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1A1F972048E44D00CA23C8 /* CPAssistantDetailVC.m */; };
 		9C1A1F9B2048F17800CA23C8 /* CPIDIV.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C1A1F9A2048F17800CA23C8 /* CPIDIV.m */; };
+		9C27CD6D208B6A1400BDB743 /* CPSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C27CD6C208B6A1400BDB743 /* CPSearchBar.m */; };
 		9C2DE68E205B529F005C0F26 /* CPFlowModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C2DE68D205B529F005C0F26 /* CPFlowModel.m */; };
 		9C2DE692205B576E005C0F26 /* CPFlowVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C2DE691205B576E005C0F26 /* CPFlowVC.m */; };
 		9C2DE696205B5893005C0F26 /* CPFlowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C2DE695205B5893005C0F26 /* CPFlowCell.m */; };
@@ -295,6 +296,8 @@
 		9C1A1F972048E44D00CA23C8 /* CPAssistantDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPAssistantDetailVC.m; sourceTree = "<group>"; };
 		9C1A1F992048F17800CA23C8 /* CPIDIV.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPIDIV.h; sourceTree = "<group>"; };
 		9C1A1F9A2048F17800CA23C8 /* CPIDIV.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPIDIV.m; sourceTree = "<group>"; };
+		9C27CD6B208B6A1400BDB743 /* CPSearchBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPSearchBar.h; sourceTree = "<group>"; };
+		9C27CD6C208B6A1400BDB743 /* CPSearchBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPSearchBar.m; sourceTree = "<group>"; };
 		9C2DE68C205B529F005C0F26 /* CPFlowModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPFlowModel.h; sourceTree = "<group>"; };
 		9C2DE68D205B529F005C0F26 /* CPFlowModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CPFlowModel.m; sourceTree = "<group>"; };
 		9C2DE690205B576E005C0F26 /* CPFlowVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CPFlowVC.h; sourceTree = "<group>"; };
@@ -1308,6 +1311,8 @@
 				9C5C8B7B202978760053C50B /* CPTabBarController.m */,
 				9C5C8B99202990D00053C50B /* CPWebVC.h */,
 				9C5C8B9A202990D00053C50B /* CPWebVC.m */,
+				9C27CD6B208B6A1400BDB743 /* CPSearchBar.h */,
+				9C27CD6C208B6A1400BDB743 /* CPSearchBar.m */,
 			);
 			path = CPBaseVC;
 			sourceTree = "<group>";
@@ -1651,6 +1656,7 @@
 				9C039E0D2064FDF500AAAA50 /* CPShippingCell.m in Sources */,
 				9C5E277020240DC6003E32E7 /* CPPostTestModel.m in Sources */,
 				9C5E273F20240983003E32E7 /* UIColor+category.m in Sources */,
+				9C27CD6D208B6A1400BDB743 /* CPSearchBar.m in Sources */,
 				9C4F8EBE206F563300873192 /* CPOrderListPageModel.m in Sources */,
 				9C3774F32044EDCF0001B961 /* CPEvaluatePriceHeader.m in Sources */,
 				9C56A19D2043A56A009838B8 /* UIView+Toast.m in Sources */,

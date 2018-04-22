@@ -22,13 +22,28 @@
 #import "CPShippingInformationListVC.h"
 #import "CPRetireveOrderModel.h"
 #import "CPRetrieveOrderListVC.h"
+#import "CPSearchBar.h"
+#import "CPTextField.h"
+#import "CPPickerView.h"
+#import "CPMemberManagerModel.h"
 
-@interface CPOrderSearchVC ()<UISearchBarDelegate>
+@interface UISearchBar(Category)<UIKeyInput>
+
+@property (nonatomic,readwrite, strong) UIView *inputView;
+
+@end
+
+@interface CPOrderSearchVC ()<UISearchBarDelegate, UIAlertViewDelegate,UIPickerViewDelegate,UIPickerViewDataSource,UITextFieldDelegate>
 
 @property (nonatomic, strong) UISearchBar *searchBar;
+@property (nonatomic, strong) CPTextField *shopSelectedTF;
 @property (nonatomic, strong) CPDatePickerTF *begintInputTF, *endInputTF;
 @property (nonatomic, strong) CPLabel *beginLB, *endLB;
 @property (nonatomic, strong) CPButton *nextActionBT;
+@property (nonatomic, strong) UIPickerView *pickerView;
+@property (nonatomic, strong) NSArray *shopsModels;
+@property (nonatomic, strong) CPMemberManagerDataModel *selectedShopModel;
+
 
 //@property (nonatomic, strong) UIDatePicker *datePicker;
 
@@ -38,8 +53,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
     // Do any additional setup after loading the view.
     [self setupUI];
+    
+    [self loadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -50,6 +68,38 @@
 - (void)setType:(CPOrderSearchType)type {
     
     _type = type;
+}
+
+- (UIPickerView *)pickerView {
+    
+    if (nil == _pickerView) {
+        _pickerView = [UIPickerView new];
+        _pickerView.delegate = self;
+    }
+    
+    return _pickerView;
+}
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    return self.shopsModels.count;
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    
+    CPMemberManagerDataModel *model = self.shopsModels[row];
+    
+    return model.companyname;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    
+    NSInteger row =  [self.pickerView selectedRowInComponent:0];
+    self.selectedShopModel = self.shopsModels[row];
+    textField.text = self.selectedShopModel.companyname;
 }
 
 - (void)setupUI {
@@ -79,7 +129,20 @@
         make.height.mas_offset(CELL_HEIGHT_F);
     }];
     
-    
+    self.shopSelectedTF = [CPTextField new];
+    self.shopSelectedTF.text                 = @"全部门店";
+    self.shopSelectedTF.delegate             = self;
+    self.shopSelectedTF.actionType           = CPTextFieldActionTypeRightAction;
+    self.shopSelectedTF.rightActionImageName = @"home_down";
+
+    [self.view addSubview:self.shopSelectedTF];
+    [self.shopSelectedTF mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.top.mas_equalTo(_searchBar.mas_bottom).offset(cellSpaceOffset);
+        make.left.mas_equalTo(cellSpaceOffset);
+        make.right.mas_equalTo(-cellSpaceOffset);
+        make.height.mas_equalTo(CELL_HEIGHT_F);
+    }];
+
     _beginLB = [CPLabel new];
     _beginLB.font      = CPFont_S;
     _beginLB.text      = @"开始日期";
@@ -88,7 +151,7 @@
     [self.view addSubview:_beginLB];
     
     [_beginLB mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.mas_equalTo(_searchBar.mas_bottom).offset(cellSpaceOffset);
+        make.top.mas_equalTo(_shopSelectedTF.mas_bottom).offset(cellSpaceOffset);
         make.left.mas_equalTo(cellSpaceOffset);
     }];
 
@@ -146,6 +209,23 @@
     
     [self.view endEditing:YES];
 }
+
+//- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"选择搜索模式" message:nil delegate:self cancelButtonTitle:@"订单号查询" otherButtonTitles:@"门店查询", nil];
+//    [alertView show];
+//}
+//
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+//    if (0 == buttonIndex) {
+//        self.searchBar.inputView = nil;
+//    } else if (1 == buttonIndex) {
+//        UIDatePicker *dataPicker = [[UIDatePicker alloc] init];
+////        self.searchBar.inputAccessoryView = dataPicker;
+//        self.searchBar.inputView = dataPicker;
+//        [self.searchBar becomeFirstResponder];
+//    }
+//}
+
 
 - (void)touchesEnded:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [self.view endEditing:YES];
@@ -360,10 +440,16 @@
     __weak typeof(self) weakSelf = self;
     
     NSMutableDictionary *params = @{
-                             @"code" : @([CPUserInfoModel shareInstance].loginModel.ID),
+//                             @"code" : @([CPUserInfoModel shareInstance].loginModel.ID),
                              @"pagesize" : @"100",
                              @"currentpage" : @(1)
                              }.mutableCopy;
+    if (self.selectedShopModel) {
+        [params setObject:self.selectedShopModel.ID forKey:@"code"];
+    } else {
+        [params setObject:@([CPUserInfoModel shareInstance].loginModel.ID) forKey:@"code"];
+    }
+
     if (self.searchBar.text.length > 0) {
         [params setObject:self.searchBar.text forKey:@"ordersn"];
     }
@@ -410,9 +496,14 @@
     
     NSMutableDictionary *params = @{
                                     @"pagesize" : @"200",
-                                    @"code" : @([CPUserInfoModel shareInstance].loginModel.ID),
+//                                    @"code" : @([CPUserInfoModel shareInstance].loginModel.ID),
                                     @"currentpage" : @(1)
                                     }.mutableCopy;
+    if (self.selectedShopModel) {
+        [params setObject:self.selectedShopModel.ID forKey:@"code"];
+    } else {
+        [params setObject:@([CPUserInfoModel shareInstance].loginModel.ID) forKey:@"code"];
+    }
     
     if (self.searchBar.text.length > 0) {
         [params setObject:self.searchBar.text forKey:@"ordersn"];
@@ -472,10 +563,16 @@
     
     NSMutableDictionary *params = @{
                                     @"pagesize" : @"100",
-                                    @"code" : @([CPUserInfoModel shareInstance].loginModel.ID),
+//                                    @"code" : @([CPUserInfoModel shareInstance].loginModel.ID),
                                     @"currentpage" : @(1)
                                     }.mutableCopy;
 
+    if (self.selectedShopModel) {
+        [params setObject:self.selectedShopModel.ID forKey:@"code"];
+    } else {
+        [params setObject:@([CPUserInfoModel shareInstance].loginModel.ID) forKey:@"code"];
+    }
+    
     NSString *requestUrl = nil;
     if (self.type == CPOrderSearchTypeOverFinishedOrder) {
         requestUrl = @"http://leshouzhan.platline.com/api/order/getRecyclingInformation";
@@ -521,6 +618,42 @@
         [self.view makeToast:@"未查到符合的数据" duration:1.0f position:CSToastPositionCenter];
     }
     
+}
+
+- (void)loadData {
+    
+    __weak typeof(self) weakSelf = self;
+    
+    NSMutableDictionary *params = @{
+                                    @"typeid" : @"1",
+                                    @"userid" : @([CPUserInfoModel shareInstance].loginModel.ID)
+                                    }.mutableCopy;
+
+    if (IS_SHOP) {
+        [params setObject:@"3" forKey:@"typeid"];
+    } else if (IS_ASSISTANT) {
+        [params setObject:@"2" forKey:@"typeid"];
+    }
+
+    [CPMemberManagerModel modelRequestWith:@"http://leshouzhan.platline.com/api/user/findUserList"
+                                parameters:params
+                                     block:^(CPMemberManagerModel *result) {
+                                         [weakSelf handleLoadDataBlock:result];
+                                     } fail:^(CPError *error) {
+                                         
+                                     }];
+}
+
+- (void)handleLoadDataBlock:(CPMemberManagerModel *)result {
+    
+    if (!result.data || ![result isKindOfClass:[CPMemberManagerModel class]]|| ![result.data isKindOfClass:[NSArray class]]) {
+        
+    } else {
+        self.shopsModels = result.data;
+    }
+    
+    self.shopSelectedTF.inputView = self.pickerView;
+
 }
 
 

@@ -330,7 +330,7 @@ typedef NS_ENUM(NSInteger, CPLoginType){
     [CPConfigUrlModel modelRequestWith:@"http://leshouzhan.platline.com/api/sysconfig/getSysConfigByCode"
                             parameters:@{@"code" : @"100"}
                                  block:^(CPConfigUrlModel *result) {
-                                     [CPUserInfoModel shareInstance].helpHtml = result.Description;
+//                                     [CPUserInfoModel shareInstance].helpHtml = result.Description;
                                  } fail:^(CPError *error) {
                                      
                                  }];
