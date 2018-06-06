@@ -25,8 +25,6 @@
 - (void)initializedBaseProperties {
     
     NSString *configPath = [[NSBundle mainBundle] pathForResource:@"FunctionList" ofType:@"plist"];
-    
-    
     NSArray *tempArray = [[NSArray alloc] initWithContentsOfFile:configPath];
     self.dataArray = @[tempArray];
 }

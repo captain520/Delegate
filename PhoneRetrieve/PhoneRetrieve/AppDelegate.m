@@ -98,7 +98,7 @@
 }
 
 - (void)configLogColors {
-    [DDLog addLogger:[DDASLLogger sharedInstance]];
+//    [DDLog addLogger:[DDASLLogger sharedInstance]];
     [DDLog addLogger:[DDTTYLogger sharedInstance]];
     [[DDTTYLogger sharedInstance] setColorsEnabled:YES];
     
@@ -161,13 +161,14 @@
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    //    DDLogInfo(@"%@",[deviceToken description]);
     NSString *push_token = [[[[deviceToken description] stringByReplacingOccurrencesOfString: @"<" withString: @""]
                       stringByReplacingOccurrencesOfString: @">" withString: @""]
                      stringByReplacingOccurrencesOfString: @" " withString: @""];
     
     [CPUserInfoModel shareInstance].push_token = push_token;
     [CPRegistParam shareInstance].push_token = push_token;
+    
+    DDLogInfo(@"%@",push_token);
 }
 
 @end

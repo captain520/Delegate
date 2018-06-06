@@ -66,7 +66,7 @@
                              @"userid": @"20"
                              };
     
-    [CPBankListModel modelRequestWith:@"http://leshouzhan.platline.com/api/Userbank/findUserBankList"
+    [CPBankListModel modelRequestWith:@"http://api.leshouzhan.com/api/Userbank/findUserBankList"
                            parameters:params
                                 block:^(id result) {
                                     [weakSelf handleLoadDataBlock:result];

@@ -232,7 +232,7 @@
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:blockDict];
     [dict setObject:[self getOrderJson] forKey:@"orderjson"];
 
-    [CPShopShippingResultModel modelRequestWith:@"http://leshouzhan.platline.com/api/Order/insertOrder"
+    [CPShopShippingResultModel modelRequestWith:@"http://api.leshouzhan.com/api/Order/insertOrder"
                            parameters:dict
                                 block:^(CPShopShippingResultModel *result) {
                                     [weakSelf handleActionBlock:result];

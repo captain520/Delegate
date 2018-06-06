@@ -186,7 +186,7 @@
 
 //    NSString *url = @"http://test.iviov.com:8088/app/sns/v1/uploadResource";
 //    NSString *url = @"http://maintenance.piaoliusan.com:81/app/upload/image";
-    NSString *url = @"http://leshouzhan.platline.com/api/Upload/uploadImage";
+    NSString *url = @"http://api.leshouzhan.com/api/Upload/uploadImage";
     
     NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer]
                                     multipartFormRequestWithMethod:@"POST"

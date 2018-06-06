@@ -270,7 +270,7 @@
         
     }
 
-    [CPDealOrderModel modelRequestWith:@"http://leshouzhan.platline.com/api/order/getTransactionOrder"
+    [CPDealOrderModel modelRequestWith:@"http://api.leshouzhan.com/api/order/getTransactionOrder"
                                   parameters:params
                                      block:^(CPDealOrderModel *result) {
                                            [weakSelf handleLoadDataBlock:result];

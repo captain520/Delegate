@@ -140,9 +140,9 @@
     
     NSString *requestUrl = nil;
     if (self.type == CPRetrieveOrderListTypeSuccess) {
-        requestUrl = @"http://leshouzhan.platline.com/api/order/getRecyclingInformation";
+        requestUrl = @"http://api.leshouzhan.com/api/order/getRecyclingInformation";
     } else if (self.type == CPRetrieveOrderListTypeFail) {
-        requestUrl = @"http://leshouzhan.platline.com/api/order/getFailureInformation";
+        requestUrl = @"http://api.leshouzhan.com/api/order/getFailureInformation";
     } else {
         
     }

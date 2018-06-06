@@ -470,7 +470,7 @@
     
     __weak typeof(self) weakSelf = self;
     
-    [CPProviceCityAreaModel modelRequestWith:@"http://leshouzhan.platline.com/api/area/findData?parentcode=0"
+    [CPProviceCityAreaModel modelRequestWith:@"http://api.leshouzhan.com/api/area/findData?parentcode=0"
                                   parameters:nil
                                        block:^(id result) {
                                            [weakSelf handleLoadProviceBlock:result];
@@ -493,7 +493,7 @@
     
     __weak typeof(self) weakSelf = self;
     
-    [CPProviceCityAreaModel modelRequestWith:@"http://leshouzhan.platline.com/api/area/findData"
+    [CPProviceCityAreaModel modelRequestWith:@"http://api.leshouzhan.com/api/area/findData"
                                   parameters:@{@"parentcode" : paramCode}
                                        block:^(id result) {
                                            [weakSelf handleLoadCityBlock:result];
@@ -516,7 +516,7 @@
     
     __weak typeof(self) weakSelf = self;
     
-    [CPProviceCityAreaModel modelRequestWith:@"http://leshouzhan.platline.com/api/area/findData"
+    [CPProviceCityAreaModel modelRequestWith:@"http://api.leshouzhan.com/api/area/findData"
                                   parameters:@{@"parentcode" : paramCode}
                                        block:^(id result) {
                                            [weakSelf handleLoadAreaBlock:result];
@@ -549,7 +549,7 @@
     
     __weak typeof(self) weakSelf = self;
     
-    [CPUserDetailInfoModel modelRequestWith:@"http://leshouzhan.platline.com/api/user/getDetailUserInfo"
+    [CPUserDetailInfoModel modelRequestWith:@"http://api.leshouzhan.com/api/user/getDetailUserInfo"
                                  parameters:@{@"userid" : @(self.ID)}
                                       block:^(CPUserDetailInfoModel *result) {
                                           [weakSelf handleLoadDataSuccessBlock:result];

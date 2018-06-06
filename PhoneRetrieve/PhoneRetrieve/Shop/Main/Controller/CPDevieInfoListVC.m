@@ -50,7 +50,7 @@
 //
 //                                    }];
     
-    NSString *urlStr = @"http://leshouzhan.platline.com/api/Report/findReportData?goodsid=1";
+    NSString *urlStr = @"http://api.leshouzhan.com/api/Report/findReportData?goodsid=1";
     __weak typeof(self) weakSelf = self;
     
     [CPFlowModel modelRequestWith:urlStr

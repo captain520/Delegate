@@ -224,7 +224,7 @@
                              @"paycfg" : @(self.paycfg)
                              };
     
-    [CPBaseModel modelRequestWith:@"http://leshouzhan.platline.com/api/user/updatePay"
+    [CPBaseModel modelRequestWith:@"http://api.leshouzhan.com/api/user/updatePay"
                        parameters:params
                             block:^(id result) {
                                 [weakSelf handleSaveActionSuccessBlock:weakSelf];

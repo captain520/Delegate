@@ -350,7 +350,7 @@
         [params setObject:@(paycfg) forKey:@"paycfg"];
     }
 
-    [CPOrderListPageModel modelRequestWith:@"http://leshouzhan.platline.com/api/Order/findOrderList"
+    [CPOrderListPageModel modelRequestWith:@"http://api.leshouzhan.com/api/Order/findOrderList"
                                 parameters:params
                                      block:^(CPOrderListPageModel *result) {
                                          [weakSelf handlequeryShopPayStateVCBlock:result];
@@ -463,7 +463,7 @@
     }
 
     
-    [CPRewardModel modelRequestWith:@"http://leshouzhan.platline.com/api/Distributionorder/getDistributionList"
+    [CPRewardModel modelRequestWith:@"http://api.leshouzhan.com/api/Distributionorder/getDistributionList"
                          parameters:params
                               block:^(CPRewardModel *result) {
                                   [weakSelf handleRewardSearchBlock:result];
@@ -524,7 +524,7 @@
     }
 
 
-    [CPDealOrderModel modelRequestWith:@"http://leshouzhan.platline.com/api/order/getTransactionOrder"
+    [CPDealOrderModel modelRequestWith:@"http://api.leshouzhan.com/api/order/getTransactionOrder"
                             parameters:params
                                  block:^(CPDealOrderModel *result) {
                                      [weakSelf handleDealOrderSearchBlock:result];
@@ -575,9 +575,9 @@
     
     NSString *requestUrl = nil;
     if (self.type == CPOrderSearchTypeOverFinishedOrder) {
-        requestUrl = @"http://leshouzhan.platline.com/api/order/getRecyclingInformation";
+        requestUrl = @"http://api.leshouzhan.com/api/order/getRecyclingInformation";
     } else if (self.type == CPOrderSearchTypeOverDueOrder) {
-        requestUrl = @"http://leshouzhan.platline.com/api/order/getFailureInformation";
+        requestUrl = @"http://api.leshouzhan.com/api/order/getFailureInformation";
     }
     
     if (self.searchBar.text.length > 0) {
@@ -635,7 +635,7 @@
         [params setObject:@"2" forKey:@"typeid"];
     }
 
-    [CPMemberManagerModel modelRequestWith:@"http://leshouzhan.platline.com/api/user/findUserList"
+    [CPMemberManagerModel modelRequestWith:@"http://api.leshouzhan.com/api/user/findUserList"
                                 parameters:params
                                      block:^(CPMemberManagerModel *result) {
                                          [weakSelf handleLoadDataBlock:result];

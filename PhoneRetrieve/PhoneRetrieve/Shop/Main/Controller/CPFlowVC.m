@@ -213,7 +213,7 @@
 
 - (void)loadData {
     
-    NSString *urlStr = @"http://leshouzhan.platline.com/api/Report/findReportData";
+    NSString *urlStr = @"http://api.leshouzhan.com/api/Report/findReportData";
     __weak typeof(self) weakSelf = self;
     
     [CPFlowModel modelRequestWith:urlStr
@@ -275,7 +275,7 @@
 
 - (void)valuePrice {
     
-    NSString *urlStr = @"http://leshouzhan.platline.com/api/Reportresult/insertResult";
+    NSString *urlStr = @"http://api.leshouzhan.com/api/Reportresult/insertResult";
     DDLogInfo(@"%@",self.selecteItems);
     
     NSMutableArray *dataArray = @[].mutableCopy;

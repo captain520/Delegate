@@ -303,7 +303,7 @@
     
     __weak typeof(self) weakSelf = self;
     
-    [CPShippingDetailModel modelRequestWith:@"http://leshouzhan.platline.com/api/Order/getOrderDetail"
+    [CPShippingDetailModel modelRequestWith:@"http://api.leshouzhan.com/api/Order/getOrderDetail"
                                  parameters:@{@"id" : self.ID}
                                       block:^(id result) {
                                           [weakSelf handleLoadDataBlock:result];

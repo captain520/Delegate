@@ -293,7 +293,7 @@ typedef NS_ENUM(NSInteger, CPLoginType){
     }
 
 //    DDLogInfo(@"------------------------------");
-//    [CPBaseModel modelRequestWith:@"http://leshouzhan.platline.com/api/user/getDetailUserInfo"
+//    [CPBaseModel modelRequestWith:@"http://api.leshouzhan.com/api/user/getDetailUserInfo"
 //                       parameters:@{@"userid" : @1}
 //                            block:^(id result) {
 //                                NSLog(@"%@",result);
@@ -311,7 +311,7 @@ typedef NS_ENUM(NSInteger, CPLoginType){
                                  
                              }];
     
-    [CPUserOperationModel modelRequestWith:@"http://leshouzhan.platline.com/api/Goodsoperation/findGoodsOperation"
+    [CPUserOperationModel modelRequestWith:@"http://api.leshouzhan.com/api/Goodsoperation/findGoodsOperation"
                        parameters:nil
                             block:^(CPUserOperationModel *result) {
                                 [CPUserInfoModel shareInstance].operationDes = result.result;
@@ -319,7 +319,7 @@ typedef NS_ENUM(NSInteger, CPLoginType){
                                 
                             }];
     
-    [CPCustomerHelpModel modelRequestWith:@"http://leshouzhan.platline.com/api/Sysinfo/getSysInfo"
+    [CPCustomerHelpModel modelRequestWith:@"http://api.leshouzhan.com/api/Sysinfo/getSysInfo"
                                parameters:nil
                                     block:^(CPCustomerHelpModel *result) {
                                         [CPUserInfoModel shareInstance].customerHelpModel = result;
@@ -327,7 +327,7 @@ typedef NS_ENUM(NSInteger, CPLoginType){
                                         
                                     }];
     
-    [CPConfigUrlModel modelRequestWith:@"http://leshouzhan.platline.com/api/sysconfig/getSysConfigByCode"
+    [CPConfigUrlModel modelRequestWith:@"http://api.leshouzhan.com/api/sysconfig/getSysConfigByCode"
                             parameters:@{@"code" : @"100"}
                                  block:^(CPConfigUrlModel *result) {
 //                                     [CPUserInfoModel shareInstance].helpHtml = result.Description;

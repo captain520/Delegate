@@ -128,7 +128,7 @@
 
     __weak typeof(self) weakSelf = self;
     
-    [CPOrderListPageModel modelRequestWith:@"http://leshouzhan.platline.com/api/Order/findOrderList"
+    [CPOrderListPageModel modelRequestWith:@"http://api.leshouzhan.com/api/Order/findOrderList"
                                   parameters:@{
                                                @"typeid" : @([CPUserInfoModel shareInstance].loginModel.Typeid),
                                                @"userid" : @([CPUserInfoModel shareInstance].loginModel.ID)

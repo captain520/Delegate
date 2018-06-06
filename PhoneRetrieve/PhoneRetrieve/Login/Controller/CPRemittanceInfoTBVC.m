@@ -521,7 +521,7 @@
 //
 //    __weak typeof(self) weakSelf = self;
 //
-//    [CPShopRegisterModel modelRequestWith:@"http://leshouzhan.platline.com/api/user/register3"
+//    [CPShopRegisterModel modelRequestWith:@"http://api.leshouzhan.com/api/user/register3"
 //                               parameters:paramsDict
 //                                    block:^(id result) {
 //                                        [weakSelf handleRegiterBlock:result];
@@ -557,7 +557,7 @@
 
     __weak typeof(self) weakSelf = self;
     
-    [CPShopRegisterModel modelRequestWith:@"http://leshouzhan.platline.com/api/user/register2"
+    [CPShopRegisterModel modelRequestWith:@"http://api.leshouzhan.com/api/user/register2"
                                parameters:paramsDict
                                     block:^(id result) {
                                         [weakSelf handleRegiterBlock:result];
@@ -573,7 +573,7 @@
     
     __weak typeof(self) weakSelf = self;
     
-    [CPShopRegisterModel modelRequestWith:@"http://leshouzhan.platline.com/api/user/register1"
+    [CPShopRegisterModel modelRequestWith:@"http://api.leshouzhan.com/api/user/register1"
                                parameters:paramsDict
                                     block:^(id result) {
                                         [weakSelf handleRegiterBlock:result];
@@ -589,7 +589,7 @@
     
     __weak typeof(self) weakSelf = self;
     
-    [CPShopRegisterModel modelRequestWith:@"http://leshouzhan.platline.com/api/user/register5"
+    [CPShopRegisterModel modelRequestWith:@"http://api.leshouzhan.com/api/user/register5"
                                parameters:paramsDict
                                     block:^(id result) {
                                         [weakSelf handleRegiterBlock:result];
@@ -605,7 +605,7 @@
     
     __weak typeof(self) weakSelf = self;
     
-    [CPShopRegisterModel modelRequestWith:@"http://leshouzhan.platline.com/api/user/addStore"
+    [CPShopRegisterModel modelRequestWith:@"http://api.leshouzhan.com/api/user/addStore"
                                parameters:paramsDict
                                     block:^(id result) {
                                         [weakSelf handleAddShopBlock];
@@ -626,7 +626,7 @@
     
     __weak typeof(self) weakSelf = self;
     
-    [CPShopRegisterModel modelRequestWith:@"http://leshouzhan.platline.com/api/user/updStore"
+    [CPShopRegisterModel modelRequestWith:@"http://api.leshouzhan.com/api/user/updStore"
                                parameters:paramsDict
                                     block:^(id result) {
                                         [weakSelf handleUpdateShopBlock];

@@ -16,9 +16,9 @@
 
 #deinf cp_Str2URL(url)        [NSURL URLWithString:url]
 
-#define CP_BASE_URL      (@"http://leshouzhan.platline.com")
+#define CP_BASE_URL      (@"http://api.leshouzhan.com")
 #else
-#define CP_BASE_URL      (@"http://leshouzhan.platline.com")
+#define CP_BASE_URL      (@"http://api.leshouzhan.com")
 #endif
 
 #define CPURL(api)     [NSString stringWithFormat:@"%@%@",CP_BASE_URL,api]

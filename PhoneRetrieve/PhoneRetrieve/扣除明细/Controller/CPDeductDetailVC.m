@@ -118,7 +118,7 @@
                              @"currentpage" : @(self.currentPageIndex)
                              };
 
-    [CPDeductDetailModel modelRequestWith:@"http://leshouzhan.platline.com/api/Order/getDeductTheDetailsList"
+    [CPDeductDetailModel modelRequestWith:@"http://api.leshouzhan.com/api/Order/getDeductTheDetailsList"
                                parameters:params
                                     block:^(CPDeductDetailModel *result) {
                                         [weakSelf handleLoadDataSuccessBlock:result];
