@@ -25,16 +25,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    //    self.dataArray = @[
+    //                       @[@"中国农业银行(8731)"],
+    //                       @[@"胡小小(1581****1234)"],
+    //                       @[@"captain_2012(158****2123)"]
+    //                       ];
     self.dataArray = @[
-                       @[@"中国农业银行(8731)"],
-                       @[@"胡小小(1581****1234)"],
-                       @[@"captain_2012(158****2123)"]
+                       @[[NSString stringWithFormat:@"%@(%@)",[CPUserInfoModel shareInstance].userDetaiInfoModel.bankname,[CPUserInfoModel shareInstance].userDetaiInfoModel.banknum]],
+                       @[[NSString stringWithFormat:@"%@(%@)",[CPUserInfoModel shareInstance].userDetaiInfoModel.aliname,[CPUserInfoModel shareInstance].userDetaiInfoModel.alinum]],
+                       @[[NSString stringWithFormat:@"%@(%@)",[CPUserInfoModel shareInstance].userDetaiInfoModel.wxname,[CPUserInfoModel shareInstance].userDetaiInfoModel.wxnum]]
                        ];
     
     self.paycfg = [CPUserInfoModel shareInstance].userDetaiInfoModel.paycfg;
     
     savePayCfg = self.paycfg;
-
+    
     [self loadData];
 }
 
@@ -44,18 +49,54 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    switch (section) {
+        case 0:
+        {
+            if ([CPUserInfoModel shareInstance].userDetaiInfoModel.bankname.length == 0) {
+                return 0;
+            }
+        }
+            break;
+        case 1:
+        {
+            if ([CPUserInfoModel shareInstance].userDetaiInfoModel.aliname.length == 0) {
+                return 0;
+            }
+        }
+            break;
+        case 2:
+        {
+            if ([CPUserInfoModel shareInstance].userDetaiInfoModel.wxname.length == 0) {
+                return 0;
+            }
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
     return 30.0f;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     switch (section) {
         case 0:
+            if ([CPUserInfoModel shareInstance].userDetaiInfoModel.bankname.length == 0) {
+                return @"";
+            }
             return @"银行卡";
             break;
         case 1:
+            if ([CPUserInfoModel shareInstance].userDetaiInfoModel.aliname.length == 0) {
+                return @"";
+            }
             return @"支付宝";
             break;
         case 2:
+            if ([CPUserInfoModel shareInstance].userDetaiInfoModel.wxname.length == 0) {
+                return @"";
+            }
             return @"微信";
             break;
             
@@ -82,7 +123,7 @@
     
     if (2 == section) {
         NSString *cellIdentify = @"CPTitleDetailCell";
-
+        
         UITableViewHeaderFooterView *footer = [tableView dequeueReusableHeaderFooterViewWithIdentifier:cellIdentify];
         if (!footer) {
             footer = [[UITableViewHeaderFooterView alloc] initWithReuseIdentifier:cellIdentify];
@@ -103,10 +144,35 @@
         }
         
         return footer;
-
+        
     }
     
     return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    switch (indexPath.section) {
+        case 0:
+            if ([CPUserInfoModel shareInstance].userDetaiInfoModel.bankname.length == 0) {
+                return 0;
+            }
+            break;
+        case 1:
+            if ([CPUserInfoModel shareInstance].userDetaiInfoModel.aliname.length == 0) {
+                return 0;
+            }
+            break;
+        case 2:
+            if ([CPUserInfoModel shareInstance].userDetaiInfoModel.wxname.length == 0) {
+                return 0;
+            }
+            break;
+            
+        default:
+            break;
+    }
+    
+    return CELL_HEIGHT_F;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -119,7 +185,7 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.shouldShowBottomLine = NO;
     }
-
+    
     cell.content = self.dataArray[indexPath.section][indexPath.row];
     
     switch (indexPath.section) {
@@ -142,15 +208,15 @@
         default:
             break;
     }
-
-//    cell.shouldSelected = [self.selectedIndexPath isEqual:indexPath];
-
+    
+    //    cell.shouldSelected = [self.selectedIndexPath isEqual:indexPath];
+    
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSLog(@"%s",__FUNCTION__);
-
+    
     switch (indexPath.section) {
         case 0:
         {
@@ -177,32 +243,32 @@
         default:
             break;
     }
-
-//    self.selectedIndexPath = indexPath;
+    
+    //    self.selectedIndexPath = indexPath;
     
     [self.dataTableView reloadData];
-//    NSString *title = @"修改银行账号";
-//    CPModifyShopInfoType type = CPModifyShopInfoTypeModifyBankAccount;
-//
-//    switch (indexPath.section) {
-//        case 1:
-//        {
-//            type = CPModifyShopInfoTypeModifyAlipayAccount;
-//            title = @"修改支付宝账号";
-//        }
-//            break;
-//        case 2:
-//        {
-//            type = CPModifyShopInfoTypeModifyWechatAccount;
-//            title = @"修改微信账号";
-//        }
-//            break;
-//
-//        default:
-//            break;
-//    }
-//
-//    [self push2AccountModifyPage:title type:type];
+    //    NSString *title = @"修改银行账号";
+    //    CPModifyShopInfoType type = CPModifyShopInfoTypeModifyBankAccount;
+    //
+    //    switch (indexPath.section) {
+    //        case 1:
+    //        {
+    //            type = CPModifyShopInfoTypeModifyAlipayAccount;
+    //            title = @"修改支付宝账号";
+    //        }
+    //            break;
+    //        case 2:
+    //        {
+    //            type = CPModifyShopInfoTypeModifyWechatAccount;
+    //            title = @"修改微信账号";
+    //        }
+    //            break;
+    //
+    //        default:
+    //            break;
+    //    }
+    //
+    //    [self push2AccountModifyPage:title type:type];
 }
 
 - (void)push2AccountModifyPage:(NSString *)title type:(CPModifyShopInfoType)type {
@@ -210,7 +276,7 @@
     CPModifyShopInfoVC *accountVC = [[CPModifyShopInfoVC alloc] init];
     accountVC.title = title;
     accountVC.type = type;
-
+    
     [self.navigationController pushViewController:accountVC animated:YES];
 }
 
@@ -224,7 +290,7 @@
                              @"paycfg" : @(self.paycfg)
                              };
     
-    [CPBaseModel modelRequestWith:DOMAIN_ADDRESS@"api/user/updatePay"
+    [CPBaseModel modelRequestWith:DOMAIN_ADDRESS@"/api/user/updatePay"
                        parameters:params
                             block:^(id result) {
                                 [weakSelf handleSaveActionSuccessBlock:weakSelf];
@@ -234,7 +300,7 @@
 }
 
 - (void)handleSaveActionSuccessBlock:(id)result {
-   
+    
     [self.navigationController popViewControllerAnimated:YES];
 }
 
