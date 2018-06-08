@@ -215,4 +215,10 @@ NSString *cp_jointString(NSString *a, NSString *b) {
 //}
 //
 
+//  获取沙盒路径
+NSString  *cp_documentFilePath(NSString *fileName) {
+    NSString *document = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject;
+    return [document stringByAppendingPathComponent:fileName];
+}
+
 @end
