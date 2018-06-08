@@ -28,9 +28,9 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>乐收栈</string>
+	<string>乐收栈APP将要访问您的相机功能进行拍照</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>NSPhotoLibraryUsageDescription</string>
+	<string>乐收栈APP将要访问您的相册功能进行照片选取</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
