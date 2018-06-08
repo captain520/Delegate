@@ -65,4 +65,7 @@ NSString *cp_noEmptyString(NSString *value);
 //  将字符串a b 拼接组合
 NSString *cp_jointString(NSString *a, NSString *b);
 
+//  获取沙盒路径
+NSString  *cp_documentFilePath(NSString *fileName);
+
 @end
