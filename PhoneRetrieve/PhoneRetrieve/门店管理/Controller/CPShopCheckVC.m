@@ -209,7 +209,7 @@
                              @"operatorname" : [CPUserInfoModel shareInstance].loginModel.linkname
                              }.copy;
 
-    [CPBaseModel modelRequestWith:@"http://api.leshouzhan.com/api/user/updateUserCheck"
+    [CPBaseModel modelRequestWith:DOMAIN_ADDRESS@"api/user/updateUserCheck"
                        parameters:params
                             block:^(id result) {
                                 [weakSelf handleCheckPassBlock:result];
@@ -234,7 +234,7 @@
                              @"userid" : @(self.model.ID)
                              }.copy;
     
-    [CPBaseModel modelRequestWith:@"http://api.leshouzhan.com/api/user/unUserCheck"
+    [CPBaseModel modelRequestWith:DOMAIN_ADDRESS@"api/user/unUserCheck"
                        parameters:params
                             block:^(id result) {
                                 [weakSelf handleCheckPassBlock:result];
@@ -256,7 +256,7 @@
     
     __weak typeof(self) weakSelf = self;
     
-    [CPUserDetailInfoModel modelRequestWith:@"http://api.leshouzhan.com/api/user/getDetailUserInfo"
+    [CPUserDetailInfoModel modelRequestWith:DOMAIN_ADDRESS@"api/user/getDetailUserInfo"
                                  parameters:@{@"userid" : self.userID}//@([CPUserInfoModel shareInstance].loginModel.ID)}
                                       block:^(CPUserDetailInfoModel *result) {
                                           [weakSelf handleLoadDataSuccessBlock:result];

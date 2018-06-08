@@ -133,7 +133,7 @@
                              @"code" : [CPUserInfoModel shareInstance].userDetaiInfoModel.cpcode
                              }.copy;
     
-    [CPBaseModel modelRequestWith:@"http://api.leshouzhan.com/api/user/updateUserInfo"
+    [CPBaseModel modelRequestWith:DOMAIN_ADDRESS@"api/user/updateUserInfo"
                        parameters:params
                             block:^(id result) {
                                 [weakSelf handleUpdateBlock];

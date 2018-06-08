@@ -10,18 +10,18 @@
 #define API_h
 
 
-#define ENVIRONMENT        0    // 1 : 正式环境    0:  测试环境
+//#define ENVIRONMENT        0    // 1 : 正式环境    0:  测试环境
+//
+//#if ENVIRONMENT
+//
+//#deinf cp_Str2URL(url)        [NSURL URLWithString:url]
+//
+//#define CP_BASE_URL      (@"http://api.leshouzhan.com")
+//#else
+//#define CP_BASE_URL      (@"http://api.leshouzhan.com")
+//#endif
 
-#if ENVIRONMENT
-
-#deinf cp_Str2URL(url)        [NSURL URLWithString:url]
-
-#define CP_BASE_URL      (@"http://api.leshouzhan.com")
-#else
-#define CP_BASE_URL      (@"http://api.leshouzhan.com")
-#endif
-
-#define CPURL(api)     [NSString stringWithFormat:@"%@%@",CP_BASE_URL,api]
+#define CPURL(api)     [NSString stringWithFormat:@"%@%@",DOMAIN_ADDRESS,api]
 
 #define CPURL_user_SHOP_REGISTER                    CPURL(@"/api/user/register3")        //  门店注册
 #define CPURL_USER_PASSWD_LOGIN                     CPURL(@"/api/user/login2")           //手机号码 + 密码登录

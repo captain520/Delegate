@@ -396,14 +396,7 @@
                                                                   ]
                                                          reduce:^id{
                                                              return @(
-                                                             self.bankOwerTF.text.length > 0
-                                                             && self.bankAccountTF.text.length > 0
-                                                             && self.bankAreaTF.text.length > 0
-                                                             && self.wechatNameTF.text.length > 0
-                                                             && self.wechatAccountTF.text.length > 0
-                                                             && self.alipayNameTF.text.length > 0
-                                                             && self.alipayAccountTF.text.length > 0
-                                                             && self.paymethodTF.text.length > 0
+                                                             [self validPayMethodInfo]
                                                              );
                                                              
                                                          }];
@@ -475,15 +468,54 @@
     
     NSString *content = consignCompanys[[consignCompanyPicker selectedRowInComponent:0]];
     self.paymethodTF.text = content;
+    
+    self.nextAction.enabled = [self validPayMethodInfo];
+}
+
+- (BOOL)validPayMethodInfo {
+    
+    BOOL valied = NO;
+    NSInteger row = [consignCompanyPicker selectedRowInComponent:0];
+    switch (row) {
+        case 0:
+        {
+            valied = (
+                      self.bankOwerTF.text.length > 0
+                      && self.bankAccountTF.text.length > 0
+                      && self.bankAreaTF.text.length > 0
+                      && self.bankBranchTF.text.length > 0
+                      );
+        }
+            break;
+        case 1:
+        {
+            
+            valied = (
+                      self.wechatNameTF.text.length > 0
+                      && self.wechatAccountTF.text.length > 0
+                      );
+        }
+            break;
+        case 2:
+        {
+            
+            valied = (
+                      self.alipayNameTF.text.length > 0
+                      && self.alipayAccountTF.text.length > 0
+                      );
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    return valied;
 }
 
 #pragma mark - private method
 
 - (void)nextAction:(UIButton *)sender {
-    
-//    [self push2VCWith:@"CPSuccessVC" title:@"提交成功"];
-//
-//    return;
 
     [CPRegistParam shareInstance].bname      = cp_noEmptyString(self.bankOwerTF.text);
     [CPRegistParam shareInstance].banknum    = cp_noEmptyString(self.bankAccountTF.text);
@@ -521,7 +553,7 @@
 //
 //    __weak typeof(self) weakSelf = self;
 //
-//    [CPShopRegisterModel modelRequestWith:@"http://api.leshouzhan.com/api/user/register3"
+//    [CPShopRegisterModel modelRequestWith:DOMAIN_ADDRESS@"api/user/register3"
 //                               parameters:paramsDict
 //                                    block:^(id result) {
 //                                        [weakSelf handleRegiterBlock:result];
@@ -536,8 +568,7 @@
         return;
     }
     
-    [[CPProgress Instance] showSuccess:self.view message:@"注册成功" finish:^(BOOL finished) {
-//        [self.navigationController popToRootViewControllerAnimated:YES];
+    [self.view makeToast:@"您提交的信息已发送成功，请耐心等候！！！" duration:2.0f position:CSToastPositionCenter title:nil image:nil style:nil completion:^(BOOL didTap) {
         
         [self.navigationController.viewControllers enumerateObjectsUsingBlock:^(__kindof UIViewController * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             if ([obj isKindOfClass: [CPLoginVC class]]) {
@@ -545,7 +576,9 @@
                 *stop = YES;
             }
         }];
+        
     }];
+    
 }
 
 #pragma mark - private method
@@ -557,7 +590,7 @@
 
     __weak typeof(self) weakSelf = self;
     
-    [CPShopRegisterModel modelRequestWith:@"http://api.leshouzhan.com/api/user/register2"
+    [CPShopRegisterModel modelRequestWith:DOMAIN_ADDRESS@"api/user/register2"
                                parameters:paramsDict
                                     block:^(id result) {
                                         [weakSelf handleRegiterBlock:result];
@@ -573,7 +606,7 @@
     
     __weak typeof(self) weakSelf = self;
     
-    [CPShopRegisterModel modelRequestWith:@"http://api.leshouzhan.com/api/user/register1"
+    [CPShopRegisterModel modelRequestWith:DOMAIN_ADDRESS@"api/user/register1"
                                parameters:paramsDict
                                     block:^(id result) {
                                         [weakSelf handleRegiterBlock:result];
@@ -589,7 +622,7 @@
     
     __weak typeof(self) weakSelf = self;
     
-    [CPShopRegisterModel modelRequestWith:@"http://api.leshouzhan.com/api/user/register5"
+    [CPShopRegisterModel modelRequestWith:DOMAIN_ADDRESS@"api/user/register5"
                                parameters:paramsDict
                                     block:^(id result) {
                                         [weakSelf handleRegiterBlock:result];
@@ -605,7 +638,7 @@
     
     __weak typeof(self) weakSelf = self;
     
-    [CPShopRegisterModel modelRequestWith:@"http://api.leshouzhan.com/api/user/addStore"
+    [CPShopRegisterModel modelRequestWith:DOMAIN_ADDRESS@"api/user/addStore"
                                parameters:paramsDict
                                     block:^(id result) {
                                         [weakSelf handleAddShopBlock];
@@ -626,7 +659,7 @@
     
     __weak typeof(self) weakSelf = self;
     
-    [CPShopRegisterModel modelRequestWith:@"http://api.leshouzhan.com/api/user/updStore"
+    [CPShopRegisterModel modelRequestWith:DOMAIN_ADDRESS@"api/user/updStore"
                                parameters:paramsDict
                                     block:^(id result) {
                                         [weakSelf handleUpdateShopBlock];

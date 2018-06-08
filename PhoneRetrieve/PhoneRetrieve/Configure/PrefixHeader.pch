@@ -9,6 +9,14 @@
 #ifndef PrefixHeader_pch
 #define PrefixHeader_pch
 
+#define RUN_EVN     0       //  0:Test   1:Product
+
+#if RUN_EVN
+#define DOMAIN_ADDRESS      @"http://api.leshouzhan.com/"
+#else
+#define DOMAIN_ADDRESS     @"http://apitest.leshouzhan.com/"
+#endif
+
 // Include any system framework and library headers here that should be included in all compilation units.
 // You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
 #import <Masonry.h>

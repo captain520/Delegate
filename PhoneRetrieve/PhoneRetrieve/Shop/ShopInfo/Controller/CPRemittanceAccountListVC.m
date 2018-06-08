@@ -224,7 +224,7 @@
                              @"paycfg" : @(self.paycfg)
                              };
     
-    [CPBaseModel modelRequestWith:@"http://api.leshouzhan.com/api/user/updatePay"
+    [CPBaseModel modelRequestWith:DOMAIN_ADDRESS@"api/user/updatePay"
                        parameters:params
                             block:^(id result) {
                                 [weakSelf handleSaveActionSuccessBlock:weakSelf];

@@ -313,7 +313,7 @@
                              @"password" :self.confirmTF.text
                              };
     
-    [CPAddMemberResultModel modelRequestWith:@"http://api.leshouzhan.com/api/user/shopCreateDY"
+    [CPAddMemberResultModel modelRequestWith:DOMAIN_ADDRESS@"api/user/shopCreateDY"
                                   parameters:params
                                        block:^(CPAddMemberResultModel *result) {
                                            [weakSelf handleAction:result];
@@ -339,7 +339,7 @@
                              @"password" : self.confirmTF.text
                              };
     
-    [CPBaseModel modelRequestWith:@"http://api.leshouzhan.com/api/user/update4"
+    [CPBaseModel modelRequestWith:DOMAIN_ADDRESS@"api/user/update4"
                        parameters:params
                             block:^(id result) {
                                 [weakSelf handleUpdateActionNBlock:result];

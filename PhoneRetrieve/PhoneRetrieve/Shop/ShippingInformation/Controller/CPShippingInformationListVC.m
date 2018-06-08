@@ -223,7 +223,12 @@
 
 - (void)searchAction:(id)sender {
     
+    __weak typeof(self) weakSelf = self;
+    
     CPOrderSearchVC *vc = [[CPOrderSearchVC alloc] init];
+    vc.searchDoneBlock = ^(id result) {
+        [weakSelf handleSearchBlock:result];
+    };
     vc.hidesBottomBarWhenPushed = YES;
     if (self.currentTabIndex == 0) {
         vc.type = CPOrderSearchTypeShopPayAndUnpaidOrder;
@@ -242,6 +247,19 @@
 //    }
     
     [self.navigationController pushViewController:vc animated:YES];
+}
+
+- (void)handleSearchBlock:(CPDealOrderModel *)result {
+    
+    [self.models removeAllObjects];
+
+    if (!result.data || ![result isKindOfClass:[CPDealOrderModel class]]|| ![result.data isKindOfClass:[NSArray class]]) {
+        
+    } else {
+        [self.models addObjectsFromArray:result.data];
+    }
+    
+    [self.dataTableView reloadData];
 }
 
 - (void)loadData {
@@ -270,7 +288,7 @@
         
     }
 
-    [CPDealOrderModel modelRequestWith:@"http://api.leshouzhan.com/api/order/getTransactionOrder"
+    [CPDealOrderModel modelRequestWith:DOMAIN_ADDRESS@"api/order/getTransactionOrder"
                                   parameters:params
                                      block:^(CPDealOrderModel *result) {
                                            [weakSelf handleLoadDataBlock:result];

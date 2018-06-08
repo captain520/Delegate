@@ -109,7 +109,13 @@
 
 - (void)searchAction:(UIButton *)sender {
     
+    
+    __weak typeof(self) weakSelf = self;
+    
     CPOrderSearchVC *searchVC = [[CPOrderSearchVC alloc] init];
+    searchVC.searchDoneBlock = ^(id result) {
+        [weakSelf handleSearchActionBlock:result];
+    };
     if (self.type == CPRetrieveOrderListTypeSuccess) {
         searchVC.title = @"回收订单查询";
         searchVC.type = CPOrderSearchTypeOverFinishedOrder;
@@ -121,6 +127,24 @@
     [self.navigationController pushViewController:searchVC animated:YES];
     
 }
+
+- (void)handleSearchActionBlock:(CPRetireveOrderModel *)result {
+    
+    [self.models removeAllObjects];
+    
+    if (!result.data ||
+        ![result isKindOfClass:[CPRetireveOrderModel class]] ||
+        ![result.data isKindOfClass:[NSArray class]]) {
+        
+        [self.models removeAllObjects];
+        
+    } else {
+        [self.models addObjectsFromArray:result.data];
+    }
+    
+    [self.dataTableView reloadData];
+}
+
 
 - (void)loadData {
     
@@ -140,9 +164,9 @@
     
     NSString *requestUrl = nil;
     if (self.type == CPRetrieveOrderListTypeSuccess) {
-        requestUrl = @"http://api.leshouzhan.com/api/order/getRecyclingInformation";
+        requestUrl = DOMAIN_ADDRESS@"api/order/getRecyclingInformation";
     } else if (self.type == CPRetrieveOrderListTypeFail) {
-        requestUrl = @"http://api.leshouzhan.com/api/order/getFailureInformation";
+        requestUrl = DOMAIN_ADDRESS@"api/order/getFailureInformation";
     } else {
         
     }

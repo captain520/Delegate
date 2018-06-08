@@ -249,7 +249,7 @@
         };
         
         self.checkBox.showHintBlock = ^{
-            [weakSelf getConfigUrl:@"210" block:^(NSString *url, NSString *title) {
+            [weakSelf getConfigUrl:@"201" block:^(NSString *url, NSString *title) {
                 CPWebVC *webVC = [[CPWebVC alloc] init];
                 //        webVC.urlStr = @"https://www.baidu.com";
                 webVC.contentStr = url;

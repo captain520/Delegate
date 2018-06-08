@@ -25,6 +25,8 @@
 //    [self loadCustomNav];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:CPImage(@"tab_home-default") style:UIBarButtonItemStyleDone target:self action:@selector(push2MainPage)];
+    
+    DDLogInfo(@"**********>Class:%@<**********",NSStringFromClass(self.class));
 }
 
 - (void)loadCustomNav {
@@ -71,7 +73,7 @@
 
 - (void)getConfigUrl:(NSString *)code block:(void (^)(NSString *url,NSString *title))block {
     
-    [CPConfigUrlModel modelRequestWith:@"http://api.leshouzhan.com/api/sysconfig/getSysConfigByCode"
+    [CPConfigUrlModel modelRequestWith:DOMAIN_ADDRESS@"api/sysconfig/getSysConfigByCode"
                             parameters:@{@"code" : code}
                                  block:^(CPConfigUrlModel *result) {
                                      !block ? : block(result.Description, result.title);

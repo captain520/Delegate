@@ -270,7 +270,7 @@
         
         __weak typeof(self) weakSelf = self;
 
-        [CPBaseModel modelRequestWith:@"http://api.leshouzhan.com/api/user/deleteUser"
+        [CPBaseModel modelRequestWith:DOMAIN_ADDRESS@"api/user/deleteUser"
                            parameters:@{@"userid" : model.ID}
                                 block:^(id result) {
                                     [weakSelf handleDeleteSuccessBlock:result];
@@ -325,7 +325,7 @@
         }
     }
 
-    [CPMemberManagerModel modelRequestWith:@"http://api.leshouzhan.com/api/user/findUserList"
+    [CPMemberManagerModel modelRequestWith:DOMAIN_ADDRESS@"api/user/findUserList"
                        parameters:params
                             block:^(CPMemberManagerModel *result) {
                                 [weakSelf handleLoadDataBlock:result];

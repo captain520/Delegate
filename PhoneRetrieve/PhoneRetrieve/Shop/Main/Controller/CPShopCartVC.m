@@ -183,7 +183,7 @@
     
     __weak typeof(self) weakSelf = self;
     
-    [CPCartModel modelRequestWith:@"http://api.leshouzhan.com/api/reportresult/findRecycList"
+    [CPCartModel modelRequestWith:DOMAIN_ADDRESS@"api/reportresult/findRecycList"
                        parameters:@{@"userid" : @([CPUserInfoModel shareInstance].loginModel.ID)}
                             block:^(NSArray <CPCartModel *> *result) {
                                 [weakSelf handleLoadDataSuccessBlock:result];

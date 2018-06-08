@@ -350,7 +350,7 @@
         [params setObject:@(paycfg) forKey:@"paycfg"];
     }
 
-    [CPOrderListPageModel modelRequestWith:@"http://api.leshouzhan.com/api/Order/findOrderList"
+    [CPOrderListPageModel modelRequestWith:DOMAIN_ADDRESS@"api/Order/findOrderList"
                                 parameters:params
                                      block:^(CPOrderListPageModel *result) {
                                          [weakSelf handlequeryShopPayStateVCBlock:result];
@@ -463,7 +463,7 @@
     }
 
     
-    [CPRewardModel modelRequestWith:@"http://api.leshouzhan.com/api/Distributionorder/getDistributionList"
+    [CPRewardModel modelRequestWith:DOMAIN_ADDRESS@"api/Distributionorder/getDistributionList"
                          parameters:params
                               block:^(CPRewardModel *result) {
                                   [weakSelf handleRewardSearchBlock:result];
@@ -495,7 +495,7 @@
     __weak typeof(self) weakSelf = self;
     
     NSMutableDictionary *params = @{
-                                    @"pagesize" : @"200",
+                                    @"pagesize" : @"201",
 //                                    @"code" : @([CPUserInfoModel shareInstance].loginModel.ID),
                                     @"currentpage" : @(1)
                                     }.mutableCopy;
@@ -524,7 +524,7 @@
     }
 
 
-    [CPDealOrderModel modelRequestWith:@"http://api.leshouzhan.com/api/order/getTransactionOrder"
+    [CPDealOrderModel modelRequestWith:DOMAIN_ADDRESS@"api/order/getTransactionOrder"
                             parameters:params
                                  block:^(CPDealOrderModel *result) {
                                      [weakSelf handleDealOrderSearchBlock:result];
@@ -537,18 +537,21 @@
 - (void)handleDealOrderSearchBlock:(CPDealOrderModel *)result {
     
     if ([result isKindOfClass:[CPDealOrderModel class]] && result.data.count > 0) {
-        CPShippingInformationListVC *vc = [[CPShippingInformationListVC alloc] init];
-        vc.model = result;
+        !self.searchDoneBlock ? : self.searchDoneBlock(result);
         
-        if(self.type == CPOrderSearchTypeShopPayAndUnpaidOrder) {
-            vc.title = @"交易订单查询结果-全部";
-        } else if(self.type == CPOrderSearchTypeShopUnpaidOrder) {
-            vc.title = @"交易订单查询结果-待支付";
-        } else if( self.type == CPOrderSearchTypeShopPaidOrder) {
-            vc.title = @"交易订单查询结果-已支付";
-        }
-
-        [self.navigationController pushViewController:vc animated:YES];
+        [self.navigationController popViewControllerAnimated:YES];
+//        CPShippingInformationListVC *vc = [[CPShippingInformationListVC alloc] init];
+//        vc.model = result;
+//
+//        if(self.type == CPOrderSearchTypeShopPayAndUnpaidOrder) {
+//            vc.title = @"交易订单查询结果-全部";
+//        } else if(self.type == CPOrderSearchTypeShopUnpaidOrder) {
+//            vc.title = @"交易订单查询结果-待支付";
+//        } else if( self.type == CPOrderSearchTypeShopPaidOrder) {
+//            vc.title = @"交易订单查询结果-已支付";
+//        }
+//
+//        [self.navigationController pushViewController:vc animated:YES];
 
     } else {
         [self.view makeToast:@"未查到符合的数据" duration:1.0f position:CSToastPositionCenter];
@@ -575,9 +578,9 @@
     
     NSString *requestUrl = nil;
     if (self.type == CPOrderSearchTypeOverFinishedOrder) {
-        requestUrl = @"http://api.leshouzhan.com/api/order/getRecyclingInformation";
+        requestUrl = DOMAIN_ADDRESS@"api/order/getRecyclingInformation";
     } else if (self.type == CPOrderSearchTypeOverDueOrder) {
-        requestUrl = @"http://api.leshouzhan.com/api/order/getFailureInformation";
+        requestUrl = DOMAIN_ADDRESS@"api/order/getFailureInformation";
     }
     
     if (self.searchBar.text.length > 0) {
@@ -605,15 +608,17 @@
     
     if ([result isKindOfClass:[CPRetireveOrderModel class]] && result.data.count > 0) {
         
-        CPRetrieveOrderListVC *vc = [[CPRetrieveOrderListVC alloc] init];
-        if (self.type == CPOrderSearchTypeOverDueOrder) {
-            vc.title = @"失效订单";
-        } else if (self.type == CPOrderSearchTypeOverFinishedOrder) {
-            vc.title = @"回收订单";
-        }
-        vc.model = result;
-        
-        [self.navigationController pushViewController:vc animated:YES];
+        !self.searchDoneBlock ? : self.searchDoneBlock(result);
+        [self.navigationController popViewControllerAnimated:YES];
+//        CPRetrieveOrderListVC *vc = [[CPRetrieveOrderListVC alloc] init];
+//        if (self.type == CPOrderSearchTypeOverDueOrder) {
+//            vc.title = @"失效订单";
+//        } else if (self.type == CPOrderSearchTypeOverFinishedOrder) {
+//            vc.title = @"回收订单";
+//        }
+//        vc.model = result;
+//
+//        [self.navigationController pushViewController:vc animated:YES];
     } else {
         [self.view makeToast:@"未查到符合的数据" duration:1.0f position:CSToastPositionCenter];
     }
@@ -635,7 +640,7 @@
         [params setObject:@"2" forKey:@"typeid"];
     }
 
-    [CPMemberManagerModel modelRequestWith:@"http://api.leshouzhan.com/api/user/findUserList"
+    [CPMemberManagerModel modelRequestWith:DOMAIN_ADDRESS@"api/user/findUserList"
                                 parameters:params
                                      block:^(CPMemberManagerModel *result) {
                                          [weakSelf handleLoadDataBlock:result];

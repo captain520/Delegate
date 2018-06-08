@@ -43,6 +43,7 @@
         self.accountTF.borderStyle = UITextBorderStyleRoundedRect;
         self.accountTF.keyboardType = UIKeyboardTypeNumberPad;
         self.accountTF.rightViewMode = UITextFieldViewModeAlways;
+        self.accountTF.secureTextEntry = YES;
         
         [self.view addSubview:self.accountTF];
         
@@ -79,6 +80,7 @@
         self.codeTF.font = [UIFont systemFontOfSize:13.0];
         self.codeTF.borderStyle = UITextBorderStyleRoundedRect;
         self.codeTF.placeholder = @"输入新密码";
+        self.codeTF.secureTextEntry = YES;
         
         [self.view addSubview:self.codeTF];
         
@@ -97,6 +99,7 @@
         self.passwdTF.font = [UIFont systemFontOfSize:13.0];
         self.passwdTF.borderStyle = UITextBorderStyleRoundedRect;
         self.passwdTF.placeholder = @"新密码确认";
+        self.passwdTF.secureTextEntry = YES;
         
         [self.view addSubview:self.passwdTF];
         

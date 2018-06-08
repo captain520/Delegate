@@ -25,4 +25,6 @@ typedef NS_ENUM(NSUInteger,CPOrderSearchType) {
 
 @property (nonatomic, assign) CPOrderSearchType type;
 
+@property (nonatomic, copy) void (^searchDoneBlock)(id result);
+
 @end

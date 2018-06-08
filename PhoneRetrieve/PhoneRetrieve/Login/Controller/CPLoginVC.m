@@ -55,12 +55,17 @@ typedef NS_ENUM(NSInteger, CPLoginType){
         }];
     }
     
+    NSDictionary *params = [NSKeyedUnarchiver unarchiveObjectWithFile:cp_documentFilePath(@"LoginInfo")];
+    
     if (nil == self.accountTF) {
         self.accountTF = [UITextField new];
         self.accountTF.placeholder = @"请输入您的手机号码/会员编号";
 //        self.accountTF.text = @"15814099327";
 //        self.accountTF.text = @"18033446838";
-        self.accountTF.text = @"15814099328";
+        if (params[@"phone"]) {
+            self.accountTF.text = params[@"phone"];
+        }
+//        self.accountTF.text = @"15814099328";
 //        self.accountTF.text = @"15814099329";
         self.accountTF.borderStyle = UITextBorderStyleRoundedRect;
 //        self.accountTF.keyboardType = UIKeyboardTypeNumberPad;
@@ -109,6 +114,11 @@ typedef NS_ENUM(NSInteger, CPLoginType){
 //        self.passwdTF.keyboardType = UIKeyboardTypeNumberPad;
         self.passwdTF.font = [UIFont systemFontOfSize:15.0f];
         self.passwdTF.tintColor = MainColor;
+        self.passwdTF.secureTextEntry = YES;
+        
+        if (params[@"password"]) {
+            self.passwdTF.text = params[@"password"];
+        }
 
         [self.view addSubview:self.passwdTF];
         
@@ -188,8 +198,23 @@ typedef NS_ENUM(NSInteger, CPLoginType){
         make.bottom.mas_equalTo(-100);
     }];
     
+    segmentControl.hidden = YES;
     [segmentControl setSelectedSegmentIndex:0];
 //#endif
+    
+    {
+        CPLabel *companyNameLB = [CPLabel new];
+        companyNameLB.text = @"深圳市奇积网络科技有限公司";
+        companyNameLB.textAlignment = NSTextAlignmentCenter;
+        companyNameLB.textColor = C66;
+        
+        [self.view addSubview:companyNameLB];
+        [companyNameLB mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(0);
+            make.right.mas_equalTo(0);
+            make.bottom.mas_equalTo(-60.0f);
+        }];
+    }
 
 }
 
@@ -282,6 +307,7 @@ typedef NS_ENUM(NSInteger, CPLoginType){
                              };
     
     if (self.loginType == CPLoginTypePasswd) {
+        [NSKeyedArchiver archiveRootObject:params toFile:cp_documentFilePath(@"LoginInfo")];
         url = CPURL_USER_PASSWD_LOGIN;
     } else if (self.loginType == CPLoginTypeCode) {
         url = CPURL_USER_MESSAGE_CODE_LOGIN;;
@@ -293,7 +319,7 @@ typedef NS_ENUM(NSInteger, CPLoginType){
     }
 
 //    DDLogInfo(@"------------------------------");
-//    [CPBaseModel modelRequestWith:@"http://api.leshouzhan.com/api/user/getDetailUserInfo"
+//    [CPBaseModel modelRequestWith:DOMAIN_ADDRESS@"api/user/getDetailUserInfo"
 //                       parameters:@{@"userid" : @1}
 //                            block:^(id result) {
 //                                NSLog(@"%@",result);
@@ -311,7 +337,7 @@ typedef NS_ENUM(NSInteger, CPLoginType){
                                  
                              }];
     
-    [CPUserOperationModel modelRequestWith:@"http://api.leshouzhan.com/api/Goodsoperation/findGoodsOperation"
+    [CPUserOperationModel modelRequestWith:DOMAIN_ADDRESS@"api/Goodsoperation/findGoodsOperation"
                        parameters:nil
                             block:^(CPUserOperationModel *result) {
                                 [CPUserInfoModel shareInstance].operationDes = result.result;
@@ -319,7 +345,7 @@ typedef NS_ENUM(NSInteger, CPLoginType){
                                 
                             }];
     
-    [CPCustomerHelpModel modelRequestWith:@"http://api.leshouzhan.com/api/Sysinfo/getSysInfo"
+    [CPCustomerHelpModel modelRequestWith:DOMAIN_ADDRESS@"/api/Sysinfo/getSysInfo"
                                parameters:nil
                                     block:^(CPCustomerHelpModel *result) {
                                         [CPUserInfoModel shareInstance].customerHelpModel = result;
@@ -327,7 +353,7 @@ typedef NS_ENUM(NSInteger, CPLoginType){
                                         
                                     }];
     
-    [CPConfigUrlModel modelRequestWith:@"http://api.leshouzhan.com/api/sysconfig/getSysConfigByCode"
+    [CPConfigUrlModel modelRequestWith:DOMAIN_ADDRESS@"/api/sysconfig/getSysConfigByCode"
                             parameters:@{@"code" : @"100"}
                                  block:^(CPConfigUrlModel *result) {
 //                                     [CPUserInfoModel shareInstance].helpHtml = result.Description;

@@ -403,7 +403,7 @@
     
     __weak typeof(self) weakSelf = self;
     
-    [CPUserDetailInfoModel modelRequestWith:@"http://api.leshouzhan.com/api/user/getDetailUserInfo"
+    [CPUserDetailInfoModel modelRequestWith:DOMAIN_ADDRESS@"api/user/getDetailUserInfo"
                                  parameters:@{@"userid" : @([CPUserInfoModel shareInstance].loginModel.ID)}
                                       block:^(CPUserDetailInfoModel *result) {
                                           [weakSelf handleLoadDataSuccessBlock:result];

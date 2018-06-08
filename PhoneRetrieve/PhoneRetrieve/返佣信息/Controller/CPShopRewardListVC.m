@@ -144,7 +144,7 @@
                              @"currentpage" : @(self.currentPageIndex)
                              };
 
-    [CPRewardModel modelRequestWith:@"http://api.leshouzhan.com/api/Distributionorder/getDistributionList"
+    [CPRewardModel modelRequestWith:DOMAIN_ADDRESS@"api/Distributionorder/getDistributionList"
                        parameters:params
                             block:^(CPRewardModel *result) {
                                 [weakSelf handleLoadDataSuccessBlock:result];
